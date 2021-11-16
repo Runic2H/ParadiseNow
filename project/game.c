@@ -54,7 +54,7 @@ void game_update(void)
 {
 	// CALUCULATE CLOCK
 	clock_t end = clock();
-	double time_spent = (double)end - (double)begin / CLOCKS_PER_SEC;
+	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 	snprintf(runtime, 256, "%0.2f", time_spent);
 
 	//DRAW CLOCK
