@@ -1,14 +1,4 @@
-#include <stdio.h>
-#include "cprocessing.h"
-#include <conio.h>
-#include <time.h>
-#include "Enemy.h"
-#include "character.h"
-
-#define color_green CP_Color_Create(0,255,0,255)
-#define color_black CP_Color_Create(0, 0, 0, 255)
-#define color_red CP_Color_Create(255, 0, 0, 255)
-#define color_blue CP_Color_Create(0,0,255,255)
+#include "macros.h"
 
 CP_Vector vectorEnemy;
 CP_Vector vectorMove, Vectorplayer;
@@ -42,7 +32,7 @@ void game_init(void)
 	CP_System_SetWindowSize(1280, 720);
 	enemy_init_posXY();
 	begin = clock();
-	layout = 0;
+	layout = WASD;
 	mage.positionX = 200.0F;
 	mage.positionY = 200.0F;
 	objPositionX = &mage.positionX;
@@ -63,9 +53,9 @@ void game_update(void)
 
 	if (CP_Input_KeyTriggered(KEY_TAB))
 	{
-		layout == 1 ? (layout = 0) : (layout = 1);
+		layout == WASD ? (layout = MOUSE) : (layout = WASD);
 	}
-	if (layout == 0)
+	if (layout == WASD)
 	{
 		c_CharacterWASD(objPositionX, objPositionY);
 	}

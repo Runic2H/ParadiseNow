@@ -1,6 +1,4 @@
-#pragma once
-#include "cprocessing.h"
-#include "Enemy.h"
+#include "macros.h"
 
 
 CP_Vector vectorEnemy;

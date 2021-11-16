@@ -1,10 +1,6 @@
-#pragma once
-#include <stdio.h>
-#include "cprocessing.h"
-#include <conio.h>
-#include <time.h>
+/* Header file for macros */
 
-#pragma once
+
 /*
 1. diff speed for each enemies
 

@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include "cprocessing.h" 
-#include "character.h"
+#include "macros.h"
 
 
 void c_CharacterWASD(float *objPositionX, float *objPositionY)
