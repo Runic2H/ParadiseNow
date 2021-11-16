@@ -39,6 +39,7 @@ void render(void)
 
 void game_init(void)
 {
+	CP_System_SetWindowSize(1280, 720);
 	enemy_init_posXY();
 	begin = clock();
 	layout = 0;
@@ -52,9 +53,9 @@ void game_init(void)
 void game_update(void)
 {
 	// CALUCULATE CLOCK
-	/*clock_t end = clock();
-	double time_spent = (double)(end-begin) / CLOCKS_PER_SEC;
-	snprintf(runtime, 256, "%0.2f", time_spent);*/
+	clock_t end = clock();
+	double time_spent = (double)end - (double)begin / CLOCKS_PER_SEC;
+	snprintf(runtime, 256, "%0.2f", time_spent);
 
 	//DRAW CLOCK
 	CP_Settings_Fill(color_red);
