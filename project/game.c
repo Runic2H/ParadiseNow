@@ -1,30 +1,35 @@
 #include <stdio.h>
 #include "cprocessing.h"
+#include <conio.h>
+#include <time.h>
+#include "Enemy.h"
 #include "character.h"
 
-float *objPositionX, *objPositionY;
+#define color_green CP_Color_Create(0,255,0,255)
+#define color_black CP_Color_Create(0, 0, 0, 255)
+#define color_red CP_Color_Create(255, 0, 0, 255)
+#define color_blue CP_Color_Create(0,0,255,255)
+
+CP_Vector vectorEnemy;
+CP_Vector vectorMove, Vectorplayer;
+CP_Vector acceleration;
+float* objPositionX, * objPositionY;
 float mousePosX, mousePosY;
-CP_Vector vectorMove, vectorMouse, *vectorObject, acceleration;
 int layout;
 struct c_CharacterStats mage;
+float x = 200.0f;
+float y = 200.0f;
 
-//Update Mouse Position
-void mouse_update() 
-{
-	mousePosX = CP_Input_GetMouseX();
-	mousePosY = CP_Input_GetMouseY();
-}
+float position_x, position_y; // FOR THE PLANTS
 
-//Redraw
-void render(void)
-{
-	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Graphics_DrawCircle(*objPositionX, *objPositionY, 20);
-}
+clock_t begin;
+char runtime[256];
 
 void game_init(void)
 {
+	enemy_init_posXY();
+	//printf("enemycount = %d\n", enemycount);
+	begin = clock();
 	layout = 0;
 	mage.positionX = 200.0F;
 	mage.positionY = 200.0F;
@@ -32,8 +37,21 @@ void game_init(void)
 	objPositionY = &mage.positionY;
 }
 
+
 void game_update(void)
 {
+
+	enemy_draw(x, y);
+
+	// CALUCULATE CLOCK
+	clock_t end = clock();
+	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+	snprintf(runtime, 256, "%0.2f", time_spent);
+
+	//DRAW CLOCK
+	CP_Settings_Fill(color_red);
+	CP_Font_DrawTextBox(runtime, 190.0f, 20.0f, 50.0f);
+
 	if (CP_Input_KeyTriggered(KEY_TAB))
 	{
 		layout == 1 ? (layout = 0) : (layout = 1);
