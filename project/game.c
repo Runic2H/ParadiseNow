@@ -19,16 +19,27 @@ int layout;
 struct c_CharacterStats mage;
 float x = 200.0f;
 float y = 200.0f;
-
-float position_x, position_y; // FOR THE PLANTS
-
 clock_t begin;
 char runtime[256];
+
+//Update Mouse Position
+void mouse_update()
+{
+	mousePosX = CP_Input_GetMouseX();
+	mousePosY = CP_Input_GetMouseY();
+}
+
+//Redraw
+void render(void)
+{
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	CP_Graphics_DrawCircle(*objPositionX, *objPositionY, 20);
+}
 
 void game_init(void)
 {
 	enemy_init_posXY();
-	//printf("enemycount = %d\n", enemycount);
 	begin = clock();
 	layout = 0;
 	mage.positionX = 200.0F;
@@ -40,13 +51,10 @@ void game_init(void)
 
 void game_update(void)
 {
-
-	enemy_draw(x, y);
-
 	// CALUCULATE CLOCK
-	clock_t end = clock();
-	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	snprintf(runtime, 256, "%0.2f", time_spent);
+	/*clock_t end = clock();
+	double time_spent = (double)(end-begin) / CLOCKS_PER_SEC;
+	snprintf(runtime, 256, "%0.2f", time_spent);*/
 
 	//DRAW CLOCK
 	CP_Settings_Fill(color_red);
@@ -64,7 +72,9 @@ void game_update(void)
 	{
 		c_CharacterMouse(objPositionX, objPositionY);
 	}
+
 	render();
+	enemy_draw(*objPositionX, *objPositionY);
 }
 
 
