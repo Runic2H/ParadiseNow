@@ -15,6 +15,12 @@ float y = 200.0f;
 clock_t begin;
 char runtime[256];
 
+void menu_init(void);
+void menu_update(void);
+void menu_exit(void);
+
+
+
 //Update Mouse Position
 void mouse_update()
 {
@@ -45,6 +51,12 @@ void game_init(void)
 
 void game_update(void)
 {
+
+	if (CP_Input_KeyTriggered(KEY_ESCAPE)) {								//go back to main menu
+		CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
+	}
+
+
 	// CALUCULATE CLOCK
 	clock_t end = clock();
 	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
