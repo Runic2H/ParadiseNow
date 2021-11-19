@@ -82,3 +82,23 @@ void enemy_draw(float player_x, float player_y)
 	}
 
 }
+
+
+void stationary_plants(float player_x, float player_y, float stationary_x, float stationary_y) {
+
+	float position_x, position_y;
+
+	CP_Vector stationaryenemy, move;
+
+
+	Vectorplayer = CP_Vector_Set(player_x, player_y);
+	stationaryenemy = CP_Vector_Set(stationary_x, stationary_y);
+	move = CP_Vector_Subtract(Vectorplayer, stationaryenemy);
+	acceleration = CP_Vector_Scale(CP_Vector_Normalize(move), 4.5);
+
+	position_x = stationaryenemy.x + acceleration.x;
+	position_y = stationaryenemy.y + acceleration.y;
+
+	CP_Settings_Fill(color_blue);
+	CP_Graphics_DrawCircle(position_x, position_y, 15);
+}

@@ -64,7 +64,7 @@ void game_update(void)
 
 	//DRAW CLOCK
 	CP_Settings_Fill(color_red);
-	CP_Font_DrawTextBox(runtime, 190.0f, 20.0f, 50.0f);
+	CP_Font_DrawTextBox(runtime, 650.0f, 30.0f, 70.0f);
 
 	if (CP_Input_KeyTriggered(KEY_TAB))
 	{
@@ -81,6 +81,13 @@ void game_update(void)
 
 	render();
 	enemy_draw(*objPositionX, *objPositionY);
+
+	//stationary plants, add @ different positions through different waves
+	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f);
+	stationary_plants(*objPositionX, *objPositionY, 600.0f, 300.0f);
+	stationary_plants(*objPositionX, *objPositionY, 700.0f, 300.0f);
+	stationary_plants(*objPositionX, *objPositionY, 800.0f, 300.0f);
+	stationary_plants(*objPositionX, *objPositionY, 900.0f, 300.0f);
 }
 
 
