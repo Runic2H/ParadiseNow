@@ -15,6 +15,11 @@ float y = 200.0f;
 clock_t begin;
 char runtime[256];
 
+CP_Image genericenemy = NULL;
+CP_Image boss = NULL;
+CP_Image stationaryplants = NULL;
+CP_Image background = NULL;
+
 void menu_init(void);
 void menu_update(void);
 void menu_exit(void);
@@ -46,11 +51,18 @@ void game_init(void)
 	mage.positionY = 200.0F;
 	objPositionX = &mage.positionX;
 	objPositionY = &mage.positionY;
+
+		//images
+	background = CP_Image_Load("./images/background.png");
+	genericenemy = CP_Image_Load("./images/slimeboss3.png");
+	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
+
 }
 
 
 void game_update(void)
 {
+	//CP_Image_Draw(background, 0, 0, 1000, 1000, 255);
 
 	if (CP_Input_KeyTriggered(KEY_ESCAPE)) {								//go back to main menu
 		CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
@@ -80,14 +92,15 @@ void game_update(void)
 	}
 
 	render();
-	enemy_draw(*objPositionX, *objPositionY);
+	enemy_draw(*objPositionX, *objPositionY, genericenemy);
 
 	//stationary plants, add @ different positions through different waves
-	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f);
-	stationary_plants(*objPositionX, *objPositionY, 600.0f, 300.0f);
-	stationary_plants(*objPositionX, *objPositionY, 700.0f, 300.0f);
-	stationary_plants(*objPositionX, *objPositionY, 800.0f, 300.0f);
-	stationary_plants(*objPositionX, *objPositionY, 900.0f, 300.0f);
+	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 600.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 700.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 800.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 900.0f, 300.0f, stationaryplants);
 }
 
 

@@ -69,7 +69,7 @@ void enemy_init_posXY()
 	}
 }
 
-void enemy_draw(float player_x, float player_y)
+void enemy_draw(float player_x, float player_y, CP_Image imageoverlay)
 {
 	CP_Settings_Fill(color_red);
 
@@ -78,13 +78,14 @@ void enemy_draw(float player_x, float player_y)
 		float* fpointerx = &Enemies[i].enemy_posX;
 		float* fpointery = &Enemies[i].enemy_posY;
 		enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
-		CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
+		//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
+		CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 55, 55, 255);
 	}
 
 }
 
 
-void stationary_plants(float player_x, float player_y, float stationary_x, float stationary_y) {
+void stationary_plants(float player_x, float player_y, float stationary_x, float stationary_y, CP_Image imageoverlay) {
 
 	float position_x, position_y;
 
@@ -100,5 +101,6 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 	position_y = stationaryenemy.y + acceleration.y;
 
 	CP_Settings_Fill(color_blue);
-	CP_Graphics_DrawCircle(position_x, position_y, 15);
+	//CP_Graphics_DrawCircle(position_x, position_y, 15);
+	CP_Image_Draw(imageoverlay, position_x, position_y, 55, 55, 255);
 }
