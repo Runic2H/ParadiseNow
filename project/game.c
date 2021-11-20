@@ -54,8 +54,9 @@ void game_init(void)
 
 		//images
 	background = CP_Image_Load("./images/background.png");
-	genericenemy = CP_Image_Load("./images/slimeboss3.png");
+	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
+	boss = CP_Image_Load("./images/boss.png");
 
 }
 
@@ -92,7 +93,7 @@ void game_update(void)
 	}
 
 	render();
-	enemy_draw(*objPositionX, *objPositionY, genericenemy);
+	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
 
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
@@ -106,5 +107,9 @@ void game_update(void)
 
 void game_exit(void)
 {
-
+	CP_Graphics_ClearBackground(color_black);
+	CP_Image_Free(&genericenemy);
+	CP_Image_Free(&stationaryplants);
+	CP_Image_Free(&background);
+	CP_Image_Free(&boss);
 }

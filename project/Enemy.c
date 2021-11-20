@@ -6,6 +6,7 @@ CP_Vector vectorMove, Vectorplayer;
 CP_Vector acceleration;
 
 #define enemycount 20
+#define bosscount 2
 #define enemyAlive 1
 #define enemyDead 0
 
@@ -19,7 +20,17 @@ struct Enemy {
 	float speed;
 };
 
+struct Boss {
+	int ID;
+	float boss_posX;
+	float boss_posY;
+	int AliveDead;
+	float speed;
+};
+
 struct Enemy Enemies[enemycount];
+struct Boss Boss[bosscount];
+
 
 float outerlimit_rand(float lower, float upper, float window_heightOrWidth)
 {
@@ -64,12 +75,36 @@ void enemy_init_posXY()
 			Enemies[i].enemy_posX = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowWidth() + 50.0f));
 			Enemies[i].enemy_posY = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowHeight());
 		}
+
 		Enemies[i].AliveDead = 1; // ALL LIVE
 		Enemies[i].speed = CP_Random_RangeFloat(1, 3);
+
 	}
+
+		for (int j = 0; j < bosscount; ++j) {
+
+			Boss[j].ID = j + 1;
+
+			if (j % 2) {
+				Boss[j].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
+				Boss[j].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
+			}
+			else
+			{
+				Boss[j].boss_posX = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
+				Boss[j].boss_posY = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
+			}
+
+				Boss[j].AliveDead = 1;
+				Boss[j].speed = CP_Random_RangeFloat(2, 4);
+
+		}
+
+	
 }
 
-void enemy_draw(float player_x, float player_y, CP_Image imageoverlay)
+
+void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image bossimage)
 {
 	CP_Settings_Fill(color_red);
 
@@ -80,6 +115,14 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay)
 		enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
 		//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
 		CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 55, 55, 255);
+	}
+
+	for (int i = 0; i < bosscount; ++i)
+	{
+		float* bossX = &Boss[i].boss_posX;
+		float* bossY = &Boss[i].boss_posY;
+		enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
+		CP_Image_Draw(bossimage, *bossX, *bossY, 95, 95, 255);
 	}
 
 }

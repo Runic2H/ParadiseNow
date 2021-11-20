@@ -25,6 +25,6 @@ void enemy_vector(float player_x, float player_y, float* ex, float* ey, float sp
 
 void enemy_init_posXY();
 
-void enemy_draw(float player_x, float player_y, CP_Image imageoverlay);
+void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image bossimage);
 
 void stationary_plants(float player_x, float player_y, float stationary_x, float stationary_y, CP_Image imageoverlay);
