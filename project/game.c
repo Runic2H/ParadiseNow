@@ -13,7 +13,6 @@ struct c_CharacterStats mage;
 float x = 200.0f;
 float y = 200.0f;
 clock_t begin;
-char runtime[256];
 
 CP_Image genericenemy = NULL;
 CP_Image boss = NULL;
@@ -37,8 +36,18 @@ void mouse_update()
 void render(void)
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Graphics_DrawCircle(*objPositionX, *objPositionY, 20);
+	renderPlayer(objPositionX, objPositionY);
+	enemy_draw(*objPositionX, *objPositionY);
+	timer(begin);
+  enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
+  
+	//stationary plants, add @ different positions through different waves
+	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 600.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 700.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 800.0f, 300.0f, stationaryplants);
+	stationary_plants(*objPositionX, *objPositionY, 900.0f, 300.0f, stationaryplants);
 }
 
 void game_init(void)
@@ -64,20 +73,11 @@ void game_init(void)
 void game_update(void)
 {
 	//CP_Image_Draw(background, 0, 0, 1000, 1000, 255);
-
-	if (CP_Input_KeyTriggered(KEY_ESCAPE)) {								//go back to main menu
+  //go back to main menu
+	if (CP_Input_KeyTriggered(KEY_ESCAPE)) 
+  {								
 		CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
 	}
-
-
-	// CALUCULATE CLOCK
-	clock_t end = clock();
-	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	snprintf(runtime, 256, "%0.2f", time_spent);
-
-	//DRAW CLOCK
-	CP_Settings_Fill(color_red);
-	CP_Font_DrawTextBox(runtime, 650.0f, 30.0f, 70.0f);
 
 	if (CP_Input_KeyTriggered(KEY_TAB))
 	{
@@ -93,15 +93,6 @@ void game_update(void)
 	}
 
 	render();
-	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
-
-	//stationary plants, add @ different positions through different waves
-	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 600.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 700.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 800.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 900.0f, 300.0f, stationaryplants);
 }
 
 

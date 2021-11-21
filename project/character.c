@@ -9,7 +9,7 @@ void c_CharacterWASD(float *objPositionX, float *objPositionY)
 	CP_Vector movement = CP_Vector_MatrixMultiply(rotate, velocity);
 	if (CP_Input_MouseDown(MOUSE_BUTTON_2))
 	{
-
+		//To implement looking around
 	}
 	else
 	{
@@ -67,11 +67,17 @@ void c_CharacterMouse(float* objPositionX, float* objPositionY)
 	CP_Vector speed = CP_Vector_Scale(CP_Vector_Normalize(directionVector), 300.f * CP_System_GetDt());
 	if (CP_Input_MouseDown(MOUSE_BUTTON_2))
 	{
-
+		//To implement looking around
 	}
 	else
 	{
 		*objPositionX += speed.x;
 		*objPositionY += speed.y;
 	}
+}
+
+void renderPlayer(float* positionX, float* positionY)
+{
+	CP_Settings_Fill(color_white);
+	CP_Graphics_DrawCircle(*positionX, *positionY, 20);
 }
