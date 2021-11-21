@@ -12,8 +12,4 @@ void chest_init(void);
 
 void chest_spawn(void);
 
-int is_ChestColliding(float posX, float posY, float diameter);
-
-int is_ChestOpen(void);
-
 void render_Chest(float posX, float posY, float diameter);

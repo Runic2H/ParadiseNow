@@ -1,11 +1,7 @@
 //test
-
-
 #include "macros.h"
 
 CP_Vector vectorEnemy;
-CP_Vector vectorMove, Vectorplayer;
-CP_Vector acceleration;
 float* objPositionX, * objPositionY;
 float mousePosX, mousePosY;
 int layout;
@@ -23,8 +19,6 @@ void menu_init(void);
 void menu_update(void);
 void menu_exit(void);
 
-
-
 //Update Mouse Position
 void mouse_update()
 {
@@ -32,7 +26,7 @@ void mouse_update()
 	mousePosY = CP_Input_GetMouseY();
 }
 
-//Redraw
+//Render stuff
 void render(void)
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -67,16 +61,15 @@ void game_init(void)
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
 	boss = CP_Image_Load("./images/boss.png");
-
 }
 
 
 void game_update(void)
 {
 	//CP_Image_Draw(background, 0, 0, 1000, 1000, 255);
-  //go back to main menu
+	//go back to main menu
 	if (CP_Input_KeyTriggered(KEY_ESCAPE)) 
-  {								
+	{								
 		CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
 	}
 
@@ -94,6 +87,12 @@ void game_update(void)
 	}
 	Shoot(*objPositionX, *objPositionY, &ShootCooldown);
 	ShootCooldown -= CP_System_GetDt();
+	enemy_collision();
+	boss_Collision();
+	boss_dmg();
+	boss_die();
+	enemy_TEST_TAKEDMG_update();
+	enemy_deadAlive_update();
 	render();
 	
 }

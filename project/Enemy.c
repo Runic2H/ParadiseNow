@@ -13,6 +13,8 @@ CP_Vector acceleration;
 // this should be parsed from char.h
 
 struct Enemy {
+	int health;
+	int collisionWproj;
 	int ID; // 1, 2, 3, 4, 5
 	float enemy_posX;
 	float enemy_posY;
@@ -21,6 +23,8 @@ struct Enemy {
 };
 
 struct Boss {
+	int health;
+	int collisionWproj;
 	int ID;
 	float boss_posX;
 	float boss_posY;
@@ -77,8 +81,9 @@ void enemy_init_posXY()
 		}
 
 		Enemies[i].AliveDead = 1; // ALL LIVE
-		Enemies[i].speed = CP_Random_RangeFloat(1, 3);
-
+		Enemies[i].speed = CP_Random_RangeFloat(2, 6);
+		Enemies[i].health = 5;
+		Enemies[i].collisionWproj = 0;
 	}
 
 		for (int j = 0; j < bosscount; ++j) {
@@ -97,10 +102,10 @@ void enemy_init_posXY()
 
 				Boss[j].AliveDead = 1;
 				Boss[j].speed = CP_Random_RangeFloat(2, 4);
+				Boss[j].health = 1;
+				Boss[j].collisionWproj = 0;
 
 		}
-
-	
 }
 
 
@@ -110,11 +115,14 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 
 	for (int i = 0; i < enemycount; i++)
 	{
-		float* fpointerx = &Enemies[i].enemy_posX;
-		float* fpointery = &Enemies[i].enemy_posY;
-		enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
-		//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
-		CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 55, 55, 255);
+		if (Enemies[i].AliveDead == 1)
+		{
+			float* fpointerx = &Enemies[i].enemy_posX;
+			float* fpointery = &Enemies[i].enemy_posY;
+			enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
+			//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
+			CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 55, 55, 255);
+		}
 	}
 
 	for (int i = 0; i < bosscount; ++i)
@@ -146,4 +154,79 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 	CP_Settings_Fill(color_blue);
 	//CP_Graphics_DrawCircle(position_x, position_y, 15);
 	CP_Image_Draw(imageoverlay, position_x, position_y, 55, 55, 255);
+}
+
+void enemy_collision()
+{
+	for (int i = 0; i < enemycount; i++)
+	{
+		if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 55.f, Projectiles[0].Point.x, Projectiles[0].Point.y, 10.f))
+		{
+			printf("%d", Enemies[i].collisionWproj = 1);
+			Projectiles[0].isActive = 0;
+		}
+		else
+		{
+			printf("%d", Enemies[i].collisionWproj = 0);
+		}
+	}
+}
+
+void boss_Collision()
+{
+	for (int i = 0; i < bosscount; i++)
+	{
+		if (is_ProjectileColliding(Boss[i].boss_posX, Boss[i].boss_posY, 55.f, Projectiles[0].Point.x, Projectiles[0].Point.y, 10.f))
+		{
+			printf("%d", Boss[i].collisionWproj = 1);
+			Projectiles[0].isActive = 0;
+		}
+		else
+		{
+			printf("%d", Boss[i].collisionWproj = 0);
+		}
+	}
+}
+
+void boss_dmg()
+{
+	for (int i = 0; i < bosscount; i++)
+	{
+		if (Boss[i].collisionWproj == 1)
+		{
+			Boss[i].health -= 1;
+		}
+	}
+}
+
+void boss_die()
+{
+	for (int i = 0; i < bosscount; i++)
+	{
+		if (Boss[i].health == 0)
+		{
+			Boss[i].AliveDead = 0;
+		}
+	}
+}
+
+void enemy_TEST_TAKEDMG_update() {
+	for (int i = 0; i < enemycount; i++)
+	{
+		if (Enemies[i].collisionWproj == 1)
+		{
+			Enemies[i].health -= 1;
+		}
+	}
+}
+
+void enemy_deadAlive_update()
+{
+	for (int i = 0; i < enemycount; i++)
+	{
+		if (Enemies[i].health == 0)
+		{
+			Enemies[i].AliveDead = 0;
+		}
+	}
 }
