@@ -16,14 +16,14 @@
 
 
 /* Forward declarations */
-void game_init(void);
-void game_update(void);
-void game_exit(void);
+void menu_init(void);
+void menu_update(void);
+void menu_exit(void);
 
 /* Entry point */
 int main(void)
 {
-    CP_Engine_SetNextGameState(game_init, game_update, game_exit);
+    CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
     CP_Engine_Run();
     return 0;
 }
