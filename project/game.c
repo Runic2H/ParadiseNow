@@ -37,9 +37,9 @@ void render(void)
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	renderPlayer(objPositionX, objPositionY);
+	DrawProjectile();
 	timer(begin);
 	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
-  
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
 	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
@@ -59,8 +59,10 @@ void game_init(void)
 	mage.positionY = 200.0F;
 	objPositionX = &mage.positionX;
 	objPositionY = &mage.positionY;
+	InitProjectiles();
+	ShootCooldown = 0.0f;
 
-		//images
+	//images
 	background = CP_Image_Load("./images/background.png");
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
@@ -90,8 +92,10 @@ void game_update(void)
 	{
 		c_CharacterMouse(objPositionX, objPositionY);
 	}
-
+	Shoot(*objPositionX, *objPositionY, &ShootCooldown);
+	ShootCooldown -= CP_System_GetDt();
 	render();
+	
 }
 
 

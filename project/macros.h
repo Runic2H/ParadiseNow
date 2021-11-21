@@ -14,6 +14,8 @@
 
 #include "interactives.h"
 
+#include "Projectiles.h"
+
 #include <stdbool.h>
 
 #define color_green CP_Color_Create(0,255,0,255)
