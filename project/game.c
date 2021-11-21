@@ -37,7 +37,8 @@ void render(void)
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	renderPlayer(objPositionX, objPositionY);
-	enemy_draw(*objPositionX, *objPositionY);
+	DrawProjectile();
+	
 	timer(begin);
   enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
   
@@ -60,6 +61,8 @@ void game_init(void)
 	mage.positionY = 200.0F;
 	objPositionX = &mage.positionX;
 	objPositionY = &mage.positionY;
+	InitProjectiles();
+	ShootCooldown = 0.0f;
 
 		//images
 	background = CP_Image_Load("./images/background.png");
@@ -91,8 +94,10 @@ void game_update(void)
 	{
 		c_CharacterMouse(objPositionX, objPositionY);
 	}
-
+	Shoot(*objPositionX, *objPositionY, &ShootCooldown);
+	ShootCooldown -= CP_System_GetDt();
 	render();
+	
 }
 
 
