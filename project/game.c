@@ -38,10 +38,8 @@ void render(void)
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	renderPlayer(objPositionX, objPositionY);
 	DrawProjectile();
-	
 	timer(begin);
-  enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
-  
+	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
 	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
@@ -64,7 +62,7 @@ void game_init(void)
 	InitProjectiles();
 	ShootCooldown = 0.0f;
 
-		//images
+	//images
 	background = CP_Image_Load("./images/background.png");
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
