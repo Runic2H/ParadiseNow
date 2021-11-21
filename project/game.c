@@ -10,7 +10,6 @@ struct c_CharacterStats mage;
 float x = 200.0f;
 float y = 200.0f;
 clock_t begin;
-char runtime[256];
 
 //Update Mouse Position
 void mouse_update()
@@ -23,8 +22,9 @@ void mouse_update()
 void render(void)
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Graphics_DrawCircle(*objPositionX, *objPositionY, 20);
+	renderPlayer(objPositionX, objPositionY);
+	enemy_draw(*objPositionX, *objPositionY);
+	timer(begin);
 }
 
 void game_init(void)
@@ -42,15 +42,6 @@ void game_init(void)
 
 void game_update(void)
 {
-	// CALUCULATE CLOCK
-	clock_t end = clock();
-	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	snprintf(runtime, 256, "%0.2f", time_spent);
-
-	//DRAW CLOCK
-	CP_Settings_Fill(color_red);
-	CP_Font_DrawTextBox(runtime, 190.0f, 20.0f, 50.0f);
-
 	if (CP_Input_KeyTriggered(KEY_TAB))
 	{
 		layout == WASD ? (layout = MOUSE) : (layout = WASD);
@@ -65,7 +56,7 @@ void game_update(void)
 	}
 
 	render();
-	enemy_draw(*objPositionX, *objPositionY);
+	
 }
 
 
