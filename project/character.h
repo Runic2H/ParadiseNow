@@ -17,6 +17,6 @@ void c_CharacterWASD(float *objPositionX, float *objPositionY);
 
 void c_CharacterMouse(float* objPositionX, float* objPositionY);
 
-void renderPlayer(float* positionX, float* positionY);
+void renderPlayer(float* positionX, float* positionY, CP_Image mage);
 
 

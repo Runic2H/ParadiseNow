@@ -22,6 +22,7 @@ struct Enemy {
 	float speed;
 };
 
+
 struct Boss {
 	int health;
 	int collisionWproj;
