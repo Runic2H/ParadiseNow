@@ -28,3 +28,15 @@ void enemy_init_posXY();
 void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image bossimage);
 
 void stationary_plants(float player_x, float player_y, float stationary_x, float stationary_y, CP_Image imageoverlay);
+
+void enemy_collision();
+
+void boss_Collision();
+
+void boss_dmg();
+
+void boss_die();
+
+void enemy_deadAlive_update();
+
+void enemy_TEST_TAKEDMG_update();

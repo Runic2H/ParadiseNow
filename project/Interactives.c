@@ -19,28 +19,6 @@ void chest_spawn(void)
 	}
 }
 
-int is_ChestColliding(float posX, float posY, float diameter)
-{
-	return ((posX >= chest.posX) && (posY >= chest.posY)) && ((posX + diameter >= chest.posX + chest.diameter) 
-		&& (posY + diameter >= chest.diameter + chest.diameter));
-}
-
-int is_ChestOpen(void)
-{
-	if (is_ChestColliding)
-	{
-		if (CP_Input_KeyTriggered(KEY_E))
-		{
-			chest.alive = 0;
-		}
-		else
-		{
-			chest.alive = 1;
-		}
-	}
-	return chest.alive == 1 ? 0 : 1;
-}
-
 void render_Chest(float posX, float posY, float diameter)
 {
 	CP_Settings_Fill(color_blue);
