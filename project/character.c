@@ -76,8 +76,9 @@ void c_CharacterMouse(float* objPositionX, float* objPositionY)
 	}
 }
 
-void renderPlayer(float* positionX, float* positionY)
+void renderPlayer(float* positionX, float* positionY,CP_Image mage)
 {
 	CP_Settings_Fill(color_white);
-	CP_Graphics_DrawCircle(*positionX, *positionY, 20);
+	//CP_Graphics_DrawCircle(*positionX, *positionY, 20);
+	CP_Image_Draw(mage, *positionX, *positionY, 100, 100, 255);
 }

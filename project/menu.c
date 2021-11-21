@@ -6,7 +6,12 @@
 void game_init(void);
 void game_update(void);
 void game_exit(void);
-#define color_background CP_Color_Create(50, 100, 0, 255)
+#define color_background CP_Color_Create(123, 63, 0, 255)
+
+
+//	variables declaration
+
+int counter;
 
 
 void menu_init(void) {
@@ -35,6 +40,9 @@ void menu_update(void) {
 	if (CP_Input_KeyTriggered(KEY_ENTER)) {
 		CP_Engine_SetNextGameState(game_init, game_update, game_exit);
 	}
+
+	//DRAW
+	CP_Font_DrawTextBox("PRESS ENTER TO START GAME", 550.0f, 300.0f, 500.0f);
 
 }
 

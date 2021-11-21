@@ -2,6 +2,7 @@
 
 
 #include "macros.h"
+#define color_background CP_Color_Create(123,63,0,255)
 
 CP_Vector vectorEnemy;
 CP_Vector vectorMove, Vectorplayer;
@@ -18,6 +19,7 @@ CP_Image genericenemy = NULL;
 CP_Image boss = NULL;
 CP_Image stationaryplants = NULL;
 CP_Image background = NULL;
+CP_Image Mage = NULL;
 
 void menu_init(void);
 void menu_update(void);
@@ -35,8 +37,8 @@ void mouse_update()
 //Redraw
 void render(void)
 {
-	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	renderPlayer(objPositionX, objPositionY);
+	CP_Graphics_ClearBackground(color_background);
+	renderPlayer(objPositionX, objPositionY, Mage);
 	DrawProjectile();
 	timer(begin);
 	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
@@ -67,7 +69,7 @@ void game_init(void)
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
 	boss = CP_Image_Load("./images/boss.png");
-
+	Mage = CP_Image_Load("./images/Mage.png");
 }
 
 
@@ -106,4 +108,5 @@ void game_exit(void)
 	CP_Image_Free(&stationaryplants);
 	CP_Image_Free(&background);
 	CP_Image_Free(&boss);
+	CP_Image_Free(&Mage);
 }

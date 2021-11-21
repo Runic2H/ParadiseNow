@@ -20,6 +20,7 @@ struct Enemy {
 	float speed;
 };
 
+
 struct Boss {
 	int ID;
 	float boss_posX;
