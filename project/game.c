@@ -37,9 +37,8 @@ void render(void)
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	renderPlayer(objPositionX, objPositionY);
-	enemy_draw(*objPositionX, *objPositionY);
 	timer(begin);
-  enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
+	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
   
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
