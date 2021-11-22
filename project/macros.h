@@ -32,6 +32,20 @@
 
 #define color_white CP_Color_Create(255,255,255,255)
 
+#define color_background CP_Color_Create(123,63,0,255)
+
+#define enemycount 20
+
+#define bosscount 2
+
+#define enemyAlive 1
+
+#define enemyDead 0
+
+#define chestCount 2
+
+#define chestSize 30.f
+
 enum controlScheme { WASD, MOUSE };
 
 enum skills 
@@ -45,9 +59,13 @@ enum skills
 use for any time related activities */
 
 int timing;
-
 void timer(clock_t begin);
-
 void render_clock(double time_spent);
-
 int getTimeSpent(int time);
+
+//Struct init
+
+struct c_CharacterStats player;
+struct Enemy Enemies[enemycount];
+struct Boss Boss[bosscount];
+struct upgrades chest;

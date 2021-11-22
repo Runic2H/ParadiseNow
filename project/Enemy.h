@@ -1,6 +1,27 @@
 /* Header file for macros */
 
 
+struct Enemy {
+	int health;
+	int collisionWproj;
+	int ID; // 1, 2, 3, 4, 5
+	float enemy_posX;
+	float enemy_posY;
+	int AliveDead; // enemyAlive 1 or enemyDead 1 0 
+	float speed;
+};
+
+
+struct Boss {
+	int health;
+	int collisionWproj;
+	int ID;
+	float boss_posX;
+	float boss_posY;
+	int AliveDead;
+	float speed;
+};
+
 /*
 1. diff speed for each enemies
 
