@@ -8,21 +8,23 @@ typedef struct Projectile {
     CP_Vector Subtract;
     CP_Vector Normalize;
     int isActive;
+    
 
 
 
 } Projectile;
 
 Projectile Projectiles[MAX_PROJECTILE];
-int Multishot;
-
+CP_Matrix Rotation;
+//int Multishot;
 
 void InitProjectiles();
 void Shoot(float PositionX, float PositionY, float* Cooldown);
 void DrawProjectile();
 float ShootCooldown;
 
-CP_Vector Normal_Y;
-CP_Vector UnitX_Left;
-CP_Vector UnitX_Right;
+//To be Removed
+//CP_Vector Normal_Y;
+//CP_Vector UnitX_Left;
+//CP_Vector UnitX_Right;
 

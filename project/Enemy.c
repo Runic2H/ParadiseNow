@@ -130,16 +130,19 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 
 void enemy_collision()
 {
-	for (int i = 0; i < enemycount; i++)
+	for (int j = 0; j < MAX_PROJECTILE; j++)
 	{
-		if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 55.f, Projectiles[0].Point.x, Projectiles[0].Point.y, 10.f))
+		for (int i = 0; i < enemycount; i++)
 		{
-			printf("%d", Enemies[i].collisionWproj = 1);
-			Projectiles[0].isActive = 0;
-		}
-		else
-		{
-			printf("%d", Enemies[i].collisionWproj = 0);
+			if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 55.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
+			{
+				Enemies[i].collisionWproj = 1;
+				Projectiles[j].isActive = 0;
+			}
+			else
+			{
+				Enemies[i].collisionWproj = 0;
+			}
 		}
 	}
 }
@@ -178,6 +181,9 @@ void boss_die()
 		if (Boss[i].health == 0)
 		{
 			Boss[i].AliveDead = 0;
+			Boss[i].boss_posX = -50.0f;
+			Boss[i].boss_posY = -50.0f;
+			Boss[i].speed = 0.0f;
 		}
 	}
 }
@@ -199,6 +205,9 @@ void enemy_deadAlive_update(float player_x, float player_y)
 		if (Enemies[i].health == 0)
 		{
 			Enemies[i].AliveDead = 0;
+			Enemies[i].enemy_posX = -50.0f;
+			Enemies[i].enemy_posY = -50.0f;
+			Enemies[i].speed = 0.0f;
 		}
 
 		if (Enemies[i].AliveDead == 1)

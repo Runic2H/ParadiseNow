@@ -47,7 +47,7 @@ void render(void)
 	/*timer(begin);*/
 	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
 	chest_spawn();
-
+	render_Chest(chest.posX,chest.posY,chest.diameter);
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
 	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
@@ -128,6 +128,15 @@ void game_update(void)
 		}
 	}
 
+	Shoot(*objPositionX, *objPositionY, &ShootCooldown);
+	ShootCooldown -= CP_System_GetDt();
+	enemy_collision();
+	boss_Collision();
+	chest_SpawnCheck();
+	boss_dmg();
+	boss_die();
+	enemy_TEST_TAKEDMG_update();
+	enemy_deadAlive_update();
 	render();
 	
 }

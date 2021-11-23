@@ -61,8 +61,8 @@ enum controlScheme { WASD, MOUSE };
 
 enum skills 
 {
-	HEALTH = 1,
-	ATTACK = 2
+	HEALTH,
+	ATTACK
 	//Add skills to list
 };
 
