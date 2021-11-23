@@ -130,16 +130,19 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 
 void enemy_collision()
 {
-	for (int i = 0; i < enemycount; i++)
+	for (int j = 0; j < MAX_PROJECTILE; j++)
 	{
-		if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 55.f, Projectiles[0].Point.x, Projectiles[0].Point.y, 10.f))
+		for (int i = 0; i < enemycount; i++)
 		{
-			printf("%d", Enemies[i].collisionWproj = 1);
-			Projectiles[0].isActive = 0;
-		}
-		else
-		{
-			printf("%d", Enemies[i].collisionWproj = 0);
+			if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 55.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
+			{
+				Enemies[i].collisionWproj = 1;
+				Projectiles[j].isActive = 0;
+			}
+			else
+			{
+				Enemies[i].collisionWproj = 0;
+			}
 		}
 	}
 }
