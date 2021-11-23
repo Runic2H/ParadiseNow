@@ -42,7 +42,8 @@ void menu_update(void) {
 	}
 
 	//DRAW
-	CP_Font_DrawTextBox("PRESS ENTER TO START GAME", 550.0f, 300.0f, 500.0f);
+	CP_Settings_TextSize(55.0f);
+	CP_Font_DrawTextBox("PRESS ENTER TO START GAME", 350.0f, 100.0f, 1000.0f);
 
 }
 

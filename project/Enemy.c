@@ -58,26 +58,26 @@ void enemy_init_posXY()
 		Enemies[i].collisionWproj = 0;
 	}
 
-		for (int j = 0; j < bosscount; ++j) {
+	for (int j = 0; j < bosscount; ++j) {
 
-			Boss[j].ID = j + 1;
+		Boss[j].ID = j + 1;
 
-			if (j % 2) {
-				Boss[j].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
-				Boss[j].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
-			}
-			else
-			{
-				Boss[j].boss_posX = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
-				Boss[j].boss_posY = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
-			}
-
-				Boss[j].AliveDead = 1;
-				Boss[j].speed = CP_Random_RangeFloat(2, 4);
-				Boss[j].health = 1;
-				Boss[j].collisionWproj = 0;
-
+		if (j % 2) {
+			Boss[j].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
+			Boss[j].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
 		}
+		else
+		{
+			Boss[j].boss_posX = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
+			Boss[j].boss_posY = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
+		}
+
+		Boss[j].AliveDead = 1;
+		Boss[j].speed = CP_Random_RangeFloat(2, 4);
+		Boss[j].health = 1;
+		Boss[j].collisionWproj = 0;
+
+	}
 }
 
 
@@ -91,7 +91,7 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 		{
 			float* fpointerx = &Enemies[i].enemy_posX;
 			float* fpointery = &Enemies[i].enemy_posY;
-			enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
+			//enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
 			//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
 			CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 55, 55, 255);
 		}
@@ -101,7 +101,7 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 	{
 		float* bossX = &Boss[i].boss_posX;
 		float* bossY = &Boss[i].boss_posY;
-		enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
+		//enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
 		CP_Image_Draw(bossimage, *bossX, *bossY, 95, 95, 255);
 	}
 
@@ -192,7 +192,7 @@ void enemy_TEST_TAKEDMG_update() {
 	}
 }
 
-void enemy_deadAlive_update()
+void enemy_deadAlive_update(float player_x, float player_y)
 {
 	for (int i = 0; i < enemycount; i++)
 	{
@@ -200,5 +200,20 @@ void enemy_deadAlive_update()
 		{
 			Enemies[i].AliveDead = 0;
 		}
+
+		if (Enemies[i].AliveDead == 1)
+		{
+			float* fpointerx = &Enemies[i].enemy_posX;
+			float* fpointery = &Enemies[i].enemy_posY;
+			enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
+		}
+	}
+
+
+	for (int i = 0; i < bosscount; ++i)
+	{
+		float* bossX = &Boss[i].boss_posX;
+		float* bossY = &Boss[i].boss_posY;
+		enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
 	}
 }
