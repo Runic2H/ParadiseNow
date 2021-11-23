@@ -15,9 +15,10 @@ CP_Image stationaryplants = NULL;
 CP_Image background = NULL;
 CP_Image Mage = NULL;
 
-void menu_init(void);
-void menu_update(void);
-void menu_exit(void);
+//void menu_init(void);
+//void menu_update(void);
+//void menu_exit(void);
+
 
 //Update Mouse Position
 void mouse_update()
@@ -43,8 +44,9 @@ void render(void)
 	CP_Graphics_ClearBackground(color_background);
 	renderPlayer(objPositionX, objPositionY, Mage);
 	DrawProjectile();
-	timer(begin);
+	/*timer(begin);*/
 	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
+	chest_spawn();
 	render_Chest(chest.posX,chest.posY,chest.diameter);
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
@@ -53,10 +55,16 @@ void render(void)
 	stationary_plants(*objPositionX, *objPositionY, 700.0f, 300.0f, stationaryplants);
 	stationary_plants(*objPositionX, *objPositionY, 800.0f, 300.0f, stationaryplants);
 	stationary_plants(*objPositionX, *objPositionY, 900.0f, 300.0f, stationaryplants);
+
+	//pause
+	if (pause == 1) {
+		render_pause_menu();
+	}
 }
 
 void game_init(void)
 {
+	CP_Settings_TextSize(20.0f);
 	CP_System_SetWindowSize(1280, 720);
 	enemy_init_posXY();
 	chest_init();
@@ -67,7 +75,7 @@ void game_init(void)
 	objPositionX = &player.positionX;
 	objPositionY = &player.positionY;
 	ShootCooldown = 0.0f;
-	CP_System_ShowConsole();
+	pause = 0;
 
 	//images
 	background = CP_Image_Load("./images/background.png");
@@ -81,24 +89,45 @@ void game_init(void)
 void game_update(void)
 {
 	//CP_Image_Draw(background, 0, 0, 1000, 1000, 255);
-	//go back to main menu
-	if (CP_Input_KeyTriggered(KEY_ESCAPE)) 
-	{								
-		CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
+	
+	if (pause == 0) {
+		if (CP_Input_KeyTriggered(KEY_ESCAPE))
+		{
+			pause = 1;
+		}
+
+		if (CP_Input_KeyTriggered(KEY_TAB))
+		{
+			layout == WASD ? (layout = MOUSE) : (layout = WASD);
+		}
+		if (layout == WASD)
+		{
+			c_CharacterWASD(objPositionX, objPositionY);
+		}
+		else
+		{
+			c_CharacterMouse(objPositionX, objPositionY);
+		}
+
+		Shoot(*objPositionX, *objPositionY, &ShootCooldown);
+		ShootCooldown -= CP_System_GetDt();
+		enemy_collision();
+		boss_Collision();
+		chest_collision(*objPositionX, *objPositionY);
+		boss_dmg();
+		boss_die();
+		enemy_TEST_TAKEDMG_update();
+		enemy_deadAlive_update(*objPositionX, *objPositionY);
+		timer(begin);
 	}
 
-	if (CP_Input_KeyTriggered(KEY_TAB))
-	{
-		layout == WASD ? (layout = MOUSE) : (layout = WASD);
+	else {
+		if (CP_Input_KeyTriggered(KEY_ESCAPE))
+		{
+			pause = 0;
+		}
 	}
-	if (layout == WASD)
-	{
-		c_CharacterWASD(objPositionX, objPositionY);
-	}
-	else
-	{
-		c_CharacterMouse(objPositionX, objPositionY);
-	}
+
 	Shoot(*objPositionX, *objPositionY, &ShootCooldown);
 	ShootCooldown -= CP_System_GetDt();
 	enemy_collision();
