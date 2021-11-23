@@ -181,6 +181,9 @@ void boss_die()
 		if (Boss[i].health == 0)
 		{
 			Boss[i].AliveDead = 0;
+			Boss[i].boss_posX = -50.0f;
+			Boss[i].boss_posY = -50.0f;
+			Boss[i].speed = 0.0f;
 		}
 	}
 }
@@ -202,6 +205,9 @@ void enemy_deadAlive_update()
 		if (Enemies[i].health == 0)
 		{
 			Enemies[i].AliveDead = 0;
+			Enemies[i].enemy_posX = -50.0f;
+			Enemies[i].enemy_posY = -50.0f;
+			Enemies[i].speed = 0.0f;
 		}
 	}
 }
