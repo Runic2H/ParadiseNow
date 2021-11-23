@@ -1,5 +1,15 @@
 #include "macros.h"
 
+void c_CharacterInit(void)
+{
+	player.positionX = 200.f;
+	player.positionY = 200.f;
+	player.diameter = 20.f;
+	player.exp = 0;
+	player.gold = 0;
+	player.attack = 1;
+	player.health = 10;
+}
 
 void c_CharacterWASD(float *objPositionX, float *objPositionY)
 {

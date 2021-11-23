@@ -5,36 +5,7 @@ CP_Vector vectorEnemy;
 CP_Vector vectorMove, Vectorplayer;
 CP_Vector acceleration;
 
-#define enemycount 20
-#define bosscount 2
-#define enemyAlive 1
-#define enemyDead 0
-
 // this should be parsed from char.h
-
-struct Enemy {
-	int health;
-	int collisionWproj;
-	int ID; // 1, 2, 3, 4, 5
-	float enemy_posX;
-	float enemy_posY;
-	int AliveDead; // enemyAlive 1 or enemyDead 1 0 
-	float speed;
-};
-
-
-struct Boss {
-	int health;
-	int collisionWproj;
-	int ID;
-	float boss_posX;
-	float boss_posY;
-	int AliveDead;
-	float speed;
-};
-
-struct Enemy Enemies[enemycount];
-struct Boss Boss[bosscount];
 
 
 float outerlimit_rand(float lower, float upper, float window_heightOrWidth)

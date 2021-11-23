@@ -1,12 +1,10 @@
 //test
 #include "macros.h"
-#define color_background CP_Color_Create(123,63,0,255)
 
 CP_Vector vectorEnemy;
 float* objPositionX, * objPositionY;
 float mousePosX, mousePosY;
 int layout;
-struct c_CharacterStats mage;
 float x = 200.0f;
 float y = 200.0f;
 clock_t begin;
@@ -28,6 +26,17 @@ void mouse_update()
 	mousePosY = CP_Input_GetMouseY();
 }
 
+void player_init()
+{
+	player.positionX = 200.f;
+	player.positionY = 200.f;
+	player.diameter = 20.f;
+	player.exp = 0;
+	player.gold = 0;
+	player.attack = 1;
+	player.health = 10;
+}
+
 //Render stuff
 void render(void)
 {
@@ -36,6 +45,7 @@ void render(void)
 	DrawProjectile();
 	timer(begin);
 	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
+	chest_spawn();
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
 	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
@@ -49,13 +59,13 @@ void game_init(void)
 {
 	CP_System_SetWindowSize(1280, 720);
 	enemy_init_posXY();
+	chest_init();
+	player_init();
+	InitProjectiles();
 	begin = clock();
 	layout = WASD;
-	mage.positionX = 200.0F;
-	mage.positionY = 200.0F;
-	objPositionX = &mage.positionX;
-	objPositionY = &mage.positionY;
-	InitProjectiles();
+	objPositionX = &player.positionX;
+	objPositionY = &player.positionY;
 	ShootCooldown = 0.0f;
 
 	//images
@@ -92,6 +102,7 @@ void game_update(void)
 	ShootCooldown -= CP_System_GetDt();
 	enemy_collision();
 	boss_Collision();
+	chest_collision(*objPositionX, *objPositionY);
 	boss_dmg();
 	boss_die();
 	enemy_TEST_TAKEDMG_update();
