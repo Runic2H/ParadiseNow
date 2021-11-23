@@ -42,7 +42,7 @@ enum skills
 };
 
 /* Timer functions, timing is used as a global variable for 
-use for any time related activities */
+use for any time related activities */    
 
 int timing;
 
