@@ -14,7 +14,7 @@ typedef struct Projectile {
 } Projectile;
 
 Projectile Projectiles[MAX_PROJECTILE];
-int Multishot;
+//int Multishot;
 
 
 void InitProjectiles();
@@ -22,7 +22,8 @@ void Shoot(float PositionX, float PositionY, float* Cooldown);
 void DrawProjectile();
 float ShootCooldown;
 
-CP_Vector Normal_Y;
-CP_Vector UnitX_Left;
-CP_Vector UnitX_Right;
+//To be Removed
+//CP_Vector Normal_Y;
+//CP_Vector UnitX_Left;
+//CP_Vector UnitX_Right;
 

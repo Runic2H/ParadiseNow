@@ -45,7 +45,7 @@ void render(void)
 	DrawProjectile();
 	timer(begin);
 	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
-	chest_spawn();
+	render_Chest(chest.posX,chest.posY,chest.diameter);
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
 	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
@@ -67,6 +67,7 @@ void game_init(void)
 	objPositionX = &player.positionX;
 	objPositionY = &player.positionY;
 	ShootCooldown = 0.0f;
+	CP_System_ShowConsole();
 
 	//images
 	background = CP_Image_Load("./images/background.png");
@@ -102,7 +103,7 @@ void game_update(void)
 	ShootCooldown -= CP_System_GetDt();
 	enemy_collision();
 	boss_Collision();
-	chest_collision(*objPositionX, *objPositionY);
+	chest_SpawnCheck();
 	boss_dmg();
 	boss_die();
 	enemy_TEST_TAKEDMG_update();
