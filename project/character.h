@@ -6,6 +6,7 @@ struct c_CharacterStats
 	int	attack;
 	int gold;
 	int exp;
+	int multishot;
 	float positionX;
 	float positionY;
 	float diameter;

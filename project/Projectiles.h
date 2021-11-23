@@ -8,14 +8,15 @@ typedef struct Projectile {
     CP_Vector Subtract;
     CP_Vector Normalize;
     int isActive;
+    
 
 
 
 } Projectile;
 
 Projectile Projectiles[MAX_PROJECTILE];
+CP_Matrix Rotation;
 //int Multishot;
-
 
 void InitProjectiles();
 void Shoot(float PositionX, float PositionY, float* Cooldown);

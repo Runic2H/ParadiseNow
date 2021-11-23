@@ -9,6 +9,7 @@ void c_CharacterInit(void)
 	player.gold = 0;
 	player.attack = 1;
 	player.health = 10;
+	player.multishot = 1;
 }
 
 void c_CharacterWASD(float *objPositionX, float *objPositionY)
