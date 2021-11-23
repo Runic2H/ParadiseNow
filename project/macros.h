@@ -32,6 +32,22 @@
 
 #define color_white CP_Color_Create(255,255,255,255)
 
+#define color_pause CP_Color_Create(0,0,0,100)
+
+#define button_box CP_Color_Create(255,255,255,100)
+
+#define color_buttons CP_Color_Create(200,63,0,255)
+
+#define color_background CP_Color_Create(123,63,0,255)
+
+bool pause;
+
+
+void menu_init(void);
+void menu_update(void);
+void menu_exit(void);
+
+
 enum controlScheme { WASD, MOUSE };
 
 enum skills 
@@ -51,3 +67,5 @@ void timer(clock_t begin);
 void render_clock(double time_spent);
 
 int getTimeSpent(int time);
+
+void render_pause_menu(void);

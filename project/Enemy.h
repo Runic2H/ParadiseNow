@@ -37,6 +37,6 @@ void boss_dmg();
 
 void boss_die();
 
-void enemy_deadAlive_update();
+void enemy_deadAlive_update(float player_x, float player_y);
 
 void enemy_TEST_TAKEDMG_update();

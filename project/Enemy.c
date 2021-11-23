@@ -120,8 +120,7 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 		{
 			float* fpointerx = &Enemies[i].enemy_posX;
 			float* fpointery = &Enemies[i].enemy_posY;
-			enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
-			//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
+			//enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
 			CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 55, 55, 255);
 		}
 	}
@@ -130,7 +129,7 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 	{
 		float* bossX = &Boss[i].boss_posX;
 		float* bossY = &Boss[i].boss_posY;
-		enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
+		//enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
 		CP_Image_Draw(bossimage, *bossX, *bossY, 95, 95, 255);
 	}
 
@@ -221,7 +220,7 @@ void enemy_TEST_TAKEDMG_update() {
 	}
 }
 
-void enemy_deadAlive_update()
+void enemy_deadAlive_update(float player_x, float player_y)
 {
 	for (int i = 0; i < enemycount; i++)
 	{
@@ -229,5 +228,23 @@ void enemy_deadAlive_update()
 		{
 			Enemies[i].AliveDead = 0;
 		}
+	}
+
+	for (int i = 0; i < enemycount; i++)
+	{
+		if (Enemies[i].AliveDead == 1)
+		{
+			float* fpointerx = &Enemies[i].enemy_posX;
+			float* fpointery = &Enemies[i].enemy_posY;
+			enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
+		}
+	}
+
+
+	for (int i = 0; i < bosscount; ++i)
+	{
+		float* bossX = &Boss[i].boss_posX;
+		float* bossY = &Boss[i].boss_posY;
+		enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
 	}
 }
