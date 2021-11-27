@@ -53,7 +53,7 @@ void enemy_init_posXY()
 		}
 
 		Enemies[i].AliveDead = 1; // ALL LIVE
-		Enemies[i].speed = CP_Random_RangeFloat(2, 6);
+		Enemies[i].speed = CP_Random_RangeFloat(2,6);
 		Enemies[i].health = 5;
 		Enemies[i].collisionWproj = 0;
 		Enemies[i].diameter = 55.f;

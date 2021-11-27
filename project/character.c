@@ -3,7 +3,6 @@
 void c_CharacterInit(void)
 {
 	player.alive = TRUE;
-	player.dmg_taken = FALSE;
 	player.positionX = 200.f;
 	player.positionY = 200.f;
 	player.diameter = c_defaultSize;
@@ -92,25 +91,4 @@ void c_renderPlayer(CP_Image mage)
 {
 	CP_Settings_Fill(color_white);
 	CP_Image_Draw(mage, player.positionX, player.positionY, 100, 100, 255);
-}
-
-void c_playerCollision(void)
-{
-	for (int i = 0; i < enemycount; i++)
-	{
-		if (is_CharacterColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, Enemies[i].diameter, player.positionX, player.positionY, player.diameter))
-		{
-			player.dmg_taken = 1;
-			if (player.dmg_taken == 1)
-			{
-				player.health -= 1;
-				player.dmg_taken = 0;
-				printf("%d", player.health);
-			}
-		}
-	}
-}
-
-void damagePlayer(void)
-{
 }

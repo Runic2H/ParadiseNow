@@ -68,11 +68,11 @@ void game_init(void)
 
 void game_update(void)
 {
-	/*timeStart += CP_System_GetDt();
-	if (timeStart >= duration) {
-		timeStart = 0.f;
-		SWAP(float, min_y, max_y);
-	}*/
+	//timeStart += CP_System_GetDt();
+	//if (timeStart >= duration) {
+	//	timeStart = 0.f;
+	//	SWAP(float, min_y, max_y);
+	//}
 	
 	if (pause == FALSE) {
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
@@ -105,7 +105,6 @@ void game_update(void)
 	ShootCooldown -= CP_System_GetDt();
 	chest_SpawnCheck();
 	enemy_collision();
-	c_playerCollision();
 	enemy_TEST_TAKEDMG_update();
 	enemy_deadAlive_update(player.positionX, player.positionY);
 	render();

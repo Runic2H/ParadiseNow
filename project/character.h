@@ -3,7 +3,6 @@
 struct c_CharacterStats
 {
 	int alive;
-	int dmg_taken;
 	int health;
 	int	attack;
 	int gold;
@@ -22,5 +21,4 @@ void c_renderPlayer(CP_Image mage);
 
 void c_CharacterInit(void);
 
-void c_playerCollision(void);
 

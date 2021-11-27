@@ -54,13 +54,13 @@
 
 #define c_defaultSize 20.f
 
+#define PI 3.14159265358979323846f  /* pi */
+
 #define SWAP(type, lhs, rhs) { \
 	type temp = lhs; \
 	lhs = rhs; \
     rhs = temp; \
 }
-
-#define PI 3.14159265358979323846f  /* pi */
 
 bool pause;
 void menu_init(void);
@@ -93,7 +93,3 @@ struct c_CharacterStats player;
 struct Enemy Enemies[enemycount];
 struct Boss Boss[bosscount];
 struct upgrades chest;
-
-/* Ease in functions */
-
-float EaseInSine(float start, float end, float value);
