@@ -9,6 +9,7 @@ struct Enemy {
 	float enemy_posY;
 	int AliveDead; // enemyAlive 1 or enemyDead 1 0 
 	float speed;
+	float diameter;
 };
 
 
@@ -20,6 +21,7 @@ struct Boss {
 	float boss_posY;
 	int AliveDead;
 	float speed;
+	float diameter;
 };
 
 /*
@@ -51,12 +53,6 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 void stationary_plants(float player_x, float player_y, float stationary_x, float stationary_y, CP_Image imageoverlay);
 
 void enemy_collision();
-
-void boss_Collision();
-
-void boss_dmg();
-
-void boss_die();
 
 void enemy_deadAlive_update(float player_x, float player_y);
 

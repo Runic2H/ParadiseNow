@@ -21,7 +21,7 @@ void chest_SpawnCheck(void)
 			chest_init();
 		}
 	}
-	if (timing != 0 && timing % 15 == 0)
+	if (global_timing != 0 && global_timing % 15 == 0)
 	{
 		chest.alive = 0;
 	};
@@ -41,18 +41,23 @@ void render_Chest(float posX, float posY, float diameter)
 	}
 }
 
+/*Things to do, research on moving vector textboxes, lecture have
+Add More skills*/
 void add_skill(int skillno)
 {
 	switch (chest.skill)
 	{
 	case HEALTH:
 		player.health += 1;
+		/*CP_Font_DrawText("Health +", (CP_System_GetWindowWidth() / 2.f), EaseInSine(min_y, max_y, (timeStart / duration)));*/
 		break;
 	case ATTACK:
 		player.attack += 1;
+		/*CP_Font_DrawText("Attack +", (CP_System_GetWindowWidth() / 2.f), EaseInSine(min_y, max_y, (timeStart / duration)));*/
 		break;
 	case MULTISHOT:
 		player.multishot += 1;
+		/*CP_Font_DrawText("Projectile +", (CP_System_GetWindowWidth() / 2.f), EaseInSine(min_y, max_y, (timeStart / duration)));*/
 		break;
 	}
 }

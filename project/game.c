@@ -2,8 +2,6 @@
 #include "macros.h"
 
 CP_Vector vectorEnemy;
-float* objPositionX, * objPositionY;
-float mousePosX, mousePosY;
 int layout;
 float x = 200.0f;
 float y = 200.0f;
@@ -19,50 +17,43 @@ CP_Image Mage = NULL;
 //void menu_update(void);
 //void menu_exit(void);
 
-
-//Update Mouse Position
-void mouse_update()
-{
-	mousePosX = CP_Input_GetMouseX();
-	mousePosY = CP_Input_GetMouseY();
-}
-
-void player_init()
-{
-	player.positionX = 200.f;
-	player.positionY = 200.f;
-	player.diameter = 20.f;
-	player.exp = 0;
-	player.gold = 0;
-	player.attack = 1;
-	player.health = 10;
-	player.multishot = 1;
-	player.damageCooldown = 1.0f;
-}
-
 //Render stuff
 void render(void)
 {
-	CP_Graphics_ClearBackground(color_background);
-	renderPlayer(objPositionX, objPositionY, Mage);
+	CP_Image_Draw(background, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
+	c_renderPlayer(Mage);
 	DrawProjectile();
-	/*timer(begin);*/
-	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
-	/*chest_spawn();*/
+	timer(begin);
+	enemy_draw(player.positionX, player.positionY, genericenemy, boss);
 	render_Chest(chest.posX,chest.posY,chest.diameter);
+
 	//stationary plants, add @ different positions through different waves
-	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 500.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 600.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 700.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 800.0f, 300.0f, stationaryplants);
-	stationary_plants(*objPositionX, *objPositionY, 900.0f, 300.0f, stationaryplants);
+	stationary_plants(player.positionX, player.positionY, 400.0f, 300.0f, stationaryplants);
+	stationary_plants(player.positionX, player.positionY, 500.0f, 300.0f, stationaryplants);
+	stationary_plants(player.positionX, player.positionY, 600.0f, 300.0f, stationaryplants);
+	stationary_plants(player.positionX, player.positionY, 700.0f, 300.0f, stationaryplants);
+	stationary_plants(player.positionX, player.positionY, 800.0f, 300.0f, stationaryplants);
+	stationary_plants(player.positionX, player.positionY, 900.0f, 300.0f, stationaryplants);
 
 	//pause
-	if (pause == 1) {
+	if (pause == TRUE) 
+	{
 		render_pause_menu();
 	}
 }
+
+void checkUpdates(void)
+{
+  playerCollide(player.positionX, player.positionY);
+	Shoot(player.positionX, player.positionY, &ShootCooldown);
+	ShootCooldown -= CP_System_GetDt();
+	chest_SpawnCheck();
+	enemy_collision();
+  boss_Collision();
+	boss_die();
+	enemy_deadAlive_update(player.positionX, player.positionY);
+}
+
 
 void game_init(void)
 {
@@ -70,67 +61,58 @@ void game_init(void)
 	CP_System_SetWindowSize(1280, 720);
 	enemy_init_posXY();
 	chest_init();
-	player_init();
+	c_CharacterInit();
 	InitProjectiles();
 	begin = clock();
 	layout = WASD;
-	objPositionX = &player.positionX;
-	objPositionY = &player.positionY;
 	ShootCooldown = 0.0f;
 	pause = 0;
 
 	//images
-	background = CP_Image_Load("./images/background.png");
+	background = CP_Image_Load("./images/background2.png");
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
 	boss = CP_Image_Load("./images/boss.png");
 	Mage = CP_Image_Load("./images/Mage.png");
+	CP_System_ShowConsole();
 }
 
 
 void game_update(void)
 {
-	//CP_Image_Draw(background, 0, 0, 1000, 1000, 255);
+	//timeStart += CP_System_GetDt();
+	//if (timeStart >= duration) {
+	//	timeStart = 0.f;
+	//	SWAP(float, min_y, max_y);
+	//}
 	
-	if (pause == 0) {
+	if (pause == FALSE) 
+  {
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
 		{
-			pause = 1;
+			pause = TRUE;
 		}
-
 		if (CP_Input_KeyTriggered(KEY_TAB))
 		{
 			layout == WASD ? (layout = MOUSE) : (layout = WASD);
 		}
 		if (layout == WASD)
 		{
-			c_CharacterWASD(objPositionX, objPositionY);
+			c_CharacterWASD();
 		}
 		else
 		{
-			c_CharacterMouse(objPositionX, objPositionY);
+			c_CharacterMouse();
 		}
-
-		Shoot(*objPositionX, *objPositionY, &ShootCooldown);
-		ShootCooldown -= CP_System_GetDt();
-		enemy_collision();
-		boss_Collision();
-		chest_SpawnCheck();
-		boss_die();
-		enemy_deadAlive_update(*objPositionX, *objPositionY);
-		timer(begin);
-		playerCollide(objPositionX, objPositionY);
-		render();
 	}
-
 	else {
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
 		{
-			pause = 0;
+			pause = TRUE;
 		}
-	}
-
-	
+  }
+  checkUpdates();
+	render();
 }
 
 

@@ -40,11 +40,6 @@
 
 #define color_background CP_Color_Create(123,63,0,255)
 
-bool pause;
-void menu_init(void);
-void menu_update(void);
-void menu_exit(void);
-
 #define enemycount 20
 
 #define bosscount 2
@@ -56,6 +51,21 @@ void menu_exit(void);
 #define chestCount 2
 
 #define chestSize 30.f
+
+#define c_defaultSize 20.f
+
+#define PI 3.14159265358979323846f  /* pi */
+
+#define SWAP(type, lhs, rhs) { \
+	type temp = lhs; \
+	lhs = rhs; \
+    rhs = temp; \
+}
+
+bool pause;
+void menu_init(void);
+void menu_update(void);
+void menu_exit(void);
 
 enum controlScheme { WASD, MOUSE };
 
@@ -70,7 +80,8 @@ enum skills
 /* Timer functions, timing is used as a global variable for 
 use for any time related activities */    
 
-int timing;
+int global_timing;
+
 void timer(clock_t begin);
 void render_clock(double time_spent);
 int getTimeSpent(int time);

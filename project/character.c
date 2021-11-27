@@ -3,9 +3,10 @@
 char health[4];
 void c_CharacterInit(void)
 {
+	player.alive = TRUE;
 	player.positionX = 200.f;
 	player.positionY = 200.f;
-	player.diameter = 20.f;
+	player.diameter = c_defaultSize;
 	player.exp = 0;
 	player.gold = 0;
 	player.attack = 1;
@@ -14,7 +15,7 @@ void c_CharacterInit(void)
 	player.damageCooldown = 1.0f;
 }
 
-void c_CharacterWASD(float *objPositionX, float *objPositionY)
+void c_CharacterWASD()
 {
 	CP_Vector direction = {10,10};
 	CP_Vector velocity = CP_Vector_Scale(CP_Vector_Normalize(direction), 400.f * CP_System_GetDt());
@@ -25,56 +26,55 @@ void c_CharacterWASD(float *objPositionX, float *objPositionY)
 		//To implement looking around
 	}
 	else
-	{
+	{	
 		if (CP_Input_KeyDown(KEY_W))
 		{
 			if (CP_Input_KeyDown(KEY_A))
 			{
-				*objPositionX += movement.x/2;
-				*objPositionY -= movement.y/2;
+				player.positionX += movement.x / 2;
+				player.positionY -= movement.y / 2;
 			}
 			else if (CP_Input_KeyDown(KEY_D))
 			{
-				*objPositionX -= movement.x/2;
-				*objPositionY -= movement.y/2;
+				player.positionX -= movement.x / 2;
+				player.positionY -= movement.y / 2;
 			}
 			else
 			{
-				*objPositionY -= velocity.y;
+				player.positionY -= velocity.y;
 			}
 		}
 		if (CP_Input_KeyDown(KEY_S))
 		{
 			if (CP_Input_KeyDown(KEY_A))
 			{
-				*objPositionX -= movement.x/2;
-				*objPositionY += movement.y/2;
+				player.positionX -= movement.x / 2;
+				player.positionY += movement.y / 2;
 			}
 			else if (CP_Input_KeyDown(KEY_D))
 			{
-				*objPositionX -= movement.x/2;
-				*objPositionY += movement.y/2;
+				player.positionX -= movement.x / 2;
+				player.positionY += movement.y / 2;
 			}
 			else
 			{
-				*objPositionY += velocity.y;
+				player.positionY += velocity.y;
 			}
 		}
 		if (CP_Input_KeyDown(KEY_A))
 		{
-			*objPositionX -= velocity.x;
+			player.positionX-= velocity.x;
 		}
 		if (CP_Input_KeyDown(KEY_D))
 		{
-			*objPositionX += velocity.x;
+			player.positionX += velocity.x;
 		}
 	}
-
 }
 
-void c_CharacterMouse(float* objPositionX, float* objPositionY)
+void c_CharacterMouse()
 {
-	CP_Vector playerVector = CP_Vector_Set(*objPositionX, *objPositionY);
+	CP_Vector playerVector = CP_Vector_Set(player.positionX, player.positionY);
 	CP_Vector mouseVector = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	CP_Vector directionVector = CP_Vector_Subtract(mouseVector, playerVector);
 	CP_Vector speed = CP_Vector_Scale(CP_Vector_Normalize(directionVector), 300.f * CP_System_GetDt());
@@ -84,16 +84,15 @@ void c_CharacterMouse(float* objPositionX, float* objPositionY)
 	}
 	else
 	{
-		*objPositionX += speed.x;
-		*objPositionY += speed.y;
+		player.positionX += speed.x;
+		player.positionY += speed.y;
 	}
 }
 
-void renderPlayer(float* positionX, float* positionY,CP_Image mage)
+void c_renderPlayer(CP_Image mage)
 {
 	CP_Settings_Fill(color_white);
-	//CP_Graphics_DrawCircle(*positionX, *positionY, 20);
-	CP_Image_Draw(mage, *positionX, *positionY, 100, 100, 255);
+	CP_Image_Draw(mage, player.positionX, player.positionY, 56, 56, 255);
 }
 
 void playerCollide(float* objPositionX, float* objPositionY) {

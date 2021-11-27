@@ -53,9 +53,10 @@ void enemy_init_posXY()
 		}
 
 		Enemies[i].AliveDead = 1; // ALL LIVE
-		Enemies[i].speed = CP_Random_RangeFloat(2, 6);
+		Enemies[i].speed = CP_Random_RangeFloat(2,6);
 		Enemies[i].health = 5;
 		Enemies[i].collisionWproj = 0;
+		Enemies[i].diameter = 55.f;
 	}
 
 	for (int j = 0; j < bosscount; ++j) {
@@ -76,7 +77,7 @@ void enemy_init_posXY()
 		Boss[j].speed = CP_Random_RangeFloat(2, 4);
 		Boss[j].health = 10;
 		Boss[j].collisionWproj = 0;
-
+		Boss[j].diameter = 95.f;
 	}
 }
 
@@ -93,7 +94,7 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 			float* fpointery = &Enemies[i].enemy_posY;
 			//enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
 			//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
-			CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 55, 55, 255);
+			CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 28, 28, 255);
 		}
 	}
 
@@ -102,7 +103,7 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 		float* bossX = &Boss[i].boss_posX;
 		float* bossY = &Boss[i].boss_posY;
 		//enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
-		CP_Image_Draw(bossimage, *bossX, *bossY, 95, 95, 255);
+		CP_Image_Draw(bossimage, *bossX, *bossY, 35, 35, 255);
 	}
 
 }
@@ -125,7 +126,7 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 
 	CP_Settings_Fill(color_blue);
 	//CP_Graphics_DrawCircle(position_x, position_y, 15);
-	CP_Image_Draw(imageoverlay, position_x, position_y, 55, 55, 255);
+	CP_Image_Draw(imageoverlay, position_x, position_y, 35, 35, 255);
 }
 
 void enemy_collision()
@@ -144,13 +145,10 @@ void enemy_collision()
 					}
 					else
 					{
-						Enemies[i].collisionWproj = 0;
+						continue;
 					}
-				}
 			}
-		}
-	}
-}
+  }
 
 void boss_Collision()
 {
@@ -168,7 +166,7 @@ void boss_Collision()
 					}
 					else
 					{
-						Boss[i].collisionWproj = 0;
+						continue;
 					}
 				}
 			}
@@ -190,7 +188,6 @@ void boss_die()
 		}
 	}
 }
-
 
 void enemy_deadAlive_update(float player_x, float player_y)
 {
