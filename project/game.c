@@ -21,7 +21,7 @@ CP_Image Mage = NULL;
 //Render stuff
 void render(void)
 {
-	CP_Graphics_ClearBackground(color_background);
+	CP_Image_Draw(background, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
 	c_renderPlayer(Mage);
 	DrawProjectile();
 	timer(begin);
@@ -43,6 +43,7 @@ void render(void)
 	}
 }
 
+
 void game_init(void)
 {
 	CP_Settings_TextSize(20.0f);
@@ -57,7 +58,7 @@ void game_init(void)
 	pause = 0;
 
 	//images
-	background = CP_Image_Load("./images/background.png");
+	background = CP_Image_Load("./images/background2.png");
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
 	boss = CP_Image_Load("./images/boss.png");
@@ -74,12 +75,12 @@ void game_update(void)
 	//	SWAP(float, min_y, max_y);
 	//}
 	
-	if (pause == FALSE) {
+	if (pause == FALSE) 
+  {
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
 		{
 			pause = TRUE;
 		}
-
 		if (CP_Input_KeyTriggered(KEY_TAB))
 		{
 			layout == WASD ? (layout = MOUSE) : (layout = WASD);
@@ -92,23 +93,21 @@ void game_update(void)
 		{
 			c_CharacterMouse();
 		}
-	}
-
+  }
 	else {
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
 		{
-			pause = FALSE;
+			pause = TRUE;
 		}
 	}
-
+  
 	Shoot(player.positionX, player.positionY, &ShootCooldown);
 	ShootCooldown -= CP_System_GetDt();
 	chest_SpawnCheck();
 	enemy_collision();
 	enemy_TEST_TAKEDMG_update();
 	enemy_deadAlive_update(player.positionX, player.positionY);
-	render();
-	
+	render();	
 }
 
 

@@ -90,5 +90,5 @@ void c_CharacterMouse()
 void c_renderPlayer(CP_Image mage)
 {
 	CP_Settings_Fill(color_white);
-	CP_Image_Draw(mage, player.positionX, player.positionY, 100, 100, 255);
+	CP_Image_Draw(mage, player.positionX, player.positionY, 56, 56, 255);
 }
