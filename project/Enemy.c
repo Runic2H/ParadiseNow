@@ -53,9 +53,10 @@ void enemy_init_posXY()
 		}
 
 		Enemies[i].AliveDead = 1; // ALL LIVE
-		Enemies[i].speed = CP_Random_RangeFloat(2, 6);
+		Enemies[i].speed = CP_Random_RangeFloat(2,6);
 		Enemies[i].health = 5;
 		Enemies[i].collisionWproj = 0;
+		Enemies[i].diameter = 55.f;
 	}
 
 	for (int j = 0; j < bosscount; ++j) {
@@ -73,10 +74,10 @@ void enemy_init_posXY()
 		}
 
 		Boss[j].AliveDead = 1;
-		Boss[j].speed = CP_Random_RangeFloat(2, 4);
-		Boss[j].health = 1;
+		Boss[j].speed = CP_Random_RangeFloat(1, 4);
+		Boss[j].health = 10;
 		Boss[j].collisionWproj = 0;
-
+		Boss[j].diameter = 95.f;
 	}
 }
 
@@ -130,60 +131,19 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 
 void enemy_collision()
 {
-	for (int j = 0; j < MAX_PROJECTILE; j++)
+	for (int j = 0; j < enemycount; j++)
 	{
-		for (int i = 0; i < enemycount; i++)
+		for (int i = j; i < MAX_PROJECTILE; i++)
 		{
-			if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 55.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
+			if (is_ProjectileColliding(Enemies[j].enemy_posX, Enemies[j].enemy_posY, 55.f, Projectiles[i].Point.x, Projectiles[i].Point.y, 10.f))
 			{
-				Enemies[i].collisionWproj = 1;
-				Projectiles[j].isActive = 0;
+				Enemies[j].collisionWproj = 1;
+				Projectiles[i].isActive = 0;
 			}
 			else
 			{
-				Enemies[i].collisionWproj = 0;
+				Enemies[j].collisionWproj = 0;
 			}
-		}
-	}
-}
-
-void boss_Collision()
-{
-	for (int i = 0; i < bosscount; i++)
-	{
-		if (is_ProjectileColliding(Boss[i].boss_posX, Boss[i].boss_posY, 55.f, Projectiles[0].Point.x, Projectiles[0].Point.y, 10.f))
-		{
-			printf("%d", Boss[i].collisionWproj = 1);
-			Projectiles[0].isActive = 0;
-		}
-		else
-		{
-			printf("%d", Boss[i].collisionWproj = 0);
-		}
-	}
-}
-
-void boss_dmg()
-{
-	for (int i = 0; i < bosscount; i++)
-	{
-		if (Boss[i].collisionWproj == 1)
-		{
-			Boss[i].health -= 1;
-		}
-	}
-}
-
-void boss_die()
-{
-	for (int i = 0; i < bosscount; i++)
-	{
-		if (Boss[i].health == 0)
-		{
-			Boss[i].AliveDead = 0;
-			Boss[i].boss_posX = -50.0f;
-			Boss[i].boss_posY = -50.0f;
-			Boss[i].speed = 0.0f;
 		}
 	}
 }

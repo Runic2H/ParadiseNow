@@ -67,13 +67,19 @@ void render_clock(double time_spent)
 {
 	CP_Settings_TextSize(20.0f);
 	CP_Settings_Fill(color_red);
-	CP_Font_DrawTextBox(runtime, 640.f, 20.0f, 50.0f);
+	CP_Font_DrawTextBox(runtime, 640.f, 20.0f, 1000.0f);
 }
 
 //Used to get timing, auto run at timer();
 int getTimeSpent(int time)
 {
 	// returns time spent to global variable
-	timing = (int)time;
-	return timing;
+	global_timing = (int)time;
+	return global_timing;
+}
+
+float EaseInSine(float start, float end, float value)
+{
+	end -= start;
+	return -end * cosf(value * (PI * 0.5f)) + end + start;
 }

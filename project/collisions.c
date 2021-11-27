@@ -1,17 +1,5 @@
 #include "macros.h"
 
-//int is_ChestColliding(float chestX, float chestY, float chestSize, float playerX, float playerY, float playerSize)
-//{
-//	return ((playerX >= chestX) && (playerY >= chestY)) && ((playerX + playerSize >= chestX + chestSize)
-//		&& (playerY + playerSize >= playerY + chestY));
-//}
-
-//int is_ProjectileColliding(float enemyX, float enemyY, float enemySize, float projX, float projY, float projSize)
-//{
-//	return ((projX >= enemyX) && (projY >= enemyY)) && ((projX + projSize >= enemyX + enemySize)
-//		&& (projY + projSize >= enemyY + enemySize));
-//}
-
 int is_ProjectileColliding(float enemyX, float enemyY, float enemySize, float projX, float projY, float projSize)
 {
 	return (enemyX < projX + projSize) 
@@ -26,4 +14,12 @@ int is_ChestColliding(float chestX, float chestY, float chestWidth, float player
 		&& ((chestX + chestWidth) > playerX)
 		&& (chestY < (playerY + playerSize))
 		&& ((chestY + chestWidth) > playerY);
+}
+
+int is_CharacterColliding(float enemyX, float enemyY, float enemySize, float playerX, float playerY, float playerSize)
+{
+	return (enemyX < playerX + playerSize)
+		&& ((enemyX + enemySize) > playerX)
+		&& (enemyY < (playerY + playerSize))
+		&& ((enemyY + enemySize) > playerY);
 }
