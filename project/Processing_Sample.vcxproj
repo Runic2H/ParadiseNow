@@ -195,8 +195,10 @@ xcopy "$(ProjectDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="character.c" />
+    <ClCompile Include="collisions.c" />
     <ClCompile Include="Enemy.c" />
     <ClCompile Include="game.c" />
+    <ClCompile Include="howtoplay.c" />
     <ClCompile Include="Interactives.c" />
     <ClCompile Include="macros.c" />
     <ClCompile Include="main.c" />
@@ -205,6 +207,7 @@ xcopy "$(ProjectDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
+    <ClInclude Include="collisions.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Interactives.h" />
     <ClInclude Include="macros.h" />

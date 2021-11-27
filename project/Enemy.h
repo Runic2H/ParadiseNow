@@ -1,6 +1,31 @@
 /* Header file for macros */
 
 
+struct Enemy {
+	int health;
+	int collisionWproj;
+	int ID; // 1, 2, 3, 4, 5
+	float enemy_posX;
+	float enemy_posY;
+	int AliveDead; // enemyAlive 1 or enemyDead 1 0 
+	float speed;
+	float diameter;
+	int gold;
+};
+
+
+struct Boss {
+	int health;
+	int collisionWproj;
+	int ID;
+	float boss_posX;
+	float boss_posY;
+	int AliveDead;
+	float speed;
+	float diameter;
+	int gold;
+};
+
 /*
 1. diff speed for each enemies
 
@@ -29,14 +54,10 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 
 void stationary_plants(float player_x, float player_y, float stationary_x, float stationary_y, CP_Image imageoverlay);
 
-void enemy_collision();
-
-void boss_Collision();
-
-void boss_dmg();
+void enemy_deadAlive_update(float player_x, float player_y);
 
 void boss_die();
 
-void enemy_deadAlive_update();
+void boss_Collision();
 
-void enemy_TEST_TAKEDMG_update();
+void enemy_collision();

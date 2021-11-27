@@ -2,21 +2,30 @@
 
 struct c_CharacterStats
 {
+	int alive;
 	int health;
+	int MAXhealth;
 	int	attack;
 	int gold;
 	int exp;
-	CP_Vector posVector;
-	CP_Vector MoveSpeed;
+	int multishot;
 	float positionX;
 	float positionY;
 	float diameter;
+	float damageCooldown;
+	int shield;
 };
 
-void c_CharacterWASD(float *objPositionX, float *objPositionY);
+void c_CharacterWASD(void);
 
-void c_CharacterMouse(float* objPositionX, float* objPositionY);
+void c_CharacterMouse(void);
 
-void renderPlayer(float* positionX, float* positionY, CP_Image mage);
+void c_renderPlayer(CP_Image mage);
+
+void c_CharacterInit(void);
+
+void playerCollide(float objPositionX, float objPositionY);
+
+void c_renderHUD(void);
 
 

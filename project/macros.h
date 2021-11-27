@@ -32,22 +32,69 @@
 
 #define color_white CP_Color_Create(255,255,255,255)
 
+#define color_pause CP_Color_Create(0,0,0,100)
+
+#define button_box CP_Color_Create(255,255,255,100)
+
+#define color_buttons CP_Color_Create(200,63,0,255)
+
+#define color_background CP_Color_Create(123,63,0,255)
+
+#define color_yellow CP_Color_Create(215,215,0,255)
+
+#define enemycount 20
+
+#define bosscount 2
+
+#define enemyAlive 1
+
+#define enemyDead 0
+
+#define chestCount 2
+
+#define chestSize 30.f
+
+#define c_defaultSize 20.f
+
+#define PI 3.14159265358979323846f  /* pi */
+
+#define SWAP(type, lhs, rhs) { \
+	type temp = lhs; \
+	lhs = rhs; \
+    rhs = temp; \
+}
+
+bool pause;
+void menu_init(void);
+void menu_update(void);
+void menu_exit(void);
+
 enum controlScheme { WASD, MOUSE };
 
 enum skills 
 {
-	HEALTH = 1,
-	ATTACK = 2
+	HEALTH,
+	ATTACK,
+	MULTISHOT,
+	HEAL,
+	SHIELD
 	//Add skills to list
 };
 
 /* Timer functions, timing is used as a global variable for 
-use for any time related activities */
+use for any time related activities */    
 
-int timing;
+int global_timing;
 
 void timer(clock_t begin);
-
 void render_clock(double time_spent);
-
 int getTimeSpent(int time);
+void render_pause_menu(void);
+
+//Struct init
+
+struct c_CharacterStats player;
+struct Enemy Enemies[enemycount];
+struct Boss Boss[bosscount];
+struct upgrades chest;
+struct Projectile Projectiles[MAX_PROJECTILE];

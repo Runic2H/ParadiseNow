@@ -51,4 +51,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 /.vs
-/project/x64
+/project/.vs/Processing_Sample/v16
+/project/x64/Debug
