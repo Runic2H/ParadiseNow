@@ -1,74 +1,72 @@
 #include "macros.h"
 
 char health[4];
+char gold[4];
+char max[4];
+
 void c_CharacterInit(void)
 {
 	player.alive = TRUE;
+	player.MAXhealth = 10;
 	player.positionX = 200.f;
 	player.positionY = 200.f;
 	player.diameter = c_defaultSize;
 	player.exp = 0;
 	player.gold = 0;
 	player.attack = 1;
-	player.health = 10;
+	player.health = player.MAXhealth;
 	player.multishot = 1;
 	player.damageCooldown = 1.0f;
+	player.shield = 0;
 }
 
 void c_CharacterWASD()
 {
-	CP_Vector direction = {10,10};
+	CP_Vector direction = { 10,10 };
 	CP_Vector velocity = CP_Vector_Scale(CP_Vector_Normalize(direction), 400.f * CP_System_GetDt());
 	CP_Matrix rotate = CP_Matrix_Rotate(45.0f);
 	CP_Vector movement = CP_Vector_MatrixMultiply(rotate, velocity);
-	if (CP_Input_MouseDown(MOUSE_BUTTON_2))
+	if (CP_Input_KeyDown(KEY_W))
 	{
-		//To implement looking around
-	}
-	else
-	{	
-		if (CP_Input_KeyDown(KEY_W))
-		{
-			if (CP_Input_KeyDown(KEY_A))
-			{
-				player.positionX += movement.x / 2;
-				player.positionY -= movement.y / 2;
-			}
-			else if (CP_Input_KeyDown(KEY_D))
-			{
-				player.positionX -= movement.x / 2;
-				player.positionY -= movement.y / 2;
-			}
-			else
-			{
-				player.positionY -= velocity.y;
-			}
-		}
-		if (CP_Input_KeyDown(KEY_S))
-		{
-			if (CP_Input_KeyDown(KEY_A))
-			{
-				player.positionX -= movement.x / 2;
-				player.positionY += movement.y / 2;
-			}
-			else if (CP_Input_KeyDown(KEY_D))
-			{
-				player.positionX -= movement.x / 2;
-				player.positionY += movement.y / 2;
-			}
-			else
-			{
-				player.positionY += velocity.y;
-			}
-		}
 		if (CP_Input_KeyDown(KEY_A))
 		{
-			player.positionX-= velocity.x;
+			player.positionX += movement.x / 2;
+			player.positionY -= movement.y / 2;
 		}
-		if (CP_Input_KeyDown(KEY_D))
+		else if (CP_Input_KeyDown(KEY_D))
 		{
-			player.positionX += velocity.x;
+			player.positionX -= movement.x / 2;
+			player.positionY -= movement.y / 2;
 		}
+		else
+		{
+			player.positionY -= velocity.y;
+		}
+	}
+	if (CP_Input_KeyDown(KEY_S))
+	{
+		if (CP_Input_KeyDown(KEY_A))
+		{
+			player.positionX -= movement.x / 2;
+			player.positionY += movement.y / 2;
+		}
+		else if (CP_Input_KeyDown(KEY_D))
+		{
+			player.positionX -= movement.x / 2;
+			player.positionY += movement.y / 2;
+		}
+		else
+		{
+			player.positionY += velocity.y;
+		}
+	}
+	if (CP_Input_KeyDown(KEY_A))
+	{
+		player.positionX -= velocity.x;
+	}
+	if (CP_Input_KeyDown(KEY_D))
+	{
+		player.positionX += velocity.x;
 	}
 }
 
@@ -80,7 +78,7 @@ void c_CharacterMouse()
 	CP_Vector speed = CP_Vector_Scale(CP_Vector_Normalize(directionVector), 300.f * CP_System_GetDt());
 	if (CP_Input_MouseDown(MOUSE_BUTTON_2))
 	{
-		//To implement looking around
+		//To look around
 	}
 	else
 	{
@@ -95,24 +93,53 @@ void c_renderPlayer(CP_Image mage)
 	CP_Image_Draw(mage, player.positionX, player.positionY, 56, 56, 255);
 }
 
-void playerCollide(float* objPositionX, float* objPositionY) {
+void playerCollide(float objPositionX, float objPositionY) {
 	for (int i = 0; i < enemycount; i++) {
 		if (Enemies[i].AliveDead == 1) {
 			if (is_PlayerColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 27.5f,
-				*objPositionX, *objPositionY, 50.f) && player.damageCooldown <= 0.f) {
+				objPositionX, objPositionY, 50.f) && player.damageCooldown <= 0.f) {
 
-
-				player.health -= 1;
-				player.damageCooldown = 1.0f;
+				if (player.shield != 1)
+				{
+					player.health -= 1;
+					player.damageCooldown = .25f;
+				}
+				else
+				{
+					player.shield = 0;
+					player.damageCooldown = 1.f;
+				}
 			}
 			else
 				continue;
 		}
-
 	}
-	snprintf(health, 4, "%d", player.health);
-	CP_Settings_TextSize(40.0f);
-	CP_Settings_Fill(color_red);
-	CP_Font_DrawTextBox(health, 10.f, 700.0f, 50.0f);
 	player.damageCooldown -= CP_System_GetDt();
 }
+
+void c_renderHUD(void)
+{
+
+	if (player.shield == 1)
+	{
+		CP_Settings_TextSize(40.0f);
+		CP_Settings_Fill(color_blue);
+		CP_Font_DrawTextBox("Energy Shield", 10.f, 600.f, 200.f);
+	}
+
+	snprintf(health, 4, "%d", player.health);
+	snprintf(max, 4, "%d", player.MAXhealth);
+	CP_Settings_TextSize(40.0f);
+	CP_Settings_Fill(color_red);
+	CP_Font_DrawTextBox("Health:", 10.f, 650.f, 125.f);
+	CP_Font_DrawTextBox(health, 130.f, 650.f, 50.f);
+	CP_Font_DrawTextBox("/", 160.f, 650.f, 10.f);
+	CP_Font_DrawTextBox(max, 190.f, 650.0f, 50.f);
+
+	snprintf(gold, 4, "%d", player.gold);
+	CP_Settings_TextSize(40.0f);
+	CP_Settings_Fill(color_yellow);
+	CP_Font_DrawTextBox("Gold:", 10.f, 700.f, 125.f);
+	CP_Font_DrawTextBox(gold, 125.f, 700.f, 150.f);
+}
+

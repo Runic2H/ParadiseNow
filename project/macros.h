@@ -40,6 +40,8 @@
 
 #define color_background CP_Color_Create(123,63,0,255)
 
+#define color_yellow CP_Color_Create(215,215,0,255)
+
 #define enemycount 20
 
 #define bosscount 2
@@ -73,7 +75,9 @@ enum skills
 {
 	HEALTH,
 	ATTACK,
-	MULTISHOT
+	MULTISHOT,
+	HEAL,
+	SHIELD
 	//Add skills to list
 };
 

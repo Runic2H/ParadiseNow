@@ -22,3 +22,8 @@ int (is_PlayerColliding)(float enemyX, float enemyY, float enemySize, float play
 		&& (enemyY < (playerY + playerSize))
 		&& ((enemyY + enemySize) > playerY);
 }
+
+void c_borderCollision(float playerX, float playerY, float playerSize, float windowWidth, float windowHeight)
+{
+
+}

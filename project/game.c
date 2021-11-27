@@ -17,11 +17,20 @@ CP_Image Mage = NULL;
 //void menu_update(void);
 //void menu_exit(void);
 
+void you_died(void)
+{
+	if (player.health <= 0)
+	{
+		CP_Engine_Terminate();
+	}
+}
+
 //Render stuff
 void render(void)
 {
 	CP_Image_Draw(background, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
 	c_renderPlayer(Mage);
+	c_renderHUD();
 	DrawProjectile();
 	timer(begin);
 	enemy_draw(player.positionX, player.positionY, genericenemy, boss);
@@ -44,14 +53,15 @@ void render(void)
 
 void checkUpdates(void)
 {
-  playerCollide(player.positionX, player.positionY);
+	playerCollide(player.positionX, player.positionY);
 	Shoot(player.positionX, player.positionY, &ShootCooldown);
 	ShootCooldown -= CP_System_GetDt();
 	chest_SpawnCheck();
 	enemy_collision();
-  boss_Collision();
+	boss_Collision();
 	boss_die();
 	enemy_deadAlive_update(player.positionX, player.positionY);
+	you_died();
 }
 
 
@@ -105,14 +115,15 @@ void game_update(void)
 			c_CharacterMouse();
 		}
 	}
-	else {
+	else 
+	{
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
 		{
 			pause = TRUE;
 		}
-  }
-  checkUpdates();
-	render();
+	}
+	  checkUpdates();
+	  render();
 }
 
 

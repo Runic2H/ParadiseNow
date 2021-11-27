@@ -57,6 +57,7 @@ void enemy_init_posXY()
 		Enemies[i].health = 5;
 		Enemies[i].collisionWproj = 0;
 		Enemies[i].diameter = 55.f;
+		Enemies[i].gold = 0;
 	}
 
 	for (int j = 0; j < bosscount; ++j) {
@@ -78,6 +79,7 @@ void enemy_init_posXY()
 		Boss[j].health = 10;
 		Boss[j].collisionWproj = 0;
 		Boss[j].diameter = 95.f;
+		Boss[j].gold = 0;
 	}
 }
 
@@ -132,23 +134,26 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 void enemy_collision()
 {
 	for (int j = 0; j < MAX_PROJECTILE; j++)
-	{	
+	{
 		if (Projectiles[j].isActive == 1) {
 			for (int i = 0; i < enemycount; i++)
 			{
 				if (Enemies[i].AliveDead == 1) {
 					if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 25.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
-					{	
+					{
 						Enemies[i].health -= player.attack;
 						Projectiles[j].isActive = 0;
-						
+
 					}
 					else
 					{
 						continue;
 					}
+				}
 			}
-  }
+		}
+	}
+}
 
 void boss_Collision()
 {
@@ -185,6 +190,15 @@ void boss_die()
 			Boss[i].boss_posX = -50.0f;
 			Boss[i].boss_posY = -50.0f;
 			Boss[i].speed = 0.0f;
+			if (Boss[i].gold == 0)
+			{
+				Boss[i].gold = 1;
+				player.gold += 10;
+			}
+			else
+			{
+				continue;
+			}
 		}
 	}
 }
@@ -199,6 +213,15 @@ void enemy_deadAlive_update(float player_x, float player_y)
 			Enemies[i].enemy_posX = -50.0f;
 			Enemies[i].enemy_posY = -50.0f;
 			Enemies[i].speed = 0.0f;
+			if (Enemies[i].gold == 0)
+			{
+				Enemies[i].gold = 1;
+				player.gold += 5;
+			}
+			else
+			{
+				continue;
+			}
 		}
 
 		if (Enemies[i].AliveDead == 1)
