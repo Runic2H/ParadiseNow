@@ -62,7 +62,8 @@ enum controlScheme { WASD, MOUSE };
 enum skills 
 {
 	HEALTH,
-	ATTACK
+	ATTACK,
+	MULTISHOT
 	//Add skills to list
 };
 
@@ -81,3 +82,4 @@ struct c_CharacterStats player;
 struct Enemy Enemies[enemycount];
 struct Boss Boss[bosscount];
 struct upgrades chest;
+struct Projectile Projectiles[MAX_PROJECTILE];

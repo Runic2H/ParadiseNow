@@ -74,7 +74,7 @@ void enemy_init_posXY()
 
 		Boss[j].AliveDead = 1;
 		Boss[j].speed = CP_Random_RangeFloat(2, 4);
-		Boss[j].health = 1;
+		Boss[j].health = 10;
 		Boss[j].collisionWproj = 0;
 
 	}
@@ -131,17 +131,22 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 void enemy_collision()
 {
 	for (int j = 0; j < MAX_PROJECTILE; j++)
-	{
-		for (int i = 0; i < enemycount; i++)
-		{
-			if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 55.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
+	{	
+		if (Projectiles[j].isActive == 1) {
+			for (int i = 0; i < enemycount; i++)
 			{
-				Enemies[i].collisionWproj = 1;
-				Projectiles[j].isActive = 0;
-			}
-			else
-			{
-				Enemies[i].collisionWproj = 0;
+				if (Enemies[i].AliveDead == 1) {
+					if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 25.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
+					{	
+						Enemies[i].health -= player.attack;
+						Projectiles[j].isActive = 0;
+						
+					}
+					else
+					{
+						Enemies[i].collisionWproj = 0;
+					}
+				}
 			}
 		}
 	}
@@ -149,36 +154,34 @@ void enemy_collision()
 
 void boss_Collision()
 {
-	for (int i = 0; i < bosscount; i++)
+	for (int j = 0; j < MAX_PROJECTILE; j++)
 	{
-		if (is_ProjectileColliding(Boss[i].boss_posX, Boss[i].boss_posY, 55.f, Projectiles[0].Point.x, Projectiles[0].Point.y, 10.f))
-		{
-			printf("%d", Boss[i].collisionWproj = 1);
-			Projectiles[0].isActive = 0;
-		}
-		else
-		{
-			printf("%d", Boss[i].collisionWproj = 0);
+		if (Projectiles[j].isActive == 1) {
+			for (int i = 0; i < bosscount; i++)
+			{
+				if (Boss[i].AliveDead == 1) {
+					if (is_ProjectileColliding(Boss[i].boss_posX, Boss[i].boss_posY, 50.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
+					{
+						Boss[i].health -= player.attack;
+						Projectiles[j].isActive = 0;
+						
+					}
+					else
+					{
+						Boss[i].collisionWproj = 0;
+					}
+				}
+			}
 		}
 	}
 }
 
-void boss_dmg()
-{
-	for (int i = 0; i < bosscount; i++)
-	{
-		if (Boss[i].collisionWproj == 1)
-		{
-			Boss[i].health -= 1;
-		}
-	}
-}
 
 void boss_die()
 {
 	for (int i = 0; i < bosscount; i++)
 	{
-		if (Boss[i].health == 0)
+		if (Boss[i].health <= 0)
 		{
 			Boss[i].AliveDead = 0;
 			Boss[i].boss_posX = -50.0f;
@@ -188,21 +191,12 @@ void boss_die()
 	}
 }
 
-void enemy_TEST_TAKEDMG_update() {
-	for (int i = 0; i < enemycount; i++)
-	{
-		if (Enemies[i].collisionWproj == 1)
-		{
-			Enemies[i].health -= 1;
-		}
-	}
-}
 
 void enemy_deadAlive_update(float player_x, float player_y)
 {
 	for (int i = 0; i < enemycount; i++)
 	{
-		if (Enemies[i].health == 0)
+		if (Enemies[i].health <= 0)
 		{
 			Enemies[i].AliveDead = 0;
 			Enemies[i].enemy_posX = -50.0f;

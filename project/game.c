@@ -36,6 +36,8 @@ void player_init()
 	player.gold = 0;
 	player.attack = 1;
 	player.health = 10;
+	player.multishot = 1;
+	player.damageCooldown = 1.0f;
 }
 
 //Render stuff
@@ -46,7 +48,7 @@ void render(void)
 	DrawProjectile();
 	/*timer(begin);*/
 	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
-	chest_spawn();
+	/*chest_spawn();*/
 	render_Chest(chest.posX,chest.posY,chest.diameter);
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
@@ -113,12 +115,12 @@ void game_update(void)
 		ShootCooldown -= CP_System_GetDt();
 		enemy_collision();
 		boss_Collision();
-		chest_collision(*objPositionX, *objPositionY);
-		boss_dmg();
+		chest_SpawnCheck();
 		boss_die();
-		enemy_TEST_TAKEDMG_update();
 		enemy_deadAlive_update(*objPositionX, *objPositionY);
 		timer(begin);
+		playerCollide(objPositionX, objPositionY);
+		render();
 	}
 
 	else {
@@ -128,16 +130,6 @@ void game_update(void)
 		}
 	}
 
-	Shoot(*objPositionX, *objPositionY, &ShootCooldown);
-	ShootCooldown -= CP_System_GetDt();
-	enemy_collision();
-	boss_Collision();
-	chest_SpawnCheck();
-	boss_dmg();
-	boss_die();
-	enemy_TEST_TAKEDMG_update();
-	enemy_deadAlive_update();
-	render();
 	
 }
 

@@ -1,5 +1,6 @@
 #include "macros.h"
 
+char health[4];
 void c_CharacterInit(void)
 {
 	player.positionX = 200.f;
@@ -10,6 +11,7 @@ void c_CharacterInit(void)
 	player.attack = 1;
 	player.health = 10;
 	player.multishot = 1;
+	player.damageCooldown = 1.0f;
 }
 
 void c_CharacterWASD(float *objPositionX, float *objPositionY)
@@ -92,4 +94,26 @@ void renderPlayer(float* positionX, float* positionY,CP_Image mage)
 	CP_Settings_Fill(color_white);
 	//CP_Graphics_DrawCircle(*positionX, *positionY, 20);
 	CP_Image_Draw(mage, *positionX, *positionY, 100, 100, 255);
+}
+
+void playerCollide(float* objPositionX, float* objPositionY) {
+	for (int i = 0; i < enemycount; i++) {
+		if (Enemies[i].AliveDead == 1) {
+			if (is_PlayerColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 27.5f,
+				*objPositionX, *objPositionY, 50.f) && player.damageCooldown <= 0.f) {
+
+
+				player.health -= 1;
+				player.damageCooldown = 1.0f;
+			}
+			else
+				continue;
+		}
+
+	}
+	snprintf(health, 4, "%d", player.health);
+	CP_Settings_TextSize(40.0f);
+	CP_Settings_Fill(color_red);
+	CP_Font_DrawTextBox(health, 10.f, 700.0f, 50.0f);
+	player.damageCooldown -= CP_System_GetDt();
 }

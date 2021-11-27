@@ -33,7 +33,7 @@ void Shoot(float PositionX, float PositionY, float* Cooldown)
                        *Cooldown = 0.20f;
                    }
                    if (k % 2 != 0) { //odd number
-                       Rotation = CP_Matrix_Rotate(-(2.5f) * ((float)(k+1)/2));
+                       Rotation = CP_Matrix_Rotate(-(3.5f) * ((float)(k+1)/2));
                        Projectiles[i + k].Mouse_Position.x = CP_Input_GetMouseX();
                        Projectiles[i + k].Mouse_Position.y = CP_Input_GetMouseY();
                        Projectiles[i + k].isActive = 1;
@@ -48,7 +48,7 @@ void Shoot(float PositionX, float PositionY, float* Cooldown)
 
                    }
                    if (k % 2 == 0) { //even number
-                       Rotation = CP_Matrix_Rotate((2.5f) * ((float)(k / 2)));
+                       Rotation = CP_Matrix_Rotate((3.5f) * ((float)(k / 2)));
                        Projectiles[i + k].Mouse_Position.x = CP_Input_GetMouseX();
                        Projectiles[i + k].Mouse_Position.y = CP_Input_GetMouseY();
                        Projectiles[i + k].isActive = 1;
