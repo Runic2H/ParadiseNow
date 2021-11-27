@@ -41,12 +41,13 @@ void player_init()
 //Render stuff
 void render(void)
 {
-	CP_Graphics_ClearBackground(color_background);
+	//CP_Graphics_ClearBackground(color_background);
+	CP_Image_Draw(background, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
 	renderPlayer(objPositionX, objPositionY, Mage);
 	DrawProjectile();
 	/*timer(begin);*/
 	enemy_draw(*objPositionX, *objPositionY, genericenemy, boss);
-	chest_spawn();
+	//chest_spawn();
 	render_Chest(chest.posX,chest.posY,chest.diameter);
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(*objPositionX, *objPositionY, 400.0f, 300.0f, stationaryplants);
@@ -61,6 +62,7 @@ void render(void)
 		render_pause_menu();
 	}
 }
+
 
 void game_init(void)
 {
@@ -78,7 +80,7 @@ void game_init(void)
 	pause = 0;
 
 	//images
-	background = CP_Image_Load("./images/background.png");
+	background = CP_Image_Load("./images/background2.png");
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
 	boss = CP_Image_Load("./images/boss.png");
@@ -88,7 +90,6 @@ void game_init(void)
 
 void game_update(void)
 {
-	//CP_Image_Draw(background, 0, 0, 1000, 1000, 255);
 	
 	if (pause == 0) {
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
@@ -102,6 +103,7 @@ void game_update(void)
 		}
 		if (layout == WASD)
 		{
+
 			c_CharacterWASD(objPositionX, objPositionY);
 		}
 		else
@@ -113,7 +115,7 @@ void game_update(void)
 		ShootCooldown -= CP_System_GetDt();
 		enemy_collision();
 		boss_Collision();
-		chest_collision(*objPositionX, *objPositionY);
+		//chest_collision(*objPositionX, *objPositionY);
 		boss_dmg();
 		boss_die();
 		enemy_TEST_TAKEDMG_update();
@@ -128,15 +130,16 @@ void game_update(void)
 		}
 	}
 
-	Shoot(*objPositionX, *objPositionY, &ShootCooldown);
-	ShootCooldown -= CP_System_GetDt();
-	enemy_collision();
-	boss_Collision();
-	chest_SpawnCheck();
-	boss_dmg();
-	boss_die();
-	enemy_TEST_TAKEDMG_update();
-	enemy_deadAlive_update();
+	//Shoot(*objPositionX, *objPositionY, &ShootCooldown);
+	//ShootCooldown -= CP_System_GetDt();
+	//enemy_collision();
+	//boss_Collision();
+	//chest_SpawnCheck();
+	//boss_dmg();
+	//boss_die();
+	//enemy_TEST_TAKEDMG_update();
+	//enemy_deadAlive_update(*objPositionX, *objPositionY);
+
 	render();
 	
 }

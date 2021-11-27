@@ -91,5 +91,5 @@ void renderPlayer(float* positionX, float* positionY,CP_Image mage)
 {
 	CP_Settings_Fill(color_white);
 	//CP_Graphics_DrawCircle(*positionX, *positionY, 20);
-	CP_Image_Draw(mage, *positionX, *positionY, 100, 100, 255);
+	CP_Image_Draw(mage, *positionX, *positionY, 56, 56, 255);
 }

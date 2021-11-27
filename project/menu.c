@@ -1,13 +1,18 @@
 #include <stdio.h>
 #include "cprocessing.h"
-
+#include "macros.h"
 
 /* Forward declarations */
 void game_init(void);
 void game_update(void);
 void game_exit(void);
-#define color_background CP_Color_Create(123, 63, 0, 255)
 
+void howtoplay_init(void);
+void howtoplay_update(void);
+void howtoplay_exit(void);
+
+CP_Image menu = NULL;
+CP_Image digipen = NULL;
 
 //	variables declaration
 
@@ -17,36 +22,43 @@ int counter;
 void menu_init(void) {
 
 	CP_System_SetWindowSize(1280, 720);
-	CP_Graphics_ClearBackground(color_background);
-
+	menu = CP_Image_Load("./images/menubackground.png");
+	//digipen = CP_Image_Load("./images/digipenlogo.png");
 }
 
-/*
-	mouse coords x y
-	keyboard button press.
-
-	menu state = 0
-	button up = 1
-	button up = 2
-
-	when space is pressed, select the current button
-
-
-*/
 
 
 void menu_update(void) {
+
 
 	if (CP_Input_KeyTriggered(KEY_ENTER)) {
 		CP_Engine_SetNextGameState(game_init, game_update, game_exit);
 	}
 
-	//DRAW
-	CP_Settings_TextSize(55.0f);
-	CP_Font_DrawTextBox("PRESS ENTER TO START GAME", 350.0f, 100.0f, 1000.0f);
+	CP_Image_Draw(menu, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
 
+	if (CP_Input_MouseTriggered(MOUSE_BUTTON_1)) {
+		if (CP_Input_GetMouseX() >= 480.0f && CP_Input_GetMouseX() <= 780.0f
+			&& CP_Input_GetMouseY() >= 500.0f && CP_Input_GetMouseY() <= 585.0f) {
+			CP_Settings_Fill(color_white);
+			CP_Graphics_DrawRect(480.0f, 500.0f, 300.0f, 85.0f);
+			CP_Engine_SetNextGameState(howtoplay_init, howtoplay_update, howtoplay_exit);
+		}
+	}
+
+	//DRAW
+	CP_Settings_Fill(color_white);
+	CP_Settings_TextSize(55.0f);
+	CP_Font_DrawTextBox("PRESS ENTER TO START GAME", 340.0f, 100.0f, 1000.0f);
+	CP_Settings_Fill(button_box);
+	CP_Graphics_DrawRect(480.0f, 500.0f, 300.0f, 85.0f);
+	CP_Settings_Fill(color_buttons);
+	CP_Settings_TextSize(50.0f);
+	CP_Font_DrawTextBox("HOW TO PLAY", 501.0f, 558.0f, 300.0f);
 }
 
 void menu_exit(void) {
-
+	
+	CP_Image_Free(&menu);
+	CP_Image_Free(&digipen);
 }

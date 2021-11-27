@@ -1,6 +1,8 @@
 #include "macros.h"
 
-
+void howtoplay_init(void);
+void howtoplay_update(void);
+void howtoplay_exit(void);
 char runtime[256];
 
 void timer(clock_t begin)
@@ -37,7 +39,7 @@ void render_pause_menu(void) {
 			CP_Settings_Fill(color_white);
 			CP_Graphics_DrawRect(460.0f, 385.0f, 350.0f, 100.0f);
 
-			//to implement tutorial how to play
+			CP_Engine_SetNextGameState(howtoplay_init, howtoplay_update, howtoplay_exit);
 		}
 
 		if (CP_Input_GetMouseX() >= 460.0f && CP_Input_GetMouseX() <= 810.0f
