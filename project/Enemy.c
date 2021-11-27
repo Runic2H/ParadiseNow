@@ -74,7 +74,7 @@ void enemy_init_posXY()
 		}
 
 		Boss[j].AliveDead = 1;
-		Boss[j].speed = CP_Random_RangeFloat(1, 4);
+		Boss[j].speed = CP_Random_RangeFloat(2, 4);
 		Boss[j].health = 10;
 		Boss[j].collisionWproj = 0;
 		Boss[j].diameter = 95.f;
@@ -131,29 +131,60 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 
 void enemy_collision()
 {
-	for (int j = 0; j < enemycount; j++)
-	{
-		for (int i = j; i < MAX_PROJECTILE; i++)
-		{
-			if (is_ProjectileColliding(Enemies[j].enemy_posX, Enemies[j].enemy_posY, 55.f, Projectiles[i].Point.x, Projectiles[i].Point.y, 10.f))
+	for (int j = 0; j < MAX_PROJECTILE; j++)
+	{	
+		if (Projectiles[j].isActive == 1) {
+			for (int i = 0; i < enemycount; i++)
 			{
-				Enemies[j].collisionWproj = 1;
-				Projectiles[i].isActive = 0;
+				if (Enemies[i].AliveDead == 1) {
+					if (is_ProjectileColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 25.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
+					{	
+						Enemies[i].health -= player.attack;
+						Projectiles[j].isActive = 0;
+						
+					}
+					else
+					{
+						continue;
+					}
 			}
-			else
+  }
+
+void boss_Collision()
+{
+	for (int j = 0; j < MAX_PROJECTILE; j++)
+	{
+		if (Projectiles[j].isActive == 1) {
+			for (int i = 0; i < bosscount; i++)
 			{
-				Enemies[j].collisionWproj = 0;
+				if (Boss[i].AliveDead == 1) {
+					if (is_ProjectileColliding(Boss[i].boss_posX, Boss[i].boss_posY, 50.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
+					{
+						Boss[i].health -= player.attack;
+						Projectiles[j].isActive = 0;
+						
+					}
+					else
+					{
+						continue;
+					}
+				}
 			}
 		}
 	}
 }
 
-void enemy_TEST_TAKEDMG_update() {
-	for (int i = 0; i < enemycount; i++)
+
+void boss_die()
+{
+	for (int i = 0; i < bosscount; i++)
 	{
-		if (Enemies[i].collisionWproj == 1)
+		if (Boss[i].health <= 0)
 		{
-			Enemies[i].health -= 1;
+			Boss[i].AliveDead = 0;
+			Boss[i].boss_posX = -50.0f;
+			Boss[i].boss_posY = -50.0f;
+			Boss[i].speed = 0.0f;
 		}
 	}
 }
@@ -162,7 +193,7 @@ void enemy_deadAlive_update(float player_x, float player_y)
 {
 	for (int i = 0; i < enemycount; i++)
 	{
-		if (Enemies[i].health == 0)
+		if (Enemies[i].health <= 0)
 		{
 			Enemies[i].AliveDead = 0;
 			Enemies[i].enemy_posX = -50.0f;

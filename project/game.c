@@ -17,7 +17,6 @@ CP_Image Mage = NULL;
 //void menu_update(void);
 //void menu_exit(void);
 
-
 //Render stuff
 void render(void)
 {
@@ -41,6 +40,18 @@ void render(void)
 	{
 		render_pause_menu();
 	}
+}
+
+void checkUpdates(void)
+{
+  playerCollide(player.positionX, player.positionY);
+	Shoot(player.positionX, player.positionY, &ShootCooldown);
+	ShootCooldown -= CP_System_GetDt();
+	chest_SpawnCheck();
+	enemy_collision();
+  boss_Collision();
+	boss_die();
+	enemy_deadAlive_update(player.positionX, player.positionY);
 }
 
 
@@ -93,21 +104,15 @@ void game_update(void)
 		{
 			c_CharacterMouse();
 		}
-  }
+	}
 	else {
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
 		{
 			pause = TRUE;
 		}
-	}
-  
-	Shoot(player.positionX, player.positionY, &ShootCooldown);
-	ShootCooldown -= CP_System_GetDt();
-	chest_SpawnCheck();
-	enemy_collision();
-	enemy_TEST_TAKEDMG_update();
-	enemy_deadAlive_update(player.positionX, player.positionY);
-	render();	
+  }
+  checkUpdates();
+	render();
 }
 
 

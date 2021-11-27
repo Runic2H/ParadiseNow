@@ -93,3 +93,4 @@ struct c_CharacterStats player;
 struct Enemy Enemies[enemycount];
 struct Boss Boss[bosscount];
 struct upgrades chest;
+struct Projectile Projectiles[MAX_PROJECTILE];

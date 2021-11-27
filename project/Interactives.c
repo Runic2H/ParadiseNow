@@ -14,7 +14,7 @@ void chest_SpawnCheck(void)
 {
 	if (is_ChestColliding(chest.posX, chest.posY, chest.diameter, player.positionX, player.positionY, 20.f))
 	{
-		CP_Font_DrawTextBox("'E' to Open", (chest.posX) - 35.f, chest.posY - 30.f, 100.f);
+		CP_Font_DrawTextBox("'E' to Open", (chest.posX) - 30.f, chest.posY - 30.f, 50.f);
 		if (CP_Input_KeyTriggered(KEY_E))
 		{
 			add_skill(chest.skill);

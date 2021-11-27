@@ -16,8 +16,7 @@ int is_ChestColliding(float chestX, float chestY, float chestWidth, float player
 		&& ((chestY + chestWidth) > playerY);
 }
 
-int is_CharacterColliding(float enemyX, float enemyY, float enemySize, float playerX, float playerY, float playerSize)
-{
+int (is_PlayerColliding)(float enemyX, float enemyY, float enemySize, float playerX, float playerY, float playerSize) {
 	return (enemyX < playerX + playerSize)
 		&& ((enemyX + enemySize) > playerX)
 		&& (enemyY < (playerY + playerSize))
