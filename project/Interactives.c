@@ -6,7 +6,7 @@ void chest_init(void)
 	chest.posX = CP_Random_RangeFloat(0.f,(float)CP_System_GetDisplayHeight());
 	chest.posY = CP_Random_RangeFloat(0.f,(float)CP_System_GetDisplayHeight() - 400.f);
 	chest.diameter = chestSize;
-	chest.skill = 4; //CP_Random_RangeInt(0, 4);
+	chest.skill = CP_Random_RangeInt(0, 4);
 }
 
 //Part of render_chest

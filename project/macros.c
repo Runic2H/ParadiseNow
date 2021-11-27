@@ -65,9 +65,9 @@ void render_pause_menu(void) {
 
 void render_clock(double time_spent)
 {
-	CP_Settings_TextSize(20.0f);
+	CP_Settings_TextSize(30.0f);
 	CP_Settings_Fill(color_red);
-	CP_Font_DrawTextBox(runtime, 640.f, 20.0f, 1000.0f);
+	CP_Font_DrawTextBox(runtime, (CP_System_GetWindowWidth()/2.f), 50.0f, 1000.0f);
 }
 
 //Used to get timing, auto run at timer();

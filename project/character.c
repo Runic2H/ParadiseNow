@@ -124,7 +124,7 @@ void c_renderHUD(void)
 	{
 		CP_Settings_TextSize(40.0f);
 		CP_Settings_Fill(color_blue);
-		CP_Font_DrawTextBox("Energy Shield", 10.f, 600.f, 200.f);
+		CP_Font_DrawTextBox("Energy Shield", 10.f, 600.f, 400.f);
 	}
 
 	snprintf(health, 4, "%d", player.health);
