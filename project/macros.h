@@ -42,7 +42,9 @@
 
 #define color_yellow CP_Color_Create(215,215,0,255)
 
-#define enemycount 20
+#define MAX_ENEMIES 100
+
+#define EnemyInitCount 20
 
 #define bosscount 2
 
@@ -94,7 +96,7 @@ void render_pause_menu(void);
 //Struct init
 
 struct c_CharacterStats player;
-struct Enemy Enemies[enemycount];
+struct Enemy Enemies[MAX_ENEMIES];
 struct Boss Boss[bosscount];
 struct upgrades chest;
 struct Projectile Projectiles[MAX_PROJECTILE];

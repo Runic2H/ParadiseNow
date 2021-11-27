@@ -62,6 +62,7 @@ void checkUpdates(void)
 	boss_die();
 	enemy_deadAlive_update(player.positionX, player.positionY);
 	you_died();
+	enemy_respawn(15, 15);
 }
 
 
