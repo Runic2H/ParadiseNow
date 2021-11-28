@@ -23,9 +23,7 @@ void menu_exit(void);
 /* Entry point */
 int main(void)
 {
-    CP_System_ShowConsole();
     CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
     CP_Engine_Run();
-    
     return 0;
 }
