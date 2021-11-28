@@ -5,6 +5,9 @@ CP_Vector vectorEnemy;
 CP_Vector vectorMove, Vectorplayer;
 CP_Vector acceleration;
 
+int enemyHP = 5;
+int bossHP = 10;
+
 // this should be parsed from char.h
 
 int global_spawnRanflag;
@@ -57,7 +60,7 @@ void enemy_init_posXY()
 
 			Enemies[i].AliveDead = 1; // ALL LIVE
 			Enemies[i].speed = CP_Random_RangeFloat(2, 6);
-			Enemies[i].health = 5;
+			Enemies[i].health = enemyHP;
 			Enemies[i].collisionWproj = 0;
 			Enemies[i].diameter = 55.f;
 			Enemies[i].kill = 0;
@@ -72,7 +75,7 @@ void enemy_init_posXY()
 			Enemies[i].enemy_posY = -50.f;
 			Enemies[i].AliveDead = 0;
 			Enemies[i].speed = 0.f;
-			Enemies[i].health = 5;
+			Enemies[i].health = enemyHP;
 			Enemies[i].collisionWproj = 0;
 			Enemies[i].diameter = 55.f;
 			Enemies[i].kill = 0;
@@ -81,7 +84,6 @@ void enemy_init_posXY()
 		}
 			Enemies[i].enemy_posX = CP_Random_RangeFloat(-50.0f, ((float)s_windowWidth + 50.0f));
 			Enemies[i].enemy_posY = outerlimit_rand(-50.0f, 50.0f, (float)s_windowHeight);
-		}
 	}
 
 	for (int j = 0; j < bosscount; ++j) {
@@ -100,7 +102,7 @@ void enemy_init_posXY()
 
 		Boss[j].AliveDead = 1;
 		Boss[j].speed = CP_Random_RangeFloat(2, 4);
-		Boss[j].health = 10;
+		Boss[j].health = bossHP;
 		Boss[j].collisionWproj = 0;
 		Boss[j].diameter = 95.f;
 		Boss[j].kill = 0;
@@ -267,24 +269,28 @@ void enemy_deadAlive_update(float player_x, float player_y)
 	}
 }
 
-void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn) {
+void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn) 
+{
+	enemyHP += 2;
+	bossHP += 5;
+
 	if (global_timing % every_Xsecs != 0)
 	{
 		global_spawnRanflag = 0;
 	}
 
-	else if (global_timing != 0 && global_timing % every_Xsecs == 0) // if every_Xsecs ==15, means every 15 secs, this function will execute
+	else if (global_timing != 0 && global_timing % every_Xsecs == 0) // if every_Xsecs == 15, means every 15 secs, this function will execute
 	{
 		if (global_spawnRanflag == 0)
 		{
 			printf("Spawn\n");
 			// counting of enemies alive
 			int spawned_count = 0;
-			
+
 			for (int i = 0; i < MAX_ENEMIES; i++)
-			{	
-				
-				if (Enemies[i].AliveDead == 0 && spawned_count < no_of_enemiesToRespawn )
+			{
+
+				if (Enemies[i].AliveDead == 0 && spawned_count < no_of_enemiesToRespawn)
 				{
 					if (i % 2)
 					{
@@ -299,20 +305,13 @@ void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn) {
 					}
 					Enemies[i].AliveDead = 1; // ALL LIVE
 					Enemies[i].speed = CP_Random_RangeFloat(2, 6);
-					Enemies[i].health = 5;
+					Enemies[i].health = enemyHP;
 					Enemies[i].collisionWproj = 0;
 					Enemies[i].diameter = 55.f;
-					Enemies[i].gold = 0;
+					Enemies[i].kill = 0;
 					spawned_count++;
-
-
-					printf("%d enemies spawned \n", spawned_count);
 				}
 			}
-			
-
-
-
 			global_spawnRanflag = 1;
 		}
 	}
