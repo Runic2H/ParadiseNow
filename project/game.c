@@ -22,14 +22,6 @@ void gameover_exit(void);
 //void menu_update(void);
 //void menu_exit(void);
 
-void you_died(void)
-{
-	if (player.health <= 0)
-	{
-		CP_Engine_SetNextGameState(gameover_init, gameover_update, gameover_exit);;
-	}
-}
-
 //Render stuff
 void render(void)
 {
@@ -67,7 +59,6 @@ void checkUpdates(void)
 	boss_Collision();
 	boss_die();
 	enemy_deadAlive_update(player.positionX, player.positionY);
-	you_died(); //Gag to Remove
 	enemy_respawn(15, 15);
 }
 
