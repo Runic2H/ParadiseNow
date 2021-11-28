@@ -4,7 +4,7 @@
 struct Enemy {
 	int health;
 	int collisionWproj;
-	int ID; // 1, 2, 3, 4, 5
+//	int ID; // 1, 2, 3, 4, 5
 	float enemy_posX;
 	float enemy_posY;
 	int AliveDead; // enemyAlive 1 or enemyDead 1 0 
@@ -17,7 +17,7 @@ struct Enemy {
 struct Boss {
 	int health;
 	int collisionWproj;
-	int ID;
+//	int ID;
 	float boss_posX;
 	float boss_posY;
 	int AliveDead;
@@ -61,3 +61,5 @@ void boss_die();
 void boss_Collision();
 
 void enemy_collision();
+
+void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn);

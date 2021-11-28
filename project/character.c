@@ -116,7 +116,7 @@ void c_renderPlayer(CP_Image mage)
 }
 
 void playerCollide(float objPositionX, float objPositionY) {
-	for (int i = 0; i < enemycount; i++) {
+	for (int i = 0; i < MAX_ENEMIES; i++) {
 		if (Enemies[i].AliveDead == 1) {
 			if (is_PlayerColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 27.5f,
 				objPositionX, objPositionY, 50.f) && player.damageCooldown <= 0.f) {

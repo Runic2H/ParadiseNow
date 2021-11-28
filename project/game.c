@@ -57,7 +57,8 @@ void checkUpdates(void)
 	boss_Collision();
 	boss_die();
 	enemy_deadAlive_update(player.positionX, player.positionY);
-	you_died(); //Gag to be removed
+	you_died();
+	enemy_respawn(15, 15);
 }
 
 
