@@ -7,7 +7,7 @@ struct c_CharacterStats
 	int MAXhealth;
 	int	attack;
 	int gold;
-	int exp;
+	int score;
 	int multishot;
 	float positionX;
 	float positionY;

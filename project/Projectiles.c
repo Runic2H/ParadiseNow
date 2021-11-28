@@ -89,8 +89,8 @@ void DrawProjectile() {
 
 
 
-            if (Projectiles[i].Point.x > CP_System_GetWindowWidth() || Projectiles[i].Point.x < 0 ||
-                Projectiles[i].Point.y > CP_System_GetWindowHeight() || Projectiles[i].Point.y < 0)
+            if (Projectiles[i].Point.x > s_windowWidth || Projectiles[i].Point.x < 0 ||
+                Projectiles[i].Point.y > s_windowHeight || Projectiles[i].Point.y < 0)
             {
                 Projectiles[i].isActive = 0;
                 continue;
