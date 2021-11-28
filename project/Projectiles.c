@@ -77,20 +77,20 @@ void Shoot(float PositionX, float PositionY, float* Cooldown)
 
 }
 
-void DrawProjectile() {
+void DrawProjectile(CP_Image projectileZ) {
     for (int i = 0; i < MAX_PROJECTILE; i++) {
 
         if (Projectiles[i].isActive == 1) {
-            CP_Settings_Fill(color_blue);
-            CP_Graphics_DrawCircle(Projectiles[i].Point.x, Projectiles[i].Point.y, 10.0);
+            //CP_Graphics_DrawCircle(Projectiles[i].Point.x, Projectiles[i].Point.y, 10.0);
+            CP_Image_Draw(projectileZ, Projectiles[i].Point.x, Projectiles[i].Point.y, 10.0f, 10.0f, 255);
             Projectiles[i].Point.x += (Projectiles[i].Velocity.x * CP_System_GetDt());
             Projectiles[i].Point.y += (Projectiles[i].Velocity.y * CP_System_GetDt());
 
 
 
 
-            if (Projectiles[i].Point.x > CP_System_GetWindowWidth() || Projectiles[i].Point.x < 0 ||
-                Projectiles[i].Point.y > CP_System_GetWindowHeight() || Projectiles[i].Point.y < 0)
+            if (Projectiles[i].Point.x > s_windowWidth || Projectiles[i].Point.x < 0 ||
+                Projectiles[i].Point.y > s_windowHeight || Projectiles[i].Point.y < 0)
             {
                 Projectiles[i].isActive = 0;
                 continue;

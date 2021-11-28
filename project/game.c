@@ -1,40 +1,45 @@
 //test
 #include "macros.h"
 
-CP_Vector vectorEnemy;
 int layout;
-float x = 200.0f;
-float y = 200.0f;
 clock_t begin;
-
 CP_Image genericenemy = NULL;
 CP_Image boss = NULL;
 CP_Image stationaryplants = NULL;
 CP_Image background = NULL;
 CP_Image Mage = NULL;
+CP_Image energyshield = NULL;
+CP_Image projectileZ = NULL;
+CP_Image chestZ = NULL;
 
-//void menu_init(void);
-//void menu_update(void);
-//void menu_exit(void);
+
+void gameover_init(void);
+void gameover_update(void);
+void gameover_exit(void);
 
 void you_died(void)
 {
 	if (player.health <= 0)
 	{
-		CP_Engine_Terminate();
+		CP_Engine_SetNextGameState(gameover_init, gameover_update, gameover_exit);
 	}
 }
+
+//void menu_init(void);
+//void menu_update(void);
+//void menu_exit(void);
 
 //Render stuff
 void render(void)
 {
 	CP_Image_Draw(background, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
-	c_renderPlayer(Mage);
+	c_renderPlayer(Mage, energyshield);
 	c_renderHUD();
-	DrawProjectile();
+	DrawProjectile(projectileZ);
 	timer(begin);
 	enemy_draw(player.positionX, player.positionY, genericenemy, boss);
-	render_Chest(chest.posX,chest.posY,chest.diameter);
+	render_Chest(chest.posX,chest.posY,chest.diameter, chestZ);
+	render_skill(chest.skill);
 
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(player.positionX, player.positionY, 400.0f, 300.0f, stationaryplants);
@@ -61,6 +66,7 @@ void checkUpdates(void)
 	boss_Collision();
 	boss_die();
 	enemy_deadAlive_update(player.positionX, player.positionY);
+	enemy_respawn(15, 15);
 	you_died();
 }
 
@@ -78,23 +84,31 @@ void game_init(void)
 	ShootCooldown = 0.0f;
 	pause = 0;
 
+	//Ease in
+	timerStart = 0.f;
+	duration = 1.f;
+	min_y = 150.f;
+	max_y = 100.f;
+
 	//images
 	background = CP_Image_Load("./images/background2.png");
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
 	boss = CP_Image_Load("./images/boss.png");
-	Mage = CP_Image_Load("./images/Mage.png");
-	CP_System_ShowConsole();
+	Mage = CP_Image_Load("./images/mage.png");
+	energyshield = CP_Image_Load("./images/magebubble.png");
+	projectileZ = CP_Image_Load("./images/projectile.png");
+	chestZ = CP_Image_Load("./images/chest.png");
 }
 
 
 void game_update(void)
 {
-	//timeStart += CP_System_GetDt();
-	//if (timeStart >= duration) {
-	//	timeStart = 0.f;
-	//	SWAP(float, min_y, max_y);
-	//}
+	timerStart += CP_System_GetDt();
+	if (timerStart >= duration) {
+		timerStart = 0.f;
+		SWAP(float, min_y, max_y);
+	}
 	
 	if (pause == FALSE) 
   {
@@ -114,15 +128,15 @@ void game_update(void)
 		{
 			c_CharacterMouse();
 		}
+	  checkUpdates();
 	}
 	else 
 	{
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
 		{
-			pause = TRUE;
+			pause = FALSE;
 		}
 	}
-	  checkUpdates();
 	  render();
 }
 
@@ -135,4 +149,7 @@ void game_exit(void)
 	CP_Image_Free(&background);
 	CP_Image_Free(&boss);
 	CP_Image_Free(&Mage);
+	CP_Image_Free(&energyshield);
+	CP_Image_Free(&projectileZ);
+	CP_Image_Free(&chestZ);
 }
