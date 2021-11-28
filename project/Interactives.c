@@ -81,10 +81,18 @@ void add_skill(int skillno)
 		player.multishot += 1;
 		break;
 	case HEAL:
-		player.health += 2;
-		if (player.health >= player.MAXhealth)
+		if (player.health == player.MAXhealth)
 		{
+			player.MAXhealth++;
 			player.health = player.MAXhealth;
+		}
+		else
+		{
+			player.health += 2;
+			if (player.health >= player.MAXhealth)
+			{
+				player.health = player.MAXhealth;
+			}
 		}
 		player.damageCooldown = 1.0f;
 		break;
