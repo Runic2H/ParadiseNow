@@ -1,12 +1,8 @@
 //test
 #include "macros.h"
 
-CP_Vector vectorEnemy;
 int layout;
-float x = 200.0f;
-float y = 200.0f;
 clock_t begin;
-
 CP_Image genericenemy = NULL;
 CP_Image boss = NULL;
 CP_Image stationaryplants = NULL;
@@ -79,23 +75,27 @@ void game_init(void)
 	ShootCooldown = 0.0f;
 	pause = 0;
 
+	//Ease in
+	timerStart = 0.f;
+	duration = 1.f;
+	min_y = s_windowHeight/2 - 50.f;
+	max_y = s_windowHeight / 2 - 100.f;
+
 	//images
 	background = CP_Image_Load("./images/background2.png");
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
 	boss = CP_Image_Load("./images/boss.png");
 	Mage = CP_Image_Load("./images/Mage.png");
-	CP_System_ShowConsole();
 }
 
 
 void game_update(void)
 {
-	//timeStart += CP_System_GetDt();
-	//if (timeStart >= duration) {
-	//	timeStart = 0.f;
-	//	SWAP(float, min_y, max_y);
-	//}
+	timerStart += CP_System_GetDt();
+	if (timerStart >= duration) {
+		timerStart = 0.f;
+	}
 	
 	if (pause == FALSE) 
   {
@@ -120,7 +120,7 @@ void game_update(void)
 	{
 		if (CP_Input_KeyTriggered(KEY_ESCAPE))
 		{
-			pause = TRUE;
+			pause = FALSE;
 		}
 	}
 	  checkUpdates();

@@ -66,6 +66,10 @@
     rhs = temp; \
 }
 
+#define s_windowWidth CP_System_GetWindowWidth()
+
+#define s_windowHeight CP_System_GetWindowHeight()
+
 bool pause;
 void menu_init(void);
 void menu_update(void);
@@ -100,3 +104,16 @@ struct Enemy Enemies[MAX_ENEMIES];
 struct Boss Boss[bosscount];
 struct upgrades chest;
 struct Projectile Projectiles[MAX_PROJECTILE];
+
+//Easein Functions
+
+float timerStart;
+float duration;
+float min_y;
+float max_y;
+
+static float EaseInSine(float start, float end, float value)
+{
+	end -= start;
+	return -end * cosf(value * (PI * 0.5f)) + end + start;
+}

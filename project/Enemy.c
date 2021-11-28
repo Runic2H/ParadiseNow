@@ -60,7 +60,9 @@ void enemy_init_posXY()
 			Enemies[i].health = 5;
 			Enemies[i].collisionWproj = 0;
 			Enemies[i].diameter = 55.f;
-			Enemies[i].gold = 0;
+			Enemies[i].kill = 0;
+			Enemies[i].enemy_posX = outerlimit_rand(-50.0f, 50.0f, (float)s_windowWidth);
+			Enemies[i].enemy_posY = CP_Random_RangeFloat(-50.0f, ((float)s_windowHeight + 50.0f));
 
 		}
 		// no Else function as the rest of the elements are initialized w zero
@@ -73,9 +75,12 @@ void enemy_init_posXY()
 			Enemies[i].health = 5;
 			Enemies[i].collisionWproj = 0;
 			Enemies[i].diameter = 55.f;
-			Enemies[i].gold = 0;
+			Enemies[i].kill = 0;
 
 
+		}
+			Enemies[i].enemy_posX = CP_Random_RangeFloat(-50.0f, ((float)s_windowWidth + 50.0f));
+			Enemies[i].enemy_posY = outerlimit_rand(-50.0f, 50.0f, (float)s_windowHeight);
 		}
 	}
 
@@ -84,13 +89,13 @@ void enemy_init_posXY()
 		//Boss[j].ID = j + 1;
 
 		if (j % 2) {
-			Boss[j].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
-			Boss[j].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
+			Boss[j].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)s_windowWidth);
+			Boss[j].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)s_windowHeight + 50.0f));
 		}
 		else
 		{
-			Boss[j].boss_posX = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
-			Boss[j].boss_posY = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
+			Boss[j].boss_posX = CP_Random_RangeFloat(-50.0f, ((float)s_windowHeight + 50.0f));
+			Boss[j].boss_posY = outerlimit_rand(-50.0f, 50.0f, (float)s_windowWidth);
 		}
 
 		Boss[j].AliveDead = 1;
@@ -98,7 +103,7 @@ void enemy_init_posXY()
 		Boss[j].health = 10;
 		Boss[j].collisionWproj = 0;
 		Boss[j].diameter = 95.f;
-		Boss[j].gold = 0;
+		Boss[j].kill = 0;
 	}
 }
 
@@ -209,10 +214,11 @@ void boss_die()
 			Boss[i].boss_posX = -50.0f;
 			Boss[i].boss_posY = -50.0f;
 			Boss[i].speed = 0.0f;
-			if (Boss[i].gold == 0)
+			if (Boss[i].kill == 0)
 			{
-				Boss[i].gold = 1;
+				Boss[i].kill = 1;
 				player.gold += 10;
+				player.score += 5;
 			}
 			else
 			{
@@ -232,10 +238,11 @@ void enemy_deadAlive_update(float player_x, float player_y)
 			Enemies[i].enemy_posX = -50.0f;
 			Enemies[i].enemy_posY = -50.0f;
 			Enemies[i].speed = 0.0f;
-			if (Enemies[i].gold == 0)
+			if (Enemies[i].kill == 0)
 			{
-				Enemies[i].gold = 1;
+				Enemies[i].kill = 1;
 				player.gold += 5;
+				player.score += 1;
 			}
 			else
 			{

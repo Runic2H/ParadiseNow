@@ -15,3 +15,5 @@ void chest_SpawnCheck(void);
 void render_Chest(float posX, float posY, float diameter);
 
 void add_skill(int skillno);
+
+void render_skill(int skillno);

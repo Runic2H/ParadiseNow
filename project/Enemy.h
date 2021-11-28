@@ -10,7 +10,7 @@ struct Enemy {
 	int AliveDead; // enemyAlive 1 or enemyDead 1 0 
 	float speed;
 	float diameter;
-	int gold;
+	int kill;
 };
 
 
@@ -23,7 +23,7 @@ struct Boss {
 	int AliveDead;
 	float speed;
 	float diameter;
-	int gold;
+	int kill;
 };
 
 /*
