@@ -14,8 +14,6 @@ void howtoplay_exit(void);
 CP_Image menu = NULL;
 CP_Image digipen = NULL;
 
-//	variables declaration
-
 int counter;
 
 
@@ -23,7 +21,6 @@ void menu_init(void) {
 
 	CP_System_SetWindowSize(1280, 720);
 	menu = CP_Image_Load("./images/menubackground.png");
-	//digipen = CP_Image_Load("./images/digipenlogo.png");
 }
 
 

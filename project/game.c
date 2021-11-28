@@ -12,6 +12,15 @@ CP_Image boss = NULL;
 CP_Image stationaryplants = NULL;
 CP_Image background = NULL;
 CP_Image Mage = NULL;
+CP_Image energyshield = NULL;
+CP_Image projectileZ = NULL;
+CP_Image chestZ = NULL;
+
+
+void gameover_init(void);
+void gameover_update(void);
+void gameover_exit(void);
+
 
 //void menu_init(void);
 //void menu_update(void);
@@ -21,7 +30,7 @@ void you_died(void)
 {
 	if (player.health <= 0)
 	{
-		CP_Engine_Terminate();
+		CP_Engine_SetNextGameState(gameover_init, gameover_update, gameover_exit);;
 	}
 }
 
@@ -29,12 +38,12 @@ void you_died(void)
 void render(void)
 {
 	CP_Image_Draw(background, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
-	c_renderPlayer(Mage);
+	c_renderPlayer(Mage, energyshield);
 	c_renderHUD();
-	DrawProjectile();
+	DrawProjectile(projectileZ);
 	timer(begin);
 	enemy_draw(player.positionX, player.positionY, genericenemy, boss);
-	render_Chest(chest.posX,chest.posY,chest.diameter);
+	render_Chest(chest.posX,chest.posY,chest.diameter, chestZ);
 
 	//stationary plants, add @ different positions through different waves
 	stationary_plants(player.positionX, player.positionY, 400.0f, 300.0f, stationaryplants);
@@ -83,7 +92,11 @@ void game_init(void)
 	genericenemy = CP_Image_Load("./images/slime.png");
 	stationaryplants = CP_Image_Load("./images/stationaryplants.png");
 	boss = CP_Image_Load("./images/boss.png");
-	Mage = CP_Image_Load("./images/Mage.png");
+	Mage = CP_Image_Load("./images/mage.png");
+	energyshield = CP_Image_Load("./images/magebubble.png");
+	projectileZ = CP_Image_Load("./images/projectile.png");
+	chestZ = CP_Image_Load("./images/chest.png");
+
 	CP_System_ShowConsole();
 }
 
@@ -114,6 +127,7 @@ void game_update(void)
 		{
 			c_CharacterMouse();
 		}
+	  checkUpdates();
 	}
 	else 
 	{
@@ -122,7 +136,6 @@ void game_update(void)
 			pause = TRUE;
 		}
 	}
-	  checkUpdates();
 	  render();
 }
 
@@ -135,4 +148,7 @@ void game_exit(void)
 	CP_Image_Free(&background);
 	CP_Image_Free(&boss);
 	CP_Image_Free(&Mage);
+	CP_Image_Free(&energyshield);
+	CP_Image_Free(&projectileZ);
+	CP_Image_Free(&chestZ);
 }

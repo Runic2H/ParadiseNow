@@ -20,7 +20,7 @@ void c_CharacterWASD(void);
 
 void c_CharacterMouse(void);
 
-void c_renderPlayer(CP_Image mage);
+void c_renderPlayer(CP_Image mage, CP_Image energyshield);
 
 void c_CharacterInit(void);
 

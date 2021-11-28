@@ -28,14 +28,14 @@ void render_pause_menu(void) {
 
 	if (CP_Input_MouseTriggered(MOUSE_BUTTON_1)) {
 		if (CP_Input_GetMouseX() >= 460.0f && CP_Input_GetMouseX() <= 810.0f
-			&& CP_Input_GetMouseY() >= 235.0f && CP_Input_GetMouseY() <= 335.0f) {
+			&& CP_Input_GetMouseY() >= 235.0f && CP_Input_GetMouseY() <= 335.0f) {					//RESUME
 			CP_Settings_Fill(color_white);
 			CP_Graphics_DrawRect(460.0f, 235.0f, 350.0f, 100.0f);
 			pause = 0;
 		}
 
 		if (CP_Input_GetMouseX() >= 460.0f && CP_Input_GetMouseX() <= 810.0f
-			&& CP_Input_GetMouseY() >= 385.0f && CP_Input_GetMouseY() <= 485.0f) {
+			&& CP_Input_GetMouseY() >= 385.0f && CP_Input_GetMouseY() <= 485.0f) {					//TUTORIAL
 			CP_Settings_Fill(color_white);
 			CP_Graphics_DrawRect(460.0f, 385.0f, 350.0f, 100.0f);
 
@@ -43,7 +43,7 @@ void render_pause_menu(void) {
 		}
 
 		if (CP_Input_GetMouseX() >= 460.0f && CP_Input_GetMouseX() <= 810.0f
-			&& CP_Input_GetMouseY() >= 535.0f && CP_Input_GetMouseY() <= 635.0f) {
+			&& CP_Input_GetMouseY() >= 535.0f && CP_Input_GetMouseY() <= 635.0f) {					//MAIN MENU
 			CP_Settings_Fill(color_white);
 			CP_Graphics_DrawRect(460.0f, 535.0f, 350.0f, 100.0f);
 			CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
