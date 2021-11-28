@@ -37,7 +37,7 @@ void chest_SpawnCheck(void)
 }
 
 //Draw Chest
-void render_Chest(float posX, float posY, float diameter)
+void render_Chest(float posX, float posY, float diameter, CP_Image chestZ)
 {
 	if (chest.alive == TRUE)
 	{
@@ -55,7 +55,8 @@ void render_Chest(float posX, float posY, float diameter)
 				CP_Font_DrawTextBox("Press 'Space' (25 gold)", chest.posX - 65.f, chest.posY - 30.f, 250.f);
 			}
 		}
-		CP_Graphics_DrawCircle(chest.posX, chest.posY, chest.diameter);
+		//CP_Graphics_DrawCircle(chest.posX, chest.posY, chest.diameter);
+		CP_Image_Draw(chestZ, chest.posX, chest.posY, 30.0f, 30.0f, 255);
 	}
 	else
 	{

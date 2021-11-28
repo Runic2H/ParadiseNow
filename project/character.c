@@ -109,10 +109,13 @@ void c_CharacterMouse()
 	}
 }
 
-void c_renderPlayer(CP_Image mage)
+void c_renderPlayer(CP_Image mage, CP_Image energyshield)
 {
-	CP_Settings_Fill(color_white);
-	CP_Image_Draw(mage, player.positionX, player.positionY, 56, 56, 255);
+	//CP_Settings_Fill(color_white);
+	if (player.shield == 1) {
+		CP_Image_Draw(energyshield, player.positionX, player.positionY, 56, 56, 255);
+	}
+		CP_Image_Draw(mage, player.positionX, player.positionY, 56, 56, 255);
 }
 
 void playerCollide(float objPositionX, float objPositionY) {
