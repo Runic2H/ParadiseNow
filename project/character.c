@@ -3,15 +3,16 @@
 char health[4];
 char gold[4];
 char max[4];
+char score[4];
 
 void c_CharacterInit(void)
 {
 	player.alive = TRUE;
 	player.MAXhealth = 10;
-	player.positionX = 200.f;
-	player.positionY = 200.f;
+	player.positionX = s_windowWidth/2.f;
+	player.positionY = s_windowHeight/2.f;
 	player.diameter = c_defaultSize;
-	player.exp = 0;
+	player.score = 0;
 	player.gold = 0;
 	player.attack = 1;
 	player.health = player.MAXhealth;
@@ -26,6 +27,27 @@ void c_CharacterWASD()
 	CP_Vector velocity = CP_Vector_Scale(CP_Vector_Normalize(direction), 400.f * CP_System_GetDt());
 	CP_Matrix rotate = CP_Matrix_Rotate(45.0f);
 	CP_Vector movement = CP_Vector_MatrixMultiply(rotate, velocity);
+	if (is_BorderColliding(player.positionX, player.positionY, (float)s_windowWidth, (float)s_windowHeight))
+	{
+		velocity = CP_Vector_Zero();
+		movement = CP_Vector_Zero();
+		if (player.positionX < 0.f)
+		{
+			player.positionX += 1.f;
+		}
+		else if (player.positionX > s_windowWidth)
+		{
+			player.positionX -= 1.f;
+		}
+		else if (player.positionY < 0.f)
+		{
+			player.positionY += 1.f;
+		}
+		else if (player.positionY > s_windowHeight)
+		{
+			player.positionY -= 1.f;
+		}
+	}
 	if (CP_Input_KeyDown(KEY_W))
 	{
 		if (CP_Input_KeyDown(KEY_A))
@@ -97,7 +119,7 @@ void c_renderPlayer(CP_Image mage, CP_Image energyshield)
 }
 
 void playerCollide(float objPositionX, float objPositionY) {
-	for (int i = 0; i < enemycount; i++) {
+	for (int i = 0; i < MAX_ENEMIES; i++) {
 		if (Enemies[i].AliveDead == 1) {
 			if (is_PlayerColliding(Enemies[i].enemy_posX, Enemies[i].enemy_posY, 27.5f,
 				objPositionX, objPositionY, 50.f) && player.damageCooldown <= 0.f) {
@@ -105,12 +127,12 @@ void playerCollide(float objPositionX, float objPositionY) {
 				if (player.shield != 1)
 				{
 					player.health -= 1;
-					player.damageCooldown = .25f;
+					player.damageCooldown = .5f;
 				}
 				else
 				{
 					player.shield = 0;
-					player.damageCooldown = 1.f;
+					player.damageCooldown = 2.0f;
 				}
 			}
 			else
@@ -135,8 +157,8 @@ void c_renderHUD(void)
 	CP_Settings_TextSize(40.0f);
 	CP_Settings_Fill(color_red);
 	CP_Font_DrawTextBox("Health:", 10.f, 650.f, 125.f);
-	CP_Font_DrawTextBox(health, 130.f, 650.f, 50.f);
-	CP_Font_DrawTextBox("/", 160.f, 650.f, 10.f);
+	CP_Font_DrawTextBox(health, 125.f, 650.f, 50.f);
+	CP_Font_DrawTextBox("/", 165.f, 650.f, 10.f);
 	CP_Font_DrawTextBox(max, 190.f, 650.0f, 50.f);
 
 	snprintf(gold, 4, "%d", player.gold);
@@ -144,5 +166,11 @@ void c_renderHUD(void)
 	CP_Settings_Fill(color_yellow);
 	CP_Font_DrawTextBox("Gold:", 10.f, 700.f, 125.f);
 	CP_Font_DrawTextBox(gold, 125.f, 700.f, 150.f);
+
+	snprintf(score, 4, "%d", player.score);
+	CP_Settings_TextSize(40.0f);
+	CP_Settings_Fill(color_white);
+	CP_Font_DrawTextBox("Score:", 10.f, 100.f, 150.f);
+	CP_Font_DrawTextBox(score, 125.f, 100.f, 1000.f);
 }
 
