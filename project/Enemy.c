@@ -271,9 +271,6 @@ void enemy_deadAlive_update(float player_x, float player_y)
 
 void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn) 
 {
-	enemyHP += 2;
-	bossHP += 5;
-
 	if (global_timing % every_Xsecs != 0)
 	{
 		global_spawnRanflag = 0;
@@ -286,10 +283,10 @@ void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn)
 			printf("Spawn\n");
 			// counting of enemies alive
 			int spawned_count = 0;
-
+			enemyHP++;
+			bossHP += 5;
 			for (int i = 0; i < MAX_ENEMIES; i++)
 			{
-
 				if (Enemies[i].AliveDead == 0 && spawned_count < no_of_enemiesToRespawn)
 				{
 					if (i % 2)
@@ -306,6 +303,7 @@ void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn)
 					Enemies[i].AliveDead = 1; // ALL LIVE
 					Enemies[i].speed = CP_Random_RangeFloat(2, 6);
 					Enemies[i].health = enemyHP;
+					printf("%d", Enemies[i].health);
 					Enemies[i].collisionWproj = 0;
 					Enemies[i].diameter = 55.f;
 					Enemies[i].kill = 0;

@@ -67,7 +67,7 @@ void render_clock(double time_spent)
 {
 	CP_Settings_TextSize(30.0f);
 	CP_Settings_Fill(color_red);
-	CP_Font_DrawTextBox(runtime, (s_windowWidth/2.f), 50.0f, 1000.0f);
+	CP_Font_DrawTextBox(runtime, (s_windowWidth/2.f), 50.0f, 500.0f);
 }
 
 //Used to get timing, auto run at timer();

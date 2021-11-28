@@ -6,6 +6,7 @@ struct upgrades {
 	float posY;
 	float diameter;
 	int skill;
+	float cooldown;
 };
 
 void chest_init(void);

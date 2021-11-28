@@ -124,12 +124,12 @@ void playerCollide(float objPositionX, float objPositionY) {
 				if (player.shield != 1)
 				{
 					player.health -= 1;
-					player.damageCooldown = .25f;
+					player.damageCooldown = .5f;
 				}
 				else
 				{
 					player.shield = 0;
-					player.damageCooldown = 1.5f;
+					player.damageCooldown = 2.0f;
 				}
 			}
 			else
