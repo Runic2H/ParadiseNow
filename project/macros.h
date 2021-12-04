@@ -48,6 +48,10 @@
 
 #define bosscount 2
 
+#define MAX_BOSS 20
+
+#define BossInitCount 2
+
 #define enemyAlive 1
 
 #define enemyDead 0
@@ -101,7 +105,7 @@ void render_pause_menu(void);
 
 struct c_CharacterStats player;
 struct Enemy Enemies[MAX_ENEMIES];
-struct Boss Boss[bosscount];
+struct Boss Boss[MAX_BOSS];
 struct upgrades chest;
 struct Projectile Projectiles[MAX_PROJECTILE];
 

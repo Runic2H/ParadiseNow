@@ -5,6 +5,9 @@ char gold[4];
 char max[4];
 char score[4];
 
+CP_Sound Character_DMG = NULL;
+CP_Sound Character_Death = NULL;
+
 void c_CharacterInit(void)
 {
 	player.alive = TRUE;
@@ -20,6 +23,8 @@ void c_CharacterInit(void)
 	player.damageCooldown = 0.f;
 	player.shield = 0;
 	player.damageTaken = 0;
+  Character_DMG = CP_Sound_LoadMusic("./Sounds/dmg to char.wav");
+	Character_Death = CP_Sound_LoadMusic("./Sounds/Boss Death.wav");
 }
 
 void c_CharacterWASD()
@@ -119,6 +124,7 @@ void playerCollide(float objPositionX, float objPositionY) {
 				if (player.shield != 1)
 				{
 					player.health -= 1;
+					CP_Sound_Play(Character_DMG);
 					player.damageCooldown = .75f;
 					player.damageTaken = .75f;
 				}
@@ -132,6 +138,28 @@ void playerCollide(float objPositionX, float objPositionY) {
 				continue;
 		}
 	}
+	//Collision w boss
+	for (int i = 0; i < MAX_BOSS; i++) {
+		if (Boss[i].AliveDead == 1) {
+			if (is_PlayerColliding(Boss[i].boss_posX, Boss[i].boss_posY, 27.5f,
+				objPositionX, objPositionY, 50.f) && player.damageCooldown <= 0.f) {
+
+				if (player.shield != 1)
+				{
+					player.health -= 2;
+					player.damageCooldown = .5f;
+				}
+				else
+				{
+					player.shield = 0;
+					player.damageCooldown = 2.0f;
+				}
+			}
+			else
+				continue;
+		}
+	}
+
 	player.damageCooldown -= CP_System_GetDt();
 	player.damageTaken -= CP_System_GetDt();
 }
