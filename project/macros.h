@@ -54,7 +54,7 @@
 
 #define chestCount 2
 
-#define chestSize 30.f
+#define chestSize 100.f
 
 #define c_defaultSize 20.f
 
@@ -111,9 +111,25 @@ float timerStart;
 float duration;
 float min_y;
 float max_y;
+float min_size;
+float max_size;
 
 static float EaseInSine(float start, float end, float value)
 {
 	end -= start;
 	return -end * cosf(value * (PI * 0.5f)) + end + start;
+}
+
+static float EaseInOutQuad(float start, float end, float value)
+{
+	value /= .5f;
+	end -= start;
+	if (value < 1) return end * 0.5f * value * value + start;
+	value--;
+	return -end * 0.5f * (value * (value - 2) - 1) + start;
+}
+
+static float Linear(float start, float end, float value)
+{
+	return (1.f - value) * start + value * end;
 }

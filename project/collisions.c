@@ -10,7 +10,7 @@ int is_ProjectileColliding(float enemyX, float enemyY, float enemySize, float pr
 
 int is_ChestColliding(float chestX, float chestY, float chestWidth, float playerX, float playerY, float playerSize)
 {
-	return (chestX < playerX + playerSize)
+	return (chestX < (playerX + playerSize))
 		&& ((chestX + chestWidth) > playerX)
 		&& (chestY < (playerY + playerSize))
 		&& ((chestY + chestWidth) > playerY);

@@ -89,6 +89,8 @@ void game_init(void)
 	duration = 1.f;
 	min_y = 150.f;
 	max_y = 100.f;
+	min_size = 20.f;
+	max_size = 30.f;
 
 	//images
 	background = CP_Image_Load("./images/background2.png");
@@ -108,6 +110,7 @@ void game_update(void)
 	if (timerStart >= duration) {
 		timerStart = 0.f;
 		SWAP(float, min_y, max_y);
+		SWAP(float, min_size, max_size);
 	}
 	
 	if (pause == FALSE) 

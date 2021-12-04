@@ -17,8 +17,9 @@ void c_CharacterInit(void)
 	player.attack = 1;
 	player.health = player.MAXhealth;
 	player.multishot = 1;
-	player.damageCooldown = 1.0f;
+	player.damageCooldown = 0.f;
 	player.shield = 0;
+	player.damageTaken = 0;
 }
 
 void c_CharacterWASD()
@@ -109,15 +110,6 @@ void c_CharacterMouse()
 	}
 }
 
-void c_renderPlayer(CP_Image mage, CP_Image energyshield)
-{
-	//CP_Settings_Fill(color_white);
-	if (player.shield == 1) {
-		CP_Image_Draw(energyshield, player.positionX, player.positionY, 56, 56, 255);
-	}
-		CP_Image_Draw(mage, player.positionX, player.positionY, 56, 56, 255);
-}
-
 void playerCollide(float objPositionX, float objPositionY) {
 	for (int i = 0; i < MAX_ENEMIES; i++) {
 		if (Enemies[i].AliveDead == 1) {
@@ -127,7 +119,8 @@ void playerCollide(float objPositionX, float objPositionY) {
 				if (player.shield != 1)
 				{
 					player.health -= 1;
-					player.damageCooldown = .5f;
+					player.damageCooldown = .75f;
+					player.damageTaken = .75f;
 				}
 				else
 				{
@@ -140,11 +133,19 @@ void playerCollide(float objPositionX, float objPositionY) {
 		}
 	}
 	player.damageCooldown -= CP_System_GetDt();
+	player.damageTaken -= CP_System_GetDt();
+}
+
+void c_renderPlayer(CP_Image mage, CP_Image energyshield)
+{
+	if (player.shield == 1) {
+		CP_Image_Draw(energyshield, player.positionX, player.positionY, 56, 56, 255);
+	}
+	CP_Image_Draw(mage, player.positionX, player.positionY, 56, 56, 255);
 }
 
 void c_renderHUD(void)
 {
-
 	if (player.shield == 1)
 	{
 		CP_Settings_TextSize(40.0f);
@@ -161,6 +162,13 @@ void c_renderHUD(void)
 	CP_Font_DrawTextBox("/", 165.f, 650.f, 10.f);
 	CP_Font_DrawTextBox(max, 190.f, 650.0f, 50.f);
 
+	//To implement danger health low sign use the values given
+	if (player.health <= 3)
+	{
+		CP_Graphics_DrawRect(250.f, 620.0f, Linear(min_size, max_size, timerStart / duration), 
+		Linear(min_size, max_size, timerStart / duration));
+	}
+
 	snprintf(gold, 4, "%d", player.gold);
 	CP_Settings_TextSize(40.0f);
 	CP_Settings_Fill(color_yellow);
@@ -171,6 +179,11 @@ void c_renderHUD(void)
 	CP_Settings_TextSize(40.0f);
 	CP_Settings_Fill(color_white);
 	CP_Font_DrawTextBox("Score:", 10.f, 100.f, 150.f);
-	CP_Font_DrawTextBox(score, 125.f, 100.f, 1000.f);
-}
+	CP_Font_DrawTextBox(score, 125.f, 100.f, 500.f);
 
+	if (player.damageCooldown > 0 && player.damageTaken > 0)
+	{
+		CP_Settings_TextSize(30.0f);
+		CP_Font_DrawText("-1", player.positionX, Linear(player.positionY, player.positionY - 25.f, (timerStart / duration)));
+	}
+}

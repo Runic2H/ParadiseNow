@@ -17,11 +17,11 @@ void chest_SpawnCheck(void)
 {
 	if (is_ChestColliding(chest.posX, chest.posY, chest.diameter, player.positionX, player.positionY, 20.f))
 	{
-		if (CP_Input_KeyTriggered(KEY_SPACE) && player.gold >= 25 && chest.cooldown <= 0.f)
+		if (player.gold >= 55 && chest.cooldown <= 0.f)
 		{
 			chest.cooldown = 2.f;
 			add_skill(chest.skill);
-			player.gold -= 25;
+			player.gold -= 55;
 			if (player.gold < 0)
 			{
 				player.gold = 0;
@@ -29,7 +29,7 @@ void chest_SpawnCheck(void)
 			chest.alive = FALSE;
 		}
 	}
-	if (global_timing != 0 && global_timing % 15 == 0)
+	if (global_timing != 0 && global_timing % 45 == 0)
 	{
 		chest.alive = FALSE;
 	};
@@ -44,15 +44,10 @@ void render_Chest(float posX, float posY, float diameter, CP_Image chestZ)
 		CP_Settings_Fill(color_white);
 		if (is_ChestColliding(chest.posX, chest.posY, chest.diameter, player.positionX, player.positionY, 20.f))
 		{
-			if (player.gold < 25)
+			if (player.gold < 75)
 			{
 				CP_Settings_TextSize(20.f);
-				CP_Font_DrawTextBox("Not Enough Gold (25 gold)", chest.posX - 70.f, chest.posY - 30.f, 250.f);
-			}
-			else if (player.gold >= 25)
-			{
-				CP_Settings_TextSize(20.f);
-				CP_Font_DrawTextBox("Press 'Space' (25 gold)", chest.posX - 65.f, chest.posY - 30.f, 250.f);
+				CP_Font_DrawText("Not Enough Gold! (55 gold)", chest.posX - 100.f, chest.posY - 30.f);
 			}
 		}
 		//CP_Graphics_DrawCircle(chest.posX, chest.posY, chest.diameter);
@@ -95,6 +90,7 @@ void add_skill(int skillno)
 			}
 		}
 		player.damageCooldown = 1.0f;
+		player.damageTaken = 0;
 		break;
 	case SHIELD:
 		player.shield = 1;
@@ -108,6 +104,7 @@ void render_skill(int skillno)
 	if (chest.cooldown >= 0.0f && chest.alive == FALSE)
 	{
 		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		CP_Font_DrawText("Opened!", chest.posX, EaseInSine(chest.posY, chest.posY - 20.f, (timerStart / duration)));
 		if (chest.skill == HEALTH)
 		{
 			CP_Font_DrawText("Health +", (s_windowWidth / 2.f), EaseInSine(min_y, max_y, (timerStart / duration)));
