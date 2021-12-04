@@ -5,6 +5,9 @@ char gold[4];
 char max[4];
 char score[4];
 
+CP_Sound Character_DMG = NULL;
+CP_Sound Character_Death = NULL;
+
 void c_CharacterInit(void)
 {
 	player.alive = TRUE;
@@ -19,6 +22,10 @@ void c_CharacterInit(void)
 	player.multishot = 1;
 	player.damageCooldown = 1.0f;
 	player.shield = 0;
+
+	// load soudns
+	Character_DMG = CP_Sound_LoadMusic("./Sounds/dmg to char.wav");
+	Character_Death = CP_Sound_LoadMusic("./Sounds/Boss Death.wav");
 }
 
 void c_CharacterWASD()
@@ -128,6 +135,7 @@ void playerCollide(float objPositionX, float objPositionY) {
 				{
 					player.health -= 1;
 					player.damageCooldown = .5f;
+					CP_Sound_Play(Character_DMG);
 				}
 				else
 				{

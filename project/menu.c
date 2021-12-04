@@ -14,6 +14,8 @@ void howtoplay_exit(void);
 CP_Image menu = NULL;
 CP_Image digipen = NULL;
 
+CP_Sound menu_music = NULL;
+
 int counter;
 
 
@@ -21,6 +23,9 @@ void menu_init(void) {
 
 	CP_System_SetWindowSize(1280, 720);
 	menu = CP_Image_Load("./images/menubackground.png");
+
+	menu_music = CP_Sound_LoadMusic("./Sounds/menu.wav");
+	CP_Sound_PlayMusic(menu_music);
 }
 
 
@@ -58,4 +63,6 @@ void menu_exit(void) {
 	
 	CP_Image_Free(&menu);
 	CP_Image_Free(&digipen);
+	CP_Sound_Free(&menu_music);
+
 }

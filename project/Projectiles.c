@@ -1,11 +1,13 @@
 #include "macros.h"
 
+CP_Sound woosh = NULL;
 
 void InitProjectiles() {
     for (int i = 0; i < MAX_PROJECTILE; i++) {
         Projectiles[i].isActive = 0;
     }
-
+    //sound init
+    woosh = CP_Sound_LoadMusic("./Sounds/projectile_woosh.wav");
 }
 
 
@@ -62,6 +64,9 @@ void Shoot(float PositionX, float PositionY, float* Cooldown)
                        *Cooldown = 0.20f;
 
                    }
+
+                   //play sound of projectile
+                   CP_Sound_Play(woosh);
                 }
                 break;
             }

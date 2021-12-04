@@ -2,6 +2,8 @@
 
 char skill[4];
 
+CP_Sound chest_open = NULL;
+
 void chest_init(void)
 {
 	chest.alive = TRUE;
@@ -10,6 +12,10 @@ void chest_init(void)
 	chest.diameter = chestSize;
 	chest.skill = CP_Random_RangeInt(HEALTH, SHIELD);
 	chest.cooldown = 0.0f;
+
+
+	// sound init
+	chest_open = CP_Sound_LoadMusic("./Sounds/chest_open.wav");
 }
 
 //Part of render_chest
@@ -27,6 +33,9 @@ void chest_SpawnCheck(void)
 				player.gold = 0;
 			}
 			chest.alive = FALSE;
+
+			//play sound of opening chest
+			CP_Sound_Play(chest_open);
 		}
 	}
 	if (global_timing != 0 && global_timing % 15 == 0)

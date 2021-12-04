@@ -10,6 +10,9 @@ CP_Vector acceleration;
 int global_spawnRanflag;
 int global_BOSS_spawnRanflag;
 
+CP_Sound Slime_Death = NULL;
+CP_Sound Boss_Death = NULL;
+
 float outerlimit_rand(float lower, float upper, float window_heightOrWidth)
 {
 	float p = CP_Random_RangeFloat(lower, upper); //rand number
@@ -120,6 +123,11 @@ void enemy_init_posXY()
 			Boss[j].kill = 0;
 		}
 	}
+
+	//sound init
+	Slime_Death = CP_Sound_LoadMusic("./Sounds/Slime Death.wav");
+	Boss_Death = CP_Sound_LoadMusic("./Sounds/Boss Death.wav");
+	
 }
 
 
@@ -239,6 +247,10 @@ void boss_die(float player_x, float player_y)
 			{
 				continue;
 			}
+			// play boss death sound
+			CP_Sound_Play(Boss_Death);
+
+
 		}
 
 		if (Boss[i].AliveDead == 1)
@@ -270,6 +282,9 @@ void enemy_deadAlive_update(float player_x, float player_y)
 			{
 				continue;
 			}
+
+			// play slime death sound
+			CP_Sound_Play(Slime_Death);
 		}
 
 		if (Enemies[i].AliveDead == 1)
