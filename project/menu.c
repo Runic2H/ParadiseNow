@@ -80,7 +80,6 @@ void menu_update(void) {
 
 void menu_exit(void) {
 	CP_Image_Free(&menu);
-	CP_Image_Free(&digipen);
 	CP_Sound_Free(&menu_music);
 	CP_Image_Free(&options);
 }

@@ -23,7 +23,7 @@ void c_CharacterInit(void)
 	player.damageCooldown = 0.f;
 	player.shield = 0;
 	player.damageTaken = 0;
-  Character_DMG = CP_Sound_LoadMusic("./Sounds/dmg to char.wav");
+	Character_DMG = CP_Sound_LoadMusic("./Sounds/dmg to char.wav");
 	Character_Death = CP_Sound_LoadMusic("./Sounds/Boss Death.wav");
 }
 
@@ -178,7 +178,27 @@ void c_renderHUD(void)
 	{
 		CP_Settings_TextSize(40.0f);
 		CP_Settings_Fill(color_blue);
-		CP_Font_DrawTextBox("Energy Shield", 10.f, 600.f, 400.f);
+		CP_Font_DrawTextBox("Energy Shield", 10.f, 580.f, 400.f);
+	}
+
+	if (player.health != 0)
+	{
+		CP_Settings_Fill(color_white);
+		float lengthMAX = player.MAXhealth * 10.f;
+		CP_Graphics_DrawRect(10.f, 600.f, lengthMAX, 10);
+		if (player.shield == 1)
+		{
+			CP_Settings_Fill(color_blue);
+		}
+		else
+		{
+			CP_Settings_Fill(color_red);
+		}
+		for (int playerHealth = player.health; playerHealth >= 0; playerHealth--)
+		{
+			float length = (float)playerHealth * 10.f;
+			CP_Graphics_DrawRect(10.f, 600.f, length, 10);
+		}
 	}
 
 	snprintf(health, 4, "%d", player.health);

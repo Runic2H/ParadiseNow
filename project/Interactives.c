@@ -53,7 +53,7 @@ void render_Chest(float posX, float posY, float diameter, CP_Image chestZ)
 		CP_Settings_Fill(color_white);
 		if (is_ChestColliding(chest.posX, chest.posY, chest.diameter, player.positionX, player.positionY, 20.f))
 		{
-			if (player.gold < 75)
+			if (player.gold < 55)
 			{
 				CP_Settings_TextSize(20.f);
 				CP_Font_DrawText("Not Enough Gold! (55 gold)", chest.posX - 100.f, chest.posY - 30.f);
@@ -113,7 +113,8 @@ void render_skill(int skillno)
 	if (chest.cooldown >= 0.0f && chest.alive == FALSE)
 	{
 		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		CP_Font_DrawText("Opened!", chest.posX, EaseInSine(chest.posY, chest.posY - 20.f, (timerStart / duration)));
+
+		CP_Font_DrawText("Opened!", chest.posX, Linear(chest.posY, chest.posY - 20.f, (timerStart / duration)));
 		if (chest.skill == HEALTH)
 		{
 			CP_Font_DrawText("Health +", (s_windowWidth / 2.f), EaseInSine(min_y, max_y, (timerStart / duration)));
@@ -134,6 +135,7 @@ void render_skill(int skillno)
 		{
 			CP_Font_DrawText("Energy Shield", (s_windowWidth / 2.f), EaseInSine(min_y, max_y, (timerStart / duration)));
 		}
+
 		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_LEFT, CP_TEXT_ALIGN_V_BASELINE);
 	}
 }

@@ -117,7 +117,7 @@ void enemy_init_posXY()
 			Boss[j].boss_posY = -50.f;
 			Boss[j].AliveDead = 0;
 			Boss[j].speed = 0.f;
-			Boss[j].health = 5;
+			Boss[j].health = 10;
 			Boss[j].collisionWproj = 0;
 			Boss[j].diameter = 55.f;
 			Boss[j].kill = 0;
@@ -141,9 +141,20 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 		{
 			float* fpointerx = &Enemies[i].enemy_posX;
 			float* fpointery = &Enemies[i].enemy_posY;
-			//enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);aa
+			//enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
 			//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
 			CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 28, 28, 255);
+			if (Enemies[i].health != 0)
+			{
+				CP_Settings_Fill(color_white);
+				CP_Graphics_DrawRect(*fpointerx - 10, *fpointery - 20, 25, 10);
+				CP_Settings_Fill(color_red);
+				for (int health = Enemies[i].health; health >= 0; health--)
+				{
+					float length = (float)health * 5.f;
+					CP_Graphics_DrawRect(*fpointerx - 10, *fpointery - 20, length, 10);
+				}
+			}
 		}
 	}
 
@@ -153,6 +164,17 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 		float* bossY = &Boss[j].boss_posY;
 		//enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
 		CP_Image_Draw(bossimage, *bossX, *bossY, 35, 35, 255);
+		if (Boss[j].health != 0)
+		{
+			CP_Settings_Fill(color_white);
+			CP_Graphics_DrawRect(*bossX - 30, *bossY - 30, 50.f, 10.f);
+			for (int health = Boss[j].health; health >= 0; health--)
+			{
+				float length = (float)health * 5.f;
+				CP_Settings_Fill(color_red);
+				CP_Graphics_DrawRect(*bossX - 30, *bossY - 30, length, 10.f);
+			}
+		}
 	}
 
 }
@@ -190,7 +212,6 @@ void enemy_collision()
 					{
 						Enemies[i].health -= player.attack;
 						Projectiles[j].isActive = 0;
-
 					}
 					else
 					{
@@ -382,7 +403,7 @@ void boss_respawn(int every_Xsecs, int no_of_bossToRespawn)
 					}
 					Boss[i].AliveDead = 1; // ALL LIVE
 					Boss[i].speed = CP_Random_RangeFloat(2, 6);
-					Boss[i].health = 5;
+					Boss[i].health = 10;
 					printf("%d", Boss[i].health);
 					Boss[i].collisionWproj = 0;
 					Boss[i].diameter = 55.f;

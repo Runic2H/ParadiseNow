@@ -165,7 +165,6 @@ void game_exit(void)
 	CP_Image_Free(&energyshield);
 	CP_Image_Free(&projectileZ);
 	CP_Image_Free(&chestZ);
-	
 	CP_Sound_Free(&gameplay_music);
 
 	

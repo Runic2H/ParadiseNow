@@ -3,6 +3,8 @@
 #include "cprocessing.h"
 
 CP_Image gameover = NULL;
+char score[4];
+char surv_time[4];
 
 void game_init(void);
 void game_update(void);
@@ -24,7 +26,6 @@ void gameover_init(void) {
 
 
 void gameover_update(void) {
-
 
 	CP_Image_Draw(gameover, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
 
@@ -54,13 +55,23 @@ void gameover_update(void) {
 
 
 	//draw
+
+	snprintf(score, 4, "%d", player.score);
+	snprintf(surv_time, 4, "%d", getTimeSpent(global_timing));
+
 	CP_Settings_Fill(button_box);
+	CP_Graphics_DrawRect(290.0f, 270.0f, 215.0f, 40.0f);
+	CP_Graphics_DrawRect(790.0f, 270.0f, 215.0f, 40.0f);
 	CP_Graphics_DrawRect(290.0f, 320.0f, 215.0f, 40.0f);
 	CP_Graphics_DrawRect(540.0f, 320.0f, 215.0f, 40.0f);
 	CP_Graphics_DrawRect(790.0f, 320.0f, 215.0f, 40.0f);
 
 	CP_Settings_Fill(color_buttons);
 	CP_Settings_TextSize(35.0f);
+	CP_Font_DrawTextBox("SCORE: ", 300.0f, 300.0f, 300.0f);
+	CP_Font_DrawText(score, 400.f, 300.f);
+	CP_Font_DrawTextBox("TIME(s): ", 800.0f, 300.0f, 300.0f);
+	CP_Font_DrawText(surv_time, 920.f, 300.f);
 	CP_Font_DrawTextBox("TUTORIAL", 320.0f, 350.0f, 300.0f);
 	CP_Font_DrawTextBox("RESTART", 570.0f, 350.0f, 300.0f);
 	CP_Font_DrawTextBox("MAIN MENU", 820.0f, 350.0f, 300.0f);
