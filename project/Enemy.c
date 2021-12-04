@@ -147,12 +147,12 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 			if (Enemies[i].health != 0)
 			{
 				CP_Settings_Fill(color_white);
-				CP_Graphics_DrawRect(*fpointerx - 10, *fpointery - 20, 25, 10);
+				CP_Graphics_DrawRect(*fpointerx - 12, *fpointery - 25, 25, 10);
 				CP_Settings_Fill(color_red);
 				for (int health = Enemies[i].health; health >= 0; health--)
 				{
 					float length = (float)health * 5.f;
-					CP_Graphics_DrawRect(*fpointerx - 10, *fpointery - 20, length, 10);
+					CP_Graphics_DrawRect(*fpointerx - 12, *fpointery - 25, length, 10);
 				}
 			}
 		}
@@ -167,12 +167,12 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 		if (Boss[j].health != 0)
 		{
 			CP_Settings_Fill(color_white);
-			CP_Graphics_DrawRect(*bossX - 30, *bossY - 30, 50.f, 10.f);
+			CP_Graphics_DrawRect(*bossX - 25, *bossY - 30, 50.f, 10.f);
 			for (int health = Boss[j].health; health >= 0; health--)
 			{
 				float length = (float)health * 5.f;
 				CP_Settings_Fill(color_red);
-				CP_Graphics_DrawRect(*bossX - 30, *bossY - 30, length, 10.f);
+				CP_Graphics_DrawRect(*bossX - 25, *bossY - 30, length, 10.f);
 			}
 		}
 	}
