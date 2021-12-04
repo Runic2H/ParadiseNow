@@ -16,14 +16,15 @@
 
 
 /* Forward declarations */
-void menu_init(void);
-void menu_update(void);
-void menu_exit(void);
+void digipen_init(void);
+void digipen_update(void);
+void digipen_exit(void);
 
 /* Entry point */
 int main(void)
 {
-    CP_Engine_SetNextGameState(menu_init, menu_update, menu_exit);
+    CP_System_ShowConsole();
+    CP_Engine_SetNextGameState(digipen_init, digipen_update, digipen_exit);
     CP_Engine_Run();
     return 0;
 }
