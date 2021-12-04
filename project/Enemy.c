@@ -8,6 +8,7 @@ CP_Vector acceleration;
 // this should be parsed from char.h
 
 int global_spawnRanflag;
+int global_BOSS_spawnRanflag;
 
 float outerlimit_rand(float lower, float upper, float window_heightOrWidth)
 {
@@ -83,26 +84,41 @@ void enemy_init_posXY()
 			Enemies[i].enemy_posY = outerlimit_rand(-50.0f, 50.0f, (float)s_windowHeight);
 	}
 
-	for (int j = 0; j < bosscount; ++j) {
+	for (int j = 0; j < MAX_BOSS; ++j) {
+		
+		if (j < BossInitCount)
+		{
+			//Boss[j].ID = j + 1;
 
-		//Boss[j].ID = j + 1;
+			if (j % 2) {
+				Boss[j].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)s_windowWidth);
+				Boss[j].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)s_windowHeight + 50.0f));
+			}
+			else
+			{
+				Boss[j].boss_posX = CP_Random_RangeFloat(-50.0f, ((float)s_windowHeight + 50.0f));
+				Boss[j].boss_posY = outerlimit_rand(-50.0f, 50.0f, (float)s_windowWidth);
+			}
 
-		if (j % 2) {
-			Boss[j].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)s_windowWidth);
-			Boss[j].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)s_windowHeight + 50.0f));
+			Boss[j].AliveDead = 1;
+			Boss[j].speed = CP_Random_RangeFloat(2, 4);
+			Boss[j].health = 10;
+			Boss[j].collisionWproj = 0;
+			Boss[j].diameter = 95.f;
+			Boss[j].kill = 0;
 		}
+		// no Else function as the rest of the elements are initialized w zero
 		else
 		{
-			Boss[j].boss_posX = CP_Random_RangeFloat(-50.0f, ((float)s_windowHeight + 50.0f));
-			Boss[j].boss_posY = outerlimit_rand(-50.0f, 50.0f, (float)s_windowWidth);
+			Boss[j].boss_posX = -50.f;
+			Boss[j].boss_posY = -50.f;
+			Boss[j].AliveDead = 0;
+			Boss[j].speed = 0.f;
+			Boss[j].health = 5;
+			Boss[j].collisionWproj = 0;
+			Boss[j].diameter = 55.f;
+			Boss[j].kill = 0;
 		}
-
-		Boss[j].AliveDead = 1;
-		Boss[j].speed = CP_Random_RangeFloat(2, 4);
-		Boss[j].health = 10;
-		Boss[j].collisionWproj = 0;
-		Boss[j].diameter = 95.f;
-		Boss[j].kill = 0;
 	}
 }
 
@@ -117,16 +133,16 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 		{
 			float* fpointerx = &Enemies[i].enemy_posX;
 			float* fpointery = &Enemies[i].enemy_posY;
-			//enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
+			//enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);aa
 			//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
 			CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 28, 28, 255);
 		}
 	}
 
-	for (int i = 0; i < bosscount; ++i)
+	for (int j = 0; j < MAX_BOSS; j++)
 	{
-		float* bossX = &Boss[i].boss_posX;
-		float* bossY = &Boss[i].boss_posY;
+		float* bossX = &Boss[j].boss_posX;
+		float* bossY = &Boss[j].boss_posY;
 		//enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
 		CP_Image_Draw(bossimage, *bossX, *bossY, 35, 35, 255);
 	}
@@ -183,7 +199,7 @@ void boss_Collision()
 	for (int j = 0; j < MAX_PROJECTILE; j++)
 	{
 		if (Projectiles[j].isActive == 1) {
-			for (int i = 0; i < bosscount; i++)
+			for (int i = 0; i < MAX_BOSS; i++)
 			{
 				if (Boss[i].AliveDead == 1) {
 					if (is_ProjectileColliding(Boss[i].boss_posX, Boss[i].boss_posY, 50.f, Projectiles[j].Point.x, Projectiles[j].Point.y, 10.f))
@@ -203,9 +219,9 @@ void boss_Collision()
 }
 
 
-void boss_die()
+void boss_die(float player_x, float player_y)
 {
-	for (int i = 0; i < bosscount; i++)
+	for (int i = 0; i < MAX_BOSS; i++)
 	{
 		if (Boss[i].health <= 0)
 		{
@@ -223,6 +239,13 @@ void boss_die()
 			{
 				continue;
 			}
+		}
+
+		if (Boss[i].AliveDead == 1)
+		{
+			float* fpointerx = &Boss[i].boss_posX;
+			float* fpointery = &Boss[i].boss_posY;
+			enemy_vector(player_x, player_y, fpointerx, fpointery, Boss[i].speed);
 		}
 	}
 }
@@ -257,14 +280,16 @@ void enemy_deadAlive_update(float player_x, float player_y)
 		}
 	}
 
-
+	/*
 	for (int i = 0; i < bosscount; ++i)
 	{
 		float* bossX = &Boss[i].boss_posX;
 		float* bossY = &Boss[i].boss_posY;
 		enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
 	}
+	*/
 }
+
 
 void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn) 
 {
@@ -306,6 +331,51 @@ void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn)
 				}
 			}
 			global_spawnRanflag = 1;
+		}
+	}
+}
+
+
+void boss_respawn(int every_Xsecs, int no_of_bossToRespawn)
+{
+	if (global_timing % every_Xsecs != 0)
+	{
+		global_BOSS_spawnRanflag = 0;
+	}
+
+	else if (global_timing != 0 && global_timing % every_Xsecs == 0) // if every_Xsecs == 15, means every 15 secs, this function will execute
+	{
+		if (global_BOSS_spawnRanflag == 0)
+		{
+			printf("Spawn\n");
+			// counting of enemies alive
+			int boss_spawned_count = 0;
+			for (int i = 0; i < MAX_BOSS; i++)
+			{
+				if (Boss[i].AliveDead == 0 && boss_spawned_count < no_of_bossToRespawn)
+				{
+					if (i % 2)
+					{
+						Boss[i].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
+						Boss[i].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowHeight() + 50.0f));
+
+					}
+					else
+					{
+						Boss[i].boss_posX = CP_Random_RangeFloat(-50.0f, ((float)CP_System_GetWindowWidth() + 50.0f));
+						Boss[i].boss_posY = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowHeight());
+					}
+					Boss[i].AliveDead = 1; // ALL LIVE
+					Boss[i].speed = CP_Random_RangeFloat(2, 6);
+					Boss[i].health = 5;
+					printf("%d", Boss[i].health);
+					Boss[i].collisionWproj = 0;
+					Boss[i].diameter = 55.f;
+					Boss[i].kill = 0;
+					boss_spawned_count++;
+				}
+			}
+			global_BOSS_spawnRanflag = 1;
 		}
 	}
 }

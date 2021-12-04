@@ -64,9 +64,10 @@ void checkUpdates(void)
 	chest_SpawnCheck();
 	enemy_collision();
 	boss_Collision();
-	boss_die();
+	boss_die(player.positionX, player.positionY);
 	enemy_deadAlive_update(player.positionX, player.positionY);
 	enemy_respawn(15, 15);
+	boss_respawn(5, 1);
 	you_died();
 }
 
