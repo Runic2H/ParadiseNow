@@ -139,6 +139,28 @@ void playerCollide(float objPositionX, float objPositionY) {
 				continue;
 		}
 	}
+	//Collision w boss
+	for (int i = 0; i < MAX_BOSS; i++) {
+		if (Boss[i].AliveDead == 1) {
+			if (is_PlayerColliding(Boss[i].boss_posX, Boss[i].boss_posY, 27.5f,
+				objPositionX, objPositionY, 50.f) && player.damageCooldown <= 0.f) {
+
+				if (player.shield != 1)
+				{
+					player.health -= 2;
+					player.damageCooldown = .5f;
+				}
+				else
+				{
+					player.shield = 0;
+					player.damageCooldown = 2.0f;
+				}
+			}
+			else
+				continue;
+		}
+	}
+
 	player.damageCooldown -= CP_System_GetDt();
 }
 
