@@ -26,7 +26,7 @@ void digipen_update(void) {
 
 
 	if (hasreachedalpha == 0) {
-		alpha += 200 * CP_System_GetDt();
+		alpha += 100 * CP_System_GetDt();
 		CP_Image_Draw(digipenz, 640.0f, 365.0f, 1280.0f, 735.0f, (int)alpha);
 	}
 

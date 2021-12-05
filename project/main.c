@@ -23,6 +23,7 @@ void digipen_exit(void);
 /* Entry point */
 int main(void)
 {
+    CP_System_ShowConsole();
     CP_Engine_SetNextGameState(digipen_init, digipen_update, digipen_exit);
     CP_Engine_Run();
     return 0;
