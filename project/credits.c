@@ -115,7 +115,7 @@ void credits_update(void) {
 	CP_Font_DrawText(" Programmer - Enemies, collision", 800.0f, 570.0f);
 	CP_Font_DrawText(" Programmer - Graphics, enemies", 800.0f, 470.0f);
 	CP_Font_DrawText(" Programmer - Character skill", 800.0f, 370.0f);
-	CP_Font_DrawText(" Programmer - Character, interactives", 800.0f, 270.0f); //elton
+	CP_Font_DrawText(" Programmer - Character, item interactions", 800.0f, 270.0f); //elton
 
 
 	CP_Image_Draw(elton, 750.0f, 250.0f, 70.0f, 70.0f, 255);

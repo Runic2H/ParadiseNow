@@ -16,7 +16,7 @@
  *
 
 
- * Copyright � 2021 DigiPen, All rights reserved.
+ * Copyright © 2021 DigiPen, All rights reserved.
 * ---------------------------------------------------------*/
 
 #include "macros.h"
@@ -111,8 +111,6 @@ void enemy_init_posXY()
 	{
 		if (i < EnemyInitCount)
 		{
-			//Enemies[i].ID = i + 1;
-
 			if (i % 2)
 			{
 				Enemies[i].enemy_posX = outerlimit_rand(-50.0f, 50.0f, (float)CP_System_GetWindowWidth());
@@ -157,8 +155,6 @@ void enemy_init_posXY()
 
 		if (j < BossInitCount)
 		{
-			//Boss[j].ID = j + 1;
-
 			if (j % 2) {
 				Boss[j].boss_posX = outerlimit_rand(-50.0f, 50.0f, (float)s_windowWidth);
 				Boss[j].boss_posY = CP_Random_RangeFloat(-50.0f, ((float)s_windowHeight + 50.0f));
@@ -200,9 +196,11 @@ void enemy_init_posXY()
 function:	enemy_draw()
 
 author:		Louis Mineo
+			Elton Teo
 
 			enemy_draw() will draw both bosses and enemies for
-			rendering onto the window screen.
+			rendering onto the window screen. Healthbars for enemies
+			and bosses are also rendered here
 
 Return : -
 *//*---------------------------------------------------------------*/
@@ -216,8 +214,6 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 		{
 			float* fpointerx = &Enemies[i].enemy_posX;
 			float* fpointery = &Enemies[i].enemy_posY;
-			//enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
-			//CP_Graphics_DrawCircle(*fpointerx, *fpointery, 15);
 			CP_Image_Draw(imageoverlay, *fpointerx, *fpointery, 28, 28, 255);
 			if (Enemies[i].health != 0)
 			{
@@ -237,7 +233,6 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 	{
 		float* bossX = &Boss[j].boss_posX;
 		float* bossY = &Boss[j].boss_posY;
-		//enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
 		CP_Image_Draw(bossimage, *bossX, *bossY, 35, 35, 255);
 		if (Boss[j].health != 0)
 		{
@@ -284,7 +279,6 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 	position_y = stationaryenemy.y + acceleration.y;
 
 	CP_Settings_Fill(color_blue);
-	//CP_Graphics_DrawCircle(position_x, position_y, 15);
 	CP_Image_Draw(imageoverlay, position_x, position_y, 35, 35, 255);
 }
 
@@ -453,15 +447,6 @@ void enemy_deadAlive_update(float player_x, float player_y)
 			enemy_vector(player_x, player_y, fpointerx, fpointery, Enemies[i].speed);
 		}
 	}
-
-	/*
-	for (int i = 0; i < bosscount; ++i)
-	{
-		float* bossX = &Boss[i].boss_posX;
-		float* bossY = &Boss[i].boss_posY;
-		enemy_vector(player_x, player_y, bossX, bossY, Boss[i].speed);
-	}
-	*/
 }
 
 /*-------------------------FUNCTION HEADER-----------------------*//*
