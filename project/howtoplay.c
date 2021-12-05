@@ -1,3 +1,20 @@
+/*---------------------------------------------------------
+ * file:	game.c
+ *
+ * author:	RICHMOND CHOO TZE YONG
+
+ * email:	r.choo@digipen.edu
+*
+ * brief:	This file contains the page loading sequence
+ *	for the how to play of the game. initialises from the
+ *	main menu and pause menu.
+
+
+ * Copyright © 2021 DigiPen, All rights reserved.
+* ---------------------------------------------------------*/
+
+
+
 #include "macros.h"
 #include <stdio.h>
 #include "cprocessing.h"
