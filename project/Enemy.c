@@ -1,3 +1,24 @@
+/*---------------------------------------------------------
+ * file:	Enemy.c
+ * author:	ELTON TEO ZHE WEI
+			LOUIS MINEO @ LINN MIN HTOO
+			RICHMOND CHOO TZE YONG
+			ABDUL HADI
+
+ * email:	e.teo@digipen.edu
+			louismineo.l@digipen.edu
+			r.choo@digipen.edu
+			abdulhadi.b@digipen.edu
+*
+ * brief:	This file contains the enemy structure of
+ *			our product. It contains all enemy-related functions,
+ *			i.e. their AI logic or rendering.
+ *
+
+
+ * Copyright © 2021 DigiPen, All rights reserved.
+* ---------------------------------------------------------*/
+
 #include "macros.h"
 
 
@@ -13,6 +34,23 @@ int global_BOSS_spawnRanflag;
 CP_Sound Slime_Death = NULL;
 CP_Sound Boss_Death = NULL;
 
+
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	outerlimit_rand()
+
+author:		Louis Mineo
+
+			outerlimit_rand() is used to produce an output of x and y
+			coord. for the enemies's spawn location. Because we want
+			the enemies spawn outside of the screen then slowly make
+			their way to the player, we used will gather the input
+			CP_System_GetWindowHeight, so that the window height and
+			window width is not hardcoded, thus easier for dynamic scalling
+			of the screen size.
+
+
+Return : float value which is an X or Y outside the window
+*//*---------------------------------------------------------------*/
 float outerlimit_rand(float lower, float upper, float window_heightOrWidth)
 {
 	float p = CP_Random_RangeFloat(lower, upper); //rand number
@@ -26,6 +64,17 @@ float outerlimit_rand(float lower, float upper, float window_heightOrWidth)
 	}
 }
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	enemy_vector()
+
+author:		Louis Mineo
+
+			enemy_vector(), this function will create the vector for
+			movement of the enemy entity from its current XY,Y position,
+			to the character's X,Y position.
+
+Return : -
+*//*---------------------------------------------------------------*/
 void enemy_vector(float player_x, float player_y, float* ex, float* ey, float speed) {
 
 	Vectorplayer = CP_Vector_Set(player_x, player_y);
@@ -37,13 +86,29 @@ void enemy_vector(float player_x, float player_y, float* ex, float* ey, float sp
 	*ey = vectorEnemy.y + acceleration.y;
 
 }
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	enemy_init_posXY()
 
+author:		Louis Mineo
+
+			enemy_init_posXY(), this function will initialize the enemy
+			and boss's XY positions, the aliveDead status, speed, health,
+			and other variables within its struct.
+
+			it will only initialize the specific amount of enemies and
+			bosses as defined as EnemyInitCount and BossInitCount, and
+			then and the other enemies and bosses are initialized with
+			the "DEAD" status , and given a position outside the window
+			with speed set as 0 so that they won't move.
+
+Return: -
+*//*---------------------------------------------------------------*/
 void enemy_init_posXY()
 {
 
 	for (int i = 0; i < MAX_ENEMIES; i++)
 	{
-		if(i < EnemyInitCount)
+		if (i < EnemyInitCount)
 		{
 			//Enemies[i].ID = i + 1;
 
@@ -83,12 +148,12 @@ void enemy_init_posXY()
 
 
 		}
-			Enemies[i].enemy_posX = CP_Random_RangeFloat(-50.0f, ((float)s_windowWidth + 50.0f));
-			Enemies[i].enemy_posY = outerlimit_rand(-50.0f, 50.0f, (float)s_windowHeight);
+		Enemies[i].enemy_posX = CP_Random_RangeFloat(-50.0f, ((float)s_windowWidth + 50.0f));
+		Enemies[i].enemy_posY = outerlimit_rand(-50.0f, 50.0f, (float)s_windowHeight);
 	}
 
 	for (int j = 0; j < MAX_BOSS; ++j) {
-		
+
 		if (j < BossInitCount)
 		{
 			//Boss[j].ID = j + 1;
@@ -127,10 +192,19 @@ void enemy_init_posXY()
 	//sound init
 	Slime_Death = CP_Sound_LoadMusic("./Sounds/Slime Death.wav");
 	Boss_Death = CP_Sound_LoadMusic("./Sounds/Boss Death.wav");
-	
+
 }
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	enemy_draw()
 
+author:		Louis Mineo
+
+			enemy_draw() will draw both bosses and enemies for
+			rendering onto the window screen.
+
+Return : -
+*//*---------------------------------------------------------------*/
 void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image bossimage)
 {
 	CP_Settings_Fill(color_red);
@@ -179,7 +253,20 @@ void enemy_draw(float player_x, float player_y, CP_Image imageoverlay, CP_Image 
 
 }
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	stationary_plants()
 
+author:		Richmond Choo
+
+			stationary_plants is for creating the position of the
+			stationary plants within the game screen and they will
+			then be rendered.
+
+			as of now, they serve no purpose, but will do so in
+			future updates, if any.
+
+Return : -
+*//*---------------------------------------------------------------*/
 void stationary_plants(float player_x, float player_y, float stationary_x, float stationary_y, CP_Image imageoverlay) {
 
 	float position_x, position_y;
@@ -199,7 +286,19 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 	//CP_Graphics_DrawCircle(position_x, position_y, 15);
 	CP_Image_Draw(imageoverlay, position_x, position_y, 35, 35, 255);
 }
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	enemy_collision()
 
+author:		Abdul Hadi
+
+			enemy_collision will loop thru the entire array of
+			projectiles and then enemies,find the ones who are still
+			"ALIVE", and check if they are colliding, with is_ProjectileColliding().
+			when it returns true, enemy health is decreased and the
+			projectile is no longer active.
+
+Return : -
+*//*---------------------------------------------------------------*/
 void enemy_collision()
 {
 	for (int j = 0; j < MAX_PROJECTILE; j++)
@@ -222,7 +321,19 @@ void enemy_collision()
 		}
 	}
 }
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	boss_Collision()
 
+author:		Louis Mineo
+
+			boss_collision will loop thru the entire array of projectiles
+			and then bosses,find the ones who are still "ALIVE", and check
+			if they are colliding, with is_ProjectileColliding(). when it
+			returns true, enemy health is decreased and the projectile is
+			no longer active.
+
+Return : -
+*//*---------------------------------------------------------------*/
 void boss_Collision()
 {
 	for (int j = 0; j < MAX_PROJECTILE; j++)
@@ -235,7 +346,7 @@ void boss_Collision()
 					{
 						Boss[i].health -= player.attack;
 						Projectiles[j].isActive = 0;
-						
+
 					}
 					else
 					{
@@ -247,7 +358,18 @@ void boss_Collision()
 	}
 }
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	boss_deadAlive_update()
 
+author:		Louis Mineo
+
+			boss_deadAlive_update() will check the boss's health is
+			less than 0, if it is, its variables are reset to 0 and
+			set to "DEAD" status with 0 speed, and positioned outside
+			the screen.
+
+Return : -
+*//*---------------------------------------------------------------*/
 void boss_die(float player_x, float player_y)
 {
 	for (int i = 0; i < MAX_BOSS; i++)
@@ -282,7 +404,18 @@ void boss_die(float player_x, float player_y)
 		}
 	}
 }
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	enemy_deadAlive_update
 
+author:		Louis Mineo
+
+			enemy_deadAlive_update() will check the enemy's health
+			is less than 0, if it is, its variables are reset to 0.
+			and set to "DEAD" status with 0 speed, and positioned
+			outside the screen.
+
+Return : -
+*//*---------------------------------------------------------------*/
 void enemy_deadAlive_update(float player_x, float player_y)
 {
 	for (int i = 0; i < MAX_ENEMIES; i++)
@@ -326,8 +459,22 @@ void enemy_deadAlive_update(float player_x, float player_y)
 	*/
 }
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	enemy_respawn
 
-void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn) 
+author:		Louis Mineo
+
+			enemy_respawn will get an input of how many enemies to
+			spawn every X seconds. then it will loop thru the enemies
+			array and set the enemies to spawn outside the screen,
+			with various variable amounts like speed.
+
+			it also has a cooldown global_spawnRanflag, that the
+			enemies only spawn once within that Xth second.
+
+Return : -
+*//*---------------------------------------------------------------*/
+void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn)
 {
 	if (global_timing % every_Xsecs != 0)
 	{
@@ -371,7 +518,21 @@ void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn)
 	}
 }
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	enemy_respawn
 
+author:		Louis Mineo
+
+			boss_respawn will get an input of how many bosses to
+			spawn every X seconds. then it will loop thru the bosses
+			array and set the bosses to spawn outside the screen, with
+			various variable amounts like speed.
+
+			it also has a cooldown global_BOSS_spawnRanflag, that the
+			bosses only spawn once within that Xth second.
+
+Return : -
+*//*---------------------------------------------------------------*/
 void boss_respawn(int every_Xsecs, int no_of_bossToRespawn)
 {
 	if (global_timing % every_Xsecs != 0)
