@@ -1,7 +1,34 @@
+/*---------------------------------------------------------
+ * file:	projectiles.c
+
+ * author:	ABDUL HADI
+
+
+ * email:	abdulhadi.b@digipen.edu
+
+ * brief:	This file contains functions related to the
+ *          projectile mechanic of the game. The functions
+ *			will initialize, shoot and render the
+ *			Projectiles
+
+
+ * Copyright © 2021 DigiPen, All rights reserved.
+* ---------------------------------------------------------*/
+
 #include "macros.h"
 
 CP_Sound woosh = NULL;
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	InitProjectiles()
+
+author:	    Abdul Hadi
+
+brief:      InitProjectiles will initialize all the projcetiles with
+            an active status of 0
+
+return:     void
+*//*---------------------------------------------------------------*/
 void InitProjectiles() {
     for (int i = 0; i < MAX_PROJECTILE; i++) {
         Projectiles[i].isActive = 0;
@@ -10,8 +37,20 @@ void InitProjectiles() {
     woosh = CP_Sound_LoadMusic("./Sounds/projectile_woosh.wav");
 }
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	Shoot(float PositionX, float PositionY, float* Cooldown)
 
+author:	    Abdul Hadi
 
+brief:      Shoot will create a projectile at the player mouse position
+            if the left mouse button is pressed. It has a cooldown
+            of 0.2 seconds.
+
+            If the player has multishot, it will also create projectiles
+            with the use of rotation from the main projectile.
+
+return:     void
+*//*---------------------------------------------------------------*/
 void Shoot(float PositionX, float PositionY, float* Cooldown)
 {
     
@@ -82,6 +121,17 @@ void Shoot(float PositionX, float PositionY, float* Cooldown)
 
 }
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	DrawProjectile(CP_Image projectileZ)
+
+author:	    Abdul Hadi
+
+brief:      DrawProjectile will render all the active projectiles each
+            frame. If the projectile position exceeds the window height
+            or width, it ill be cleared and changed to inactive.
+
+return:     void
+*//*---------------------------------------------------------------*/
 void DrawProjectile(CP_Image projectileZ) {
     for (int i = 0; i < MAX_PROJECTILE; i++) {
 
@@ -100,8 +150,6 @@ void DrawProjectile(CP_Image projectileZ) {
                 Projectiles[i].isActive = 0;
                 continue;
             }
-
-
         }
 
     }

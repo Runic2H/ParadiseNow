@@ -77,7 +77,7 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 
 void enemy_deadAlive_update(float player_x, float player_y);
 
-void boss_die(float player_x, float player_y);
+void boss_deadAlive_update(float player_x, float player_y);
 
 void boss_Collision();
 

@@ -16,7 +16,7 @@
  *
 
 
- * Copyright © 2021 DigiPen, All rights reserved.
+ * Copyright ï¿½ 2021 DigiPen, All rights reserved.
 * ---------------------------------------------------------*/
 
 #include "macros.h"
@@ -86,6 +86,7 @@ void enemy_vector(float player_x, float player_y, float* ex, float* ey, float sp
 	*ey = vectorEnemy.y + acceleration.y;
 
 }
+
 /*-------------------------FUNCTION HEADER-----------------------*//*
 function:	enemy_init_posXY()
 
@@ -286,6 +287,7 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 	//CP_Graphics_DrawCircle(position_x, position_y, 15);
 	CP_Image_Draw(imageoverlay, position_x, position_y, 35, 35, 255);
 }
+
 /*-------------------------FUNCTION HEADER-----------------------*//*
 function:	enemy_collision()
 
@@ -321,6 +323,7 @@ void enemy_collision()
 		}
 	}
 }
+
 /*-------------------------FUNCTION HEADER-----------------------*//*
 function:	boss_Collision()
 
@@ -367,10 +370,11 @@ author:		Louis Mineo
 			less than 0, if it is, its variables are reset to 0 and
 			set to "DEAD" status with 0 speed, and positioned outside
 			the screen.
-
+      
 Return : -
 *//*---------------------------------------------------------------*/
-void boss_die(float player_x, float player_y)
+void boss_deadAlive_update(float player_x, float player_y)
+
 {
 	for (int i = 0; i < MAX_BOSS; i++)
 	{
@@ -404,6 +408,7 @@ void boss_die(float player_x, float player_y)
 		}
 	}
 }
+
 /*-------------------------FUNCTION HEADER-----------------------*//*
 function:	enemy_deadAlive_update
 
