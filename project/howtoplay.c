@@ -9,11 +9,34 @@ void menu_update(void);
 void menu_exit(void);
 
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function: void howtoplay_init(void)
+
+author: Richmond Choo
+
+brief: loads an image into the variable. to be used in later
+	functions.
+
+return:	void
+*//*---------------------------------------------------------------*/
 void howtoplay_init(void) {
 
 	howtoplay = CP_Image_Load("./images/howtoplay.png");
 }
 
+
+
+
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function: void howtoplay_update(void)
+
+author: Richmond Choo
+
+brief: draws the image loaded from the previous function
+	sets up a button with collision detection, implementation
+
+return: void
+*//*---------------------------------------------------------------*/
 void howtoplay_update(void) {
 
 
@@ -41,6 +64,18 @@ void howtoplay_update(void) {
 
 }
 
+
+
+
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function: void howtoplay_exit(void)
+
+author: Richmond Choo
+
+brief: frees up the memory used by the image. cleans up the file nicely
+
+return:	void
+*//*---------------------------------------------------------------*/
 void howtoplay_exit(void) {
 
 	CP_Image_Free(&howtoplay);
