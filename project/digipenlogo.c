@@ -1,14 +1,8 @@
 /*---------------------------------------------------------
  * file:	digipenlogo.c
- * author:	ELTON TEO ZHE WEI
-			LOUIS MINEO @ LINN MIN HTOO
-			RICHMOND CHOO TZE YONG
-			ABDUL HADI
+ * author:	RICHMOND CHOO TZE YONG
 
- * email:	e.teo@digipen.edu
-			louismineo.l@digipen.edu
-			r.choo@digipen.edu
-			abdulhadi.b@digipen.edu
+ * email:	r.choo@digipen.edu
 *
  * brief:	This file contains logic behind the game's starting
  *			sequence containing the school's logo

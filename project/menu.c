@@ -1,3 +1,24 @@
+/*---------------------------------------------------------
+ * file:	game.c
+ *
+ * author:	LOUIS MINEO @ LINN MIN HTOO
+			RICHMOND CHOO TZE YONG
+
+ * email:	louismineo.l@digipen.edu
+			r.choo@digipen.edu
+*
+ * brief:	This file contains the main menu loading sequence
+ *	that is launched right after digipenlogo.c
+ *  is used to launch more sequences such as
+ * - credits.c
+ * - howtoplay.c
+ * - game.c
+
+
+ * Copyright © 2021 DigiPen, All rights reserved.
+* ---------------------------------------------------------*/
+
+
 #include <stdio.h>
 #include "cprocessing.h"
 #include "macros.h"

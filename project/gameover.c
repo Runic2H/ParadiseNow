@@ -50,7 +50,7 @@ author:		Richmond Choo
 			as it can change the game state to howtoplay, game_init
 			or menu_init
 
-Return : -
+Return : void
 *//*---------------------------------------------------------------*/
 void gameover_init(void) {
 	gameover = CP_Image_Load("./images/gameover.png");
@@ -68,7 +68,7 @@ author:		Richmond Choo
 			as it can change the game state to howtoplay, game_init
 			or menu_init
 
-Return : -
+Return : void
 *//*---------------------------------------------------------------*/
 void gameover_update(void) {
 
@@ -129,7 +129,7 @@ author:		Richmond Choo
 
 			gameover_exit frees the image from memory
 
-Return : -
+Return : void
 *//*---------------------------------------------------------------*/
 void gameover_exit(void) {
 

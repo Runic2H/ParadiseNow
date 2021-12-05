@@ -1,3 +1,19 @@
+/*---------------------------------------------------------
+ * file:	credits.c
+ *
+ * author:  RICHMOND CHOO TZE YONG
+
+ * email:	r.choo@digipen.edu
+*
+ * brief:	This file contains the loading page for the credits
+ *	when it is initialised from the main menu
+
+
+ * Copyright © 2021 DigiPen, All rights reserved.
+* ---------------------------------------------------------*/
+
+
+
 #include "macros.h"
 #include "cprocessing.h"
 #include <stdio.h>
