@@ -13,6 +13,9 @@ CP_Image projectileZ = NULL;
 CP_Image chestZ = NULL;
 
 
+CP_Sound gameplay_music = NULL;
+
+
 void gameover_init(void);
 void gameover_update(void);
 void gameover_exit(void);
@@ -21,6 +24,7 @@ void you_died(void)
 {
 	if (player.health <= 0)
 	{
+		CP_Sound_StopAll();
 		CP_Engine_SetNextGameState(gameover_init, gameover_update, gameover_exit);
 	}
 }
@@ -52,6 +56,7 @@ void render(void)
 	//pause
 	if (pause == TRUE) 
 	{
+		
 		render_pause_menu();
 	}
 }
@@ -64,9 +69,10 @@ void checkUpdates(void)
 	chest_SpawnCheck();
 	enemy_collision();
 	boss_Collision();
-	boss_die();
+	boss_die(player.positionX, player.positionY);
 	enemy_deadAlive_update(player.positionX, player.positionY);
 	enemy_respawn(15, 15);
+	boss_respawn(5, 1);
 	you_died();
 }
 
@@ -89,6 +95,8 @@ void game_init(void)
 	duration = 1.f;
 	min_y = 150.f;
 	max_y = 100.f;
+	min_size = 20.f;
+	max_size = 30.f;
 
 	//images
 	background = CP_Image_Load("./images/background2.png");
@@ -99,6 +107,10 @@ void game_init(void)
 	energyshield = CP_Image_Load("./images/magebubble.png");
 	projectileZ = CP_Image_Load("./images/projectile.png");
 	chestZ = CP_Image_Load("./images/chest.png");
+
+	//sounds
+	gameplay_music = CP_Sound_LoadMusic("./Sounds/gameplay.wav");
+	CP_Sound_PlayMusic(gameplay_music);
 }
 
 
@@ -108,6 +120,7 @@ void game_update(void)
 	if (timerStart >= duration) {
 		timerStart = 0.f;
 		SWAP(float, min_y, max_y);
+		SWAP(float, min_size, max_size);
 	}
 	
 	if (pause == FALSE) 
@@ -152,4 +165,7 @@ void game_exit(void)
 	CP_Image_Free(&energyshield);
 	CP_Image_Free(&projectileZ);
 	CP_Image_Free(&chestZ);
+	CP_Sound_Free(&gameplay_music);
+
+	
 }

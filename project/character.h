@@ -14,6 +14,7 @@ struct c_CharacterStats
 	float diameter;
 	float damageCooldown;
 	int shield;
+	float damageTaken;
 };
 
 void c_CharacterWASD(void);
@@ -27,5 +28,4 @@ void c_CharacterInit(void);
 void playerCollide(float objPositionX, float objPositionY);
 
 void c_renderHUD(void);
-
 

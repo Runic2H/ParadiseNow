@@ -56,10 +56,12 @@ void stationary_plants(float player_x, float player_y, float stationary_x, float
 
 void enemy_deadAlive_update(float player_x, float player_y);
 
-void boss_die();
+void boss_die(float player_x, float player_y);
 
 void boss_Collision();
 
 void enemy_collision();
 
 void enemy_respawn(int every_Xsecs, int no_of_enemiesToRespawn);
+
+void boss_respawn(int every_Xsecs, int no_of_bossToRespawn);
