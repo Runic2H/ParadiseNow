@@ -147,7 +147,9 @@ void playerCollide(float objPositionX, float objPositionY) {
 				if (player.shield != 1)
 				{
 					player.health -= 2;
+					CP_Sound_Play(Character_DMG);
 					player.damageCooldown = .5f;
+					player.damageTaken = .5f;
 				}
 				else
 				{
@@ -238,6 +240,6 @@ void c_renderHUD(CP_Image warning)
 	if (player.damageCooldown > 0 && player.damageTaken > 0)
 	{
 		CP_Settings_TextSize(30.0f);
-		CP_Font_DrawText("-1", player.positionX, Linear(player.positionY, player.positionY - 25.f, (timerStart / duration)));
+		CP_Font_DrawText("Argh!", player.positionX, Linear(player.positionY, player.positionY - 25.f, (timerStart / duration)));
 	}
 }

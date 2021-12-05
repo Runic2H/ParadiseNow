@@ -56,7 +56,7 @@ void credits_update(void) {
 	CP_Font_DrawText(" Lead developer in enemy implementation, spawn, and enemy implementation.", 800.0f, 570.0f);
 	CP_Font_DrawText(" Centered on the graphics implementation, enemy application.", 800.0f, 470.0f);
 	CP_Font_DrawText(" Aimed at character skills, and bug fixes.", 800.0f, 370.0f);
-	CP_Font_DrawText(" Spearheaded character to enemy, and character to ambient interaction.", 800.0f, 270.0f);
+	CP_Font_DrawText(" Spearheaded character to enemy, and character to ambient interactions.", 800.0f, 270.0f);
 
 	CP_Image_Draw(elton, 750.0f, 250.0f, 70.0f, 70.0f, 255);
 	CP_Image_Draw(hadi, 750.0f, 350.0f, 70.0f, 70.0f, 255);
