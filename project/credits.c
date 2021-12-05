@@ -36,8 +36,8 @@ void credits_update(void) {
 	CP_Settings_Fill(color_white);
 	CP_Settings_TextSize(25.0f);
 	CP_Font_DrawText("  President: Claude Comair", 100.0f, 80.0f);
-	CP_Font_DrawText("Instructors: Chen Ding Xiang - role", 100.0f, 150.0f);
-	CP_Font_DrawText("                       Gerald Wong - role", 100.0f, 200.0f);
+	CP_Font_DrawText("Instructors: Chen Ding Xiang - Professor", 100.0f, 150.0f);
+	CP_Font_DrawText("                       Gerald Wong - Professor", 100.0f, 200.0f);
 
 	CP_Settings_TextSize(30.0f);
 	CP_Settings_Fill(color_buttons);
@@ -53,10 +53,10 @@ void credits_update(void) {
 
 
 	CP_Settings_TextSize(15.0f);
-	CP_Font_DrawText(" lead developer in enemy implementation, spawn, and implementation", 800.0f, 570.0f);
-	CP_Font_DrawText(" centered on the graphics implementation, enemy application", 800.0f, 470.0f);
-	CP_Font_DrawText("aimed at character skills, and bug fixes", 800.0f, 370.0f);
-	CP_Font_DrawText("spearheaded character - enemy and character - ambient implementation", 800.0f, 270.0f);
+	CP_Font_DrawText(" Lead developer in enemy implementation, spawn, and enemy implementation.", 800.0f, 570.0f);
+	CP_Font_DrawText(" Centered on the graphics implementation, enemy application.", 800.0f, 470.0f);
+	CP_Font_DrawText(" Aimed at character skills, and bug fixes.", 800.0f, 370.0f);
+	CP_Font_DrawText(" Spearheaded character to enemy, and character to ambient interaction.", 800.0f, 270.0f);
 
 	CP_Image_Draw(elton, 750.0f, 250.0f, 70.0f, 70.0f, 255);
 	CP_Image_Draw(hadi, 750.0f, 350.0f, 70.0f, 70.0f, 255);

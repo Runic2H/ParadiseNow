@@ -11,6 +11,7 @@ CP_Image Mage = NULL;
 CP_Image energyshield = NULL;
 CP_Image projectileZ = NULL;
 CP_Image chestZ = NULL;
+CP_Image warning = NULL;
 
 
 CP_Sound gameplay_music = NULL;
@@ -38,7 +39,7 @@ void render(void)
 {
 	CP_Image_Draw(background, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
 	c_renderPlayer(Mage, energyshield);
-	c_renderHUD();
+	c_renderHUD(warning);
 	DrawProjectile(projectileZ);
 	timer(begin);
 	enemy_draw(player.positionX, player.positionY, genericenemy, boss);
@@ -107,6 +108,7 @@ void game_init(void)
 	energyshield = CP_Image_Load("./images/magebubble.png");
 	projectileZ = CP_Image_Load("./images/projectile.png");
 	chestZ = CP_Image_Load("./images/chest.png");
+	warning = CP_Image_Load("./images/warning.png");
 
 	//sounds
 	gameplay_music = CP_Sound_LoadMusic("./Sounds/gameplay.wav");
@@ -165,6 +167,7 @@ void game_exit(void)
 	CP_Image_Free(&energyshield);
 	CP_Image_Free(&projectileZ);
 	CP_Image_Free(&chestZ);
+	CP_Image_Free(&warning);
 	CP_Sound_Free(&gameplay_music);
 
 	

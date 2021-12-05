@@ -27,5 +27,5 @@ void c_CharacterInit(void);
 
 void playerCollide(float objPositionX, float objPositionY);
 
-void c_renderHUD(void);
+void c_renderHUD(CP_Image warning);
 

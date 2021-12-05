@@ -172,7 +172,7 @@ void c_renderPlayer(CP_Image mage, CP_Image energyshield)
 	CP_Image_Draw(mage, player.positionX, player.positionY, 56, 56, 255);
 }
 
-void c_renderHUD(void)
+void c_renderHUD(CP_Image warning)
 {
 	if (player.shield == 1)
 	{
@@ -213,8 +213,14 @@ void c_renderHUD(void)
 	//To implement danger health low sign use the values given
 	if (player.health <= 3)
 	{
-		CP_Graphics_DrawRect(250.f, 620.0f, Linear(min_size, max_size, timerStart / duration), 
-		Linear(min_size, max_size, timerStart / duration));
+		//CP_Graphics_DrawRect(250.f, 620.0f, Linear(min_size, max_size, timerStart / duration), 
+		//Linear(min_size, max_size, timerStart / duration));
+		CP_Image_Draw(warning, 260.0f, 660.0f, Linear(min_size+80.0f, max_size+80.0f, timerStart / duration),
+			Linear(min_size+80.0f, max_size+80.0f, timerStart / duration), 255);
+
+
+		//CP_Image_Draw(warning, 250.0f, 660.0f, Linear(85.0f, 100.0f, timerStart / duration),
+		//	Linear(85.0f, 100.0f, timerStart / duration), 255);
 	}
 
 	snprintf(gold, 4, "%d", player.gold);
