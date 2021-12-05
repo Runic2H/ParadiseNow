@@ -248,7 +248,7 @@ void boss_Collision()
 }
 
 
-void boss_die(float player_x, float player_y)
+void boss_deadAlive_update(float player_x, float player_y)
 {
 	for (int i = 0; i < MAX_BOSS; i++)
 	{

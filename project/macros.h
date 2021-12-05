@@ -1,5 +1,33 @@
 /* Header file for macros */
+/*---------------------------------------------------------
+ * file:	macros.h
 
+ * author:	ELTON TEO ZHE WEI
+			LOUIS MINEO @ LINN MIN HTOO
+			RICHMOND CHOO TZE YONG
+			ABDUL HADI
+
+ * email:	e.teo@digipen.edu
+			louismineo.l@digipen.edu
+			r.choo@digipen.edu
+			abdulhadi.b@digipen.edu
+
+ * brief:	This file contains all preprocessor declarations
+ *			required for the game to run. Any other #define
+ *			functions required is also placed here as well
+ *			as a global variable for time, several static
+ *			functions for easein animations and all struct
+ *			objects declared
+
+
+ * Copyright © 2021 DigiPen, All rights reserved.
+* ---------------------------------------------------------*/
+
+/*-------------------------FUNCTION HEADER-----------------------*//*
+	Preprocessor declarations
+	#include...
+
+*//*---------------------------------------------------------------*/
 #include <stdio.h>
 
 #include "cprocessing.h"
@@ -22,6 +50,10 @@
 
 #include "collisions.h"
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+	All #define operations
+
+*//*---------------------------------------------------------------*/
 #define color_green CP_Color_Create(0,255,0,255)
 
 #define color_black CP_Color_Create(0, 0, 0, 255)
@@ -79,6 +111,10 @@ void menu_init(void);
 void menu_update(void);
 void menu_exit(void);
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+	enum lists for controlScheme and skills
+
+*//*---------------------------------------------------------------*/
 enum controlScheme { WASD, MOUSE };
 
 enum skills 
@@ -91,9 +127,12 @@ enum skills
 	//Add skills to list
 };
 
-/* Timer functions, timing is used as a global variable for 
-use for any time related activities */    
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+	Timer functions, timing is used as a global variable for 
+	use for any time related activities   
+
+*//*---------------------------------------------------------------*/
 int global_timing;
 
 void timer(clock_t begin);
@@ -101,16 +140,21 @@ void render_clock(double time_spent);
 int getTimeSpent(int time);
 void render_pause_menu(void);
 
-//Struct init
+/*-------------------------FUNCTION HEADER-----------------------*//*
+	Struct Initialisation
 
+*//*---------------------------------------------------------------*/
 struct c_CharacterStats player;
 struct Enemy Enemies[MAX_ENEMIES];
 struct Boss Boss[MAX_BOSS];
 struct upgrades chest;
 struct Projectile Projectiles[MAX_PROJECTILE];
 
-//Easein Functions
+/*-------------------------FUNCTION HEADER-----------------------*//*
+	Timer functions, timing is used as a global variable for
+	use for any time related activities
 
+*//*---------------------------------------------------------------*/
 float timerStart;
 float duration;
 float min_y;
@@ -118,6 +162,10 @@ float max_y;
 float min_size;
 float max_size;
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+	Easein functions
+
+*//*---------------------------------------------------------------*/
 static float EaseInSine(float start, float end, float value)
 {
 	end -= start;

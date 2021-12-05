@@ -1,10 +1,18 @@
 /*---------------------------------------------------------
  * file:	main.c
- * author:	[NAME]
- * email:	[DIGIPEN EMAIL ADDRESS]
+
+ * author:	ELTON TEO ZHE WEI
+			LOUIS MINEO @ LINN MIN HTOO
+			RICHMOND CHOO TZE YONG
+			ABDUL HADI
+
+ * email:	e.teo@digipen.edu
+ 			louismineo.l@digipen.edu
+			r.choo@digipen.edu
+			abdulhadi.b@digipen.edu
 * 
  * brief:	Main entry point for the sample project
-			* of the CProcessing library
+			Slime Rush of the CProcessing library
 * 
  * documentation link:
  * https://inside.digipen.edu/main/GSDP:GAM100/CProcessing
