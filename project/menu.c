@@ -75,7 +75,6 @@ void menu_update(void) {
 }
 
 void menu_exit(void) {
-	
 	CP_Image_Free(&menu);
 	CP_Image_Free(&options);
 }
