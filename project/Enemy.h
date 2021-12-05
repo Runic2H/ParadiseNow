@@ -1,10 +1,31 @@
+/*---------------------------------------------------------
+ * file:	Enemy.h
+ * author:	ELTON TEO ZHE WEI
+			LOUIS MINEO @ LINN MIN HTOO
+			RICHMOND CHOO TZE YONG
+			ABDUL HADI
+
+ * email:	e.teo@digipen.edu
+			louismineo.l@digipen.edu
+			r.choo@digipen.edu
+			abdulhadi.b@digipen.edu
+*
+ * brief:	This file contains the function declarations and
+ *			struct declarations which are utilised in Enemy.c
+ *
+
+
+ * Copyright © 2021 DigiPen, All rights reserved.
+* ---------------------------------------------------------*/
+
+
 /* Header file for macros */
 
 
 struct Enemy {
 	int health;
 	int collisionWproj;
-//	int ID; // 1, 2, 3, 4, 5
+	//	int ID; // 1, 2, 3, 4, 5
 	float enemy_posX;
 	float enemy_posY;
 	int AliveDead; // enemyAlive 1 or enemyDead 1 0 
@@ -17,7 +38,7 @@ struct Enemy {
 struct Boss {
 	int health;
 	int collisionWproj;
-//	int ID;
+	//	int ID;
 	float boss_posX;
 	float boss_posY;
 	int AliveDead;

@@ -1,3 +1,24 @@
+﻿/*---------------------------------------------------------
+ * file:	gameover.c
+ * author:	ELTON TEO ZHE WEI
+			LOUIS MINEO @ LINN MIN HTOO
+			RICHMOND CHOO TZE YONG
+			ABDUL HADI
+
+ * email:	e.teo@digipen.edu
+			louismineo.l@digipen.edu
+			r.choo@digipen.edu
+			abdulhadi.b@digipen.edu
+*
+ * brief:	This file contains logic behind the game's screen
+ *			state after the player/character has depleted its health
+ *			, thus game over.
+ *
+
+
+ * Copyright � 2021 DigiPen, All rights reserved.
+* ---------------------------------------------------------*/
+
 #include "macros.h"
 #include <stdio.h>
 #include "cprocessing.h"
@@ -18,13 +39,37 @@ void menu_init(void);
 void menu_update(void);
 void menu_exit(void);
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	gameover_init()
 
+author:		Richmond Choo
+
+			gameover_init loads the gameover art into memory as gameover.
+
+			then creates logic over which button pressed by the mouse
+			as it can change the game state to howtoplay, game_init
+			or menu_init
+
+Return : -
+*//*---------------------------------------------------------------*/
 void gameover_init(void) {
 	gameover = CP_Image_Load("./images/gameover.png");
 }
 
 
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	gameover_update()
 
+author:		Richmond Choo
+
+			gameover_update loads the gameover art onto the screen.
+
+			then creates logic over which button pressed by the mouse
+			as it can change the game state to howtoplay, game_init
+			or menu_init
+
+Return : -
+*//*---------------------------------------------------------------*/
 void gameover_update(void) {
 
 	CP_Image_Draw(gameover, 640.0f, 365.0f, 1280.0f, 735.0f, 255);
@@ -77,7 +122,15 @@ void gameover_update(void) {
 	CP_Font_DrawTextBox("MAIN MENU", 820.0f, 350.0f, 300.0f);
 
 }
+/*-------------------------FUNCTION HEADER-----------------------*//*
+function:	gameover_exit()
 
+author:		Richmond Choo
+
+			gameover_exit frees the image from memory
+
+Return : -
+*//*---------------------------------------------------------------*/
 void gameover_exit(void) {
 
 	CP_Image_Free(&gameover);
